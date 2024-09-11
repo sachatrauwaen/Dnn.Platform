@@ -1,0 +1,66 @@
+﻿@using ClientDependency.Core.Mvc
+@model DotNetNuke.Framework.Models.PageModel
+@{
+    Layout = null;
+    var SkinPath = Path.GetDirectoryName(Model.Skin.SkinSrc);
+}
+
+<!DOCTYPE html>
+
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+
+    <dnn:DnnCssInclude ID="BootstrapCSS" runat="server" FilePath="" PathNameAlias="SkinPath" Priority="12" />
+    <dnn:DnnCssInclude ID="SmartMenuBootstrapCSS" runat="server" FilePath="css/jquery.smartmenus.bootstrap.css" PathNameAlias="SkinPath" Priority="13" />
+    <dnn:DnnCssInclude ID="MainMenuCSS" runat="server" FilePath="Menus/MainMenu/MainMenu.css" PathNameAlias="SkinPath" Priority="14" />
+    <dnn:DnnCssInclude ID="SkinCSS" runat="server" FilePath="skin.css" PathNameAlias="SkinPath" />
+
+    <%-- JS files --%>
+    <dnn:DnnJsInclude ID="BootstrapJS" runat="server" FilePath="bootstrap/js/bootstrap.min.js" PathNameAlias="SkinPath" />
+    <dnn:DnnJsInclude ID="SmartMenusJquery" runat="server" FilePath="js/jquery.smartmenus.js" PathNameAlias="SkinPath" />
+    <dnn:DnnJsInclude ID="SmartMenusJqueryBootstrap" runat="server" FilePath="js/jquery.smartmenus.bootstrap.js" PathNameAlias="SkinPath" />
+    <dnn:DnnJsInclude ID="scriptJS" runat="server" FilePath="js/scripts.js" PathNameAlias="SkinPath" />
+
+
+
+    <link href="@Model.Skin.SkinSrc.Replace("Inner.ascx","skin.css")" rel="stylesheet">
+
+</head>
+<body>
+    <div>
+
+        @Html.RenderJsHere()
+        @Model.Skin.SkinSrc<br />
+        @Model.TabId<br />
+        @Model.Language<br />
+
+        @Html.Partial(Model.Skin.RazorFile)
+
+        @if (Model.Skin.Panes.ContainsKey("")) { }
+
+        @Html.
+
+        @foreach (var pane in Model.Skin.Panes)
+        {
+            <p>@pane.Key</p>
+            foreach (var container in pane.Value.Containers)
+            {
+                <p>@container.Key</p>
+                <p>@container.Value.ModuleConfiguration.ModuleID - @container.Value.ModuleConfiguration.ModuleTitle</p>
+                <div>
+
+                    @Html.Partial(container.Value.ContainerRazorFile, container.Value.ModuleConfiguration)
+
+                     @Html.Action(container.Value.ActionName, container.Value.ControllerName, container.Value.ModuleConfiguration)
+                </div>
+            }
+        }
+
+        @*@DotNetNuke.Web.Mvc.Skins.SkinExtensions.DDRMenu();*@
+        
+    </div>
+</body>
+</html>

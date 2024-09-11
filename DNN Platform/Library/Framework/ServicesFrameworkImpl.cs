@@ -6,11 +6,13 @@ namespace DotNetNuke.Framework
 {
     using System.Globalization;
     using System.Web.Helpers;
+    using System.Web.Mvc;
     using System.Web.UI;
 
     using DotNetNuke.Common;
     using DotNetNuke.Entities.Portals;
     using DotNetNuke.Framework.JavaScriptLibraries;
+    using DotNetNuke.Mvc;
     using DotNetNuke.UI.Utilities;
     using DotNetNuke.Web.Client.ClientResourceManagement;
 
@@ -79,6 +81,31 @@ namespace DotNetNuke.Framework
             }
 
             ClientResourceManager.RegisterScript(page, scriptPath);
+        }
+
+        public void RegisterAjaxScript(ControllerContext page)
+        {
+            var path = ServicesFramework.GetServiceFrameworkRoot();
+            if (string.IsNullOrEmpty(path))
+            {
+                return;
+            }
+
+            MvcJavaScript.RegisterClientReference(page, ClientAPI.ClientNamespaceReferences.dnn);
+            MvcClientAPI.RegisterClientVariable("sf_siteRoot", path, /*overwrite*/ true);
+            MvcClientAPI.RegisterClientVariable("sf_tabId", PortalSettings.Current.ActiveTab.TabID.ToString(CultureInfo.InvariantCulture), /*overwrite*/ true);
+
+            string scriptPath;
+            if (HttpContextSource.Current.IsDebuggingEnabled)
+            {
+                scriptPath = "~/js/Debug/dnn.servicesframework.js";
+            }
+            else
+            {
+                scriptPath = "~/js/dnn.servicesframework.js";
+            }
+
+            MvcClientResourceManager.RegisterScript(page, scriptPath);
         }
 
         private static void SetKey(string key)

@@ -4,6 +4,7 @@
 
 namespace DotNetNuke.Framework
 {
+    using System.Web.Mvc;
     using System.Web.UI;
 
     internal interface IServiceFrameworkInternals
@@ -15,5 +16,7 @@ namespace DotNetNuke.Framework
         void RegisterAjaxAntiForgery(Page page);
 
         void RegisterAjaxScript(Page page);
+
+        void RegisterAjaxScript(ControllerContext page);
     }
 }

@@ -74,7 +74,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ClientDependency.Core, Version=1.9.10.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Dnn.ClientDependency.1.9.10\lib\net45\ClientDependency.Core.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\dnnClientDependency\src\ClientDependency.Mvc\bin\Debug-MVC5\ClientDependency.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="ClientDependency.Core.Mvc, Version=1.9.10.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\dnnClientDependency\src\ClientDependency.Mvc\bin\Debug-MVC5\ClientDependency.Core.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="DotNetNuke.WebControls">
       <SpecificVersion>False</SpecificVersion>
@@ -549,6 +554,9 @@
     <Compile Include="admin\Users\ViewProfile.ascx.designer.cs">
       <DependentUpon>ViewProfile.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\SkinExtensions.cs" />
+    <Compile Include="Models\PageModel.cs" />
+    <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1256,6 +1264,11 @@
     <Content Include="Providers\DataProviders\SqlDataProvider\09.12.01.SqlDataProvider" />
     <Content Include="Install\Config\09.13.04.config" />
     <Content Include="Providers\DataProviders\SqlDataProvider\09.13.04.SqlDataProvider" />
+    <Content Include="Views\Default\Page.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Views\web.config" />
+    <Content Include="Views\Shared\HtmlModule.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
@@ -3396,6 +3409,7 @@
   <ItemGroup>
     <Folder Include="Install\Provider\" />
     <Folder Include="Install\Temp\" />
+    <Folder Include="Views\Html\" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">
@@ -3435,6 +3449,10 @@
       <Project>{03e3afa5-ddc9-48fb-a839-ad4282ce237e}</Project>
       <Name>DotNetNuke.Web.Client</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DotNetNuke.Web.Mvc\DotNetNuke.Web.Mvc.csproj">
+      <Project>{64dc5798-9d37-4f8d-97dd-8403e6e70dd3}</Project>
+      <Name>DotNetNuke.Web.Mvc</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DotNetNuke.WebUtility\DotNetNuke.WebUtility.vbproj">
       <Project>{4912f062-f8a8-4f9d-8f8e-244ebee1acbd}</Project>
       <Name>DotNetNuke.WebUtility</Name>
@@ -3458,6 +3476,10 @@
     <ProjectReference Include="..\Modules\DDRMenu\DotNetNuke.Modules.DDRMenu.csproj">
       <Project>{a86ebc44-2bc8-4c4a-997b-2708e4aac345}</Project>
       <Name>DotNetNuke.Modules.DDRMenu</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Modules\HTML\DotNetNuke.Modules.Html.csproj">
+      <Project>{cd8732d8-b4dd-435d-bf21-a90c2964aba4}</Project>
+      <Name>DotNetNuke.Modules.Html</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -113,6 +113,9 @@
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Extensions.Design" />
+    <Reference Include="System.Web.Mvc">
+      <HintPath>..\..\..\Packages\Microsoft.AspNet.Mvc.5.2.9\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
@@ -123,9 +126,11 @@
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Components\CompareWorkflowStatePermissions.cs" />
     <Compile Include="Components\DataProvider.cs" />
+    <Compile Include="Components\HTMLController.cs" />
     <Compile Include="Components\HtmlModuleBase.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Components\HtmlModuleModel.cs" />
     <Compile Include="Components\HtmlModuleSettings.cs" />
     <Compile Include="Components\HtmlModuleSettingsRepository.cs" />
     <Compile Include="Components\HtmlTextController.cs" />
@@ -226,6 +231,10 @@
     <ProjectReference Include="..\..\DotNetNuke.Abstractions\DotNetNuke.Abstractions.csproj">
       <Project>{6928A9B1-F88A-4581-A132-D3EB38669BB0}</Project>
       <Name>DotNetNuke.Abstractions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DotNetNuke.Web.Mvc\DotNetNuke.Web.Mvc.csproj">
+      <Project>{64dc5798-9d37-4f8d-97dd-8403e6e70dd3}</Project>
+      <Name>DotNetNuke.Web.Mvc</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\DotNetNuke.Web\DotNetNuke.Web.csproj">
       <Project>{ee1329fe-fd88-4e1a-968c-345e394ef080}</Project>

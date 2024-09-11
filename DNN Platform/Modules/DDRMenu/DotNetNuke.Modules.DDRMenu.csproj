@@ -169,8 +169,10 @@
     <Compile Include="ModuleBase.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="MvcMenuBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings.cs" />
+    <Compile Include="SkinExtensions.cs" />
     <Compile Include="SkinObject.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>

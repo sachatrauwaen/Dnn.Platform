@@ -6,6 +6,7 @@ namespace DotNetNuke.Web.Mvc.Routing
     using System;
     using System.Collections.Generic;
     using System.Web.Http;
+    using System.Web.Mvc;
     using System.Web.Routing;
 
     using DotNetNuke.Common;
@@ -19,8 +20,8 @@ namespace DotNetNuke.Web.Mvc.Routing
     {
         private static readonly ILog Logger = LoggerSource.Instance.GetLogger(typeof(MvcRoutingManager));
         private readonly Dictionary<string, int> moduleUsage = new Dictionary<string, int>();
-        private readonly RouteCollection routes;
         private readonly PortalAliasMvcRouteManager portalAliasMvcRouteManager;
+        private readonly RouteCollection routes;
 
         public MvcRoutingManager()
             : this(RouteTable.Routes)
@@ -108,11 +109,6 @@ namespace DotNetNuke.Web.Mvc.Routing
             return !string.IsNullOrEmpty(configValue) && Convert.ToBoolean(configValue);
         }
 
-        private static void RegisterSystemRoutes()
-        {
-            // routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-        }
-
         private static Route MapRouteWithNamespace(string name, string url, object defaults, object constraints, string[] namespaces)
         {
             var route = new Route(url, new DnnMvcRouteHandler())
@@ -141,9 +137,41 @@ namespace DotNetNuke.Web.Mvc.Routing
             return dictionary != null ? new RouteValueDictionary(dictionary) : TypeHelper.ObjectToDictionary(values);
         }
 
+        private void RegisterSystemRoutes()
+        {
+            // routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+            // var route = MapRouteWithNamespace(
+            //        name: "Default",
+            //        url: "mvc/{controller}/{action}/{id}",
+            //        defaults: new { action = "Index", id = UrlParameter.Optional },
+            //        constraints: null,
+            //        namespaces: new string[] { "DotNetNuke.Framework.Controllers" });
+            // this.routes.Add(route);
+
+            /*
+            this.routes.MapRoute(
+                name: "Default",
+                url: "mvc/{controller}/{action}/{tabid}/{language}",
+                defaults: new { action = "Index", tabid = UrlParameter.Optional, language= UrlParameter.Optional },
+                namespaces: new string[] { "DotNetNuke.Framework.Controllers" });
+            */
+
+            var route = new Route("mvc/{controller}/{action}/{tabid}/{language}", new DnnMvcPageRouteHandler())
+            {
+                Defaults = CreateRouteValueDictionaryUncached(new { action = "Index", tabid = UrlParameter.Optional, language = UrlParameter.Optional }),
+
+                // Constraints = CreateRouteValueDictionaryUncached(constraints),
+            };
+            route.DataTokens = new RouteValueDictionary();
+            ConstraintValidation.Validate(route);
+            route.SetNameSpaces(new string[] { "DotNetNuke.Framework.Controllers" });
+            route.SetName("Default");
+            this.routes.Add(route);
+        }
+
         private void LocateServicesAndMapRoutes()
         {
-            RegisterSystemRoutes();
+            this.RegisterSystemRoutes();
             this.ClearCachedRouteData();
 
             this.moduleUsage.Clear();

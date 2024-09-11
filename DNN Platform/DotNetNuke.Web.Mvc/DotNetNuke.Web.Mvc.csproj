@@ -127,6 +127,8 @@
     <Compile Include="Common\PropertyHelper.cs" />
     <Compile Include="Common\TypeHelper.cs" />
     <Compile Include="DnnMvcDependencyResolver.cs" />
+    <Compile Include="DnnMvcPageHandler.cs" />
+    <Compile Include="DnnMvcPageRouteHandler.cs" />
     <Compile Include="Extensions\StartupExtensions.cs" />
     <Compile Include="Framework\ActionFilters\AuthFilterContext.cs" />
     <Compile Include="Framework\ActionFilters\AuthorizeAttributeBase.cs" />
@@ -194,6 +196,10 @@
     <Compile Include="Routing\MvcRoutingManager.cs" />
     <Compile Include="Routing\PortalAliasMvcRouteManager.cs" />
     <Compile Include="Routing\StandardModuleRoutingProvider.cs" />
+    <Compile Include="Skins\Controllers\DnnPageController.cs" />
+    <Compile Include="Skins\MvcContainer.cs" />
+    <Compile Include="Skins\MvcPane.cs" />
+    <Compile Include="Skins\MvcSkin.cs" />
     <Compile Include="StandardTabAndModuleInfoProvider.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>

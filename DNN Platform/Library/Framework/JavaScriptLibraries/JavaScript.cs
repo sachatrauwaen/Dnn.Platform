@@ -16,6 +16,7 @@ namespace DotNetNuke.Framework.JavaScriptLibraries
     using DotNetNuke.Entities.Host;
     using DotNetNuke.Entities.Portals;
     using DotNetNuke.Entities.Users;
+    using DotNetNuke.Mvc;
     using DotNetNuke.Services.Installer.Packages;
     using DotNetNuke.Services.Localization;
     using DotNetNuke.Services.Log.EventLog;
@@ -322,7 +323,7 @@ namespace DotNetNuke.Framework.JavaScriptLibraries
             }
         }
 
-        private static string GetScriptPath(JavaScriptLibrary js, Page page)
+        private static string GetScriptPath(JavaScriptLibrary js, HttpRequest request)
         {
             if (Host.CdnEnabled)
             {
@@ -339,7 +340,7 @@ namespace DotNetNuke.Framework.JavaScriptLibraries
                     var cdnPath = js.CDNPath;
                     if (cdnPath.StartsWith("//"))
                     {
-                        cdnPath = $"{(UrlUtils.IsSecureConnectionOrSslOffload(page.Request) ? "https" : "http")}:{cdnPath}";
+                        cdnPath = $"{(UrlUtils.IsSecureConnectionOrSslOffload(request) ? "https" : "http")}:{cdnPath}";
                     }
 
                     return cdnPath;
@@ -431,7 +432,7 @@ namespace DotNetNuke.Framework.JavaScriptLibraries
                 return;
             }
 
-            ClientResourceManager.RegisterScript(page, GetScriptPath(jsl, page), GetFileOrder(jsl), GetScriptLocation(jsl), jsl.LibraryName, jsl.Version.ToString(3));
+            ClientResourceManager.RegisterScript(page, GetScriptPath(jsl, page.Request), GetFileOrder(jsl), GetScriptLocation(jsl), jsl.LibraryName, jsl.Version.ToString(3));
 
             if (Host.CdnEnabled && !string.IsNullOrEmpty(jsl.ObjectName))
             {
