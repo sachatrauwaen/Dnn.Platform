@@ -554,6 +554,8 @@
     <Compile Include="admin\Users\ViewProfile.ascx.designer.cs">
       <DependentUpon>ViewProfile.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\ModuleActionsController.cs" />
+    <Compile Include="Controllers\ModuleActionsModel.cs" />
     <Compile Include="Controllers\SkinExtensions.cs" />
     <Compile Include="Models\PageModel.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
@@ -1264,11 +1266,7 @@
     <Content Include="Providers\DataProviders\SqlDataProvider\09.12.01.SqlDataProvider" />
     <Content Include="Install\Config\09.13.04.config" />
     <Content Include="Providers\DataProviders\SqlDataProvider\09.13.04.SqlDataProvider" />
-    <Content Include="Views\Default\Page.cshtml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Views\web.config" />
-    <Content Include="Views\Shared\HtmlModule.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
@@ -3409,7 +3407,6 @@
   <ItemGroup>
     <Folder Include="Install\Provider\" />
     <Folder Include="Install\Temp\" />
-    <Folder Include="Views\Html\" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">
@@ -3429,6 +3426,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Dnn.AdminExperience\EditBar\Dnn.EditBar.UI\Dnn.EditBar.UI.csproj">
+      <Project>{9d9b15dd-e7ce-476c-bd3b-ff44e64efb67}</Project>
+      <Name>Dnn.EditBar.UI</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\DotNetNuke.Internal.SourceGenerators\DotNetNuke.Internal.SourceGenerators.csproj" ReferenceOutputAssembly="false" OutputItemType="Analyzer">
       <Project>{5fe5d021-9c8d-47a6-bd34-f328ba3e709c}</Project>
       <Name>DotNetNuke.Internal.SourceGenerators</Name>

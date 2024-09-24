@@ -25,6 +25,18 @@ namespace DotNetNuke.Mvc
             return dic;
         }
 
+        public static Dictionary<string, string> GetClientStartupScriptList()
+        {
+            var dic = HttpContext.Current.Items["CAPIStartupScriptList"] as Dictionary<string, string>;
+            if (dic == null)
+            {
+                dic = new Dictionary<string, string>();
+                HttpContext.Current.Items["CAPIStartupScriptList"] = dic;
+            }
+
+            return dic;
+        }
+
         public static void RegisterClientVariable(string key, string value, bool overwrite)
         {
             GetClientVariableList().Add(key, value);
@@ -33,6 +45,11 @@ namespace DotNetNuke.Mvc
         public static void RegisterEmbeddedResource(string fileName, Type assemblyType)
         {
             // RegisterClientVariable(FileName + ".resx", ThePage.ClientScript.GetWebResourceUrl(AssemblyType, FileName), true);
+        }
+
+        public static void RegisterStartupScript(string key, string value)
+        {
+            GetClientStartupScriptList().Add(key, value);
         }
     }
 }

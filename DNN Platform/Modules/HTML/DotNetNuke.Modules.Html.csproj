@@ -126,6 +126,7 @@
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Components\CompareWorkflowStatePermissions.cs" />
     <Compile Include="Components\DataProvider.cs" />
+    <Compile Include="Components\EditHTMLModel.cs" />
     <Compile Include="Components\HTMLController.cs" />
     <Compile Include="Components\HtmlModuleBase.cs">
       <SubType>ASPXCodeBehind</SubType>

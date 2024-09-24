@@ -171,6 +171,77 @@ namespace DotNetNuke.Web.Mvc.Skins
             }
         }
 
+        public void ProcessPane()
+        {
+            /*
+                // remove excess skin non-validating attributes
+                this.PaneControl.Attributes.Remove("ContainerType");
+                this.PaneControl.Attributes.Remove("ContainerName");
+                this.PaneControl.Attributes.Remove("ContainerSrc");
+            */
+            if (Globals.IsLayoutMode())
+            {
+                /*
+                this.PaneControl.Visible = true;
+
+                // display pane border
+                string cssclass = this.PaneControl.Attributes["class"];
+                if (string.IsNullOrEmpty(cssclass))
+                {
+                    this.PaneControl.Attributes["class"] = CPaneOutline;
+                }
+                else
+                {
+                    this.PaneControl.Attributes["class"] = cssclass.Replace(CPaneOutline, string.Empty).Trim().Replace("  ", " ") + " " + CPaneOutline;
+                }
+
+                // display pane name
+                var ctlLabel = new Label { Text = "<center>" + this.Name + "</center><br />", CssClass = "SubHead" };
+                this.PaneControl.Controls.AddAt(0, ctlLabel);
+                */
+            }
+            else
+            {
+                /*
+                if (this.PaneControl.Visible == false && TabPermissionController.CanAddContentToPage())
+                {
+                    this.PaneControl.Visible = true;
+                }
+                if (this.CanCollapsePane())
+                {
+                    // This pane has no controls so set the width to 0
+                    if (this.PaneControl.Attributes["style"] != null)
+                    {
+                        this.PaneControl.Attributes.Remove("style");
+                    }
+
+                    if (this.PaneControl.Attributes["class"] != null)
+                    {
+                        this.PaneControl.Attributes["class"] = this.PaneControl.Attributes["class"] + " DNNEmptyPane";
+                    }
+                    else
+                    {
+                        this.PaneControl.Attributes["class"] = "DNNEmptyPane";
+                    }
+                }
+
+                // Add support for drag and drop
+                if (Globals.IsEditMode())
+                {
+                    // this call also checks for permission
+                    if (this.PaneControl.Attributes["class"] != null)
+                    {
+                        this.PaneControl.Attributes["class"] = this.PaneControl.Attributes["class"] + " dnnSortable";
+                    }
+                    else
+                    {
+                        this.PaneControl.Attributes["class"] = "dnnSortable";
+                    }
+                }
+                */
+            }
+        }
+
         private bool IsVesionableModule(ModuleInfo moduleInfo)
         {
             if (string.IsNullOrEmpty(moduleInfo.DesktopModule.BusinessControllerClass))

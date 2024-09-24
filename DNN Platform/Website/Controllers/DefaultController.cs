@@ -16,9 +16,11 @@ namespace DotNetNuke.Framework.Controllers
     using System.Web.Mvc;
 
     using ClientDependency.Core.Mvc;
+    using Dnn.EditBar.UI.Mvc;
     using DotNetNuke.Application;
     using DotNetNuke.Common.Utilities;
     using DotNetNuke.Entities.Host;
+    using DotNetNuke.Entities.Modules;
     using DotNetNuke.Entities.Portals;
     using DotNetNuke.Entities.Tabs;
     using DotNetNuke.Framework.JavaScriptLibraries;
@@ -53,7 +55,12 @@ namespace DotNetNuke.Framework.Controllers
             return this.View();
         }
 
-        [DnnAuthorize]
+        public ActionResult Terms(ModuleInfo module)
+        {
+            var terms = Localization.GetSystemMessage(this.PortalSettings, "MESSAGE_PORTAL_TERMS");
+            return this.View("Terms", string.Empty, terms);
+        }
+
         public ActionResult Page(int tabid, string language)
         {
             var antiForgery = string.Empty;
@@ -67,17 +74,15 @@ namespace DotNetNuke.Framework.Controllers
             ServicesFrameworkInternal.Instance.RegisterAjaxScript(this.ControllerContext);
             var user = this.PortalSettings.UserInfo;
 
-            if (user.UserID > 0)
-            {
-                MvcClientAPI.RegisterClientVariable("dnn_current_userid", this.PortalSettings.UserInfo.UserID.ToString(), true);
-            }
+            MvcContentEditorManager.CreateManager(this);
 
             var renderer = this.ControllerContext.GetLoader();
 
             // renderer.RegisterDependency("/Resources/libraries/jQuery/03_07_01/jquery.js", ClientDependency.Core.ClientDependencyType.Javascript);
             var model = new PageModel()
             {
-                EditMode = Personalization.GetUserMode() == PortalSettings.Mode.Edit,
+                // EditMode = Personalization.GetUserMode() == PortalSettings.Mode.Edit,
+                IsEditMode = Globals.IsEditMode(),
                 AntiForgery = antiForgery,
                 PortalId = this.PortalSettings?.PortalId,
                 TabId = this.PortalSettings?.ActiveTab?.TabID,
@@ -86,6 +91,7 @@ namespace DotNetNuke.Framework.Controllers
             model.Skin = this.OnInit(model);
             DotNetNuke.Framework.JavaScriptLibraries.MvcJavaScript.Register(this.ControllerContext);
             model.ClientVariables = MvcClientAPI.GetClientVariableList();
+            model.StartupScripts = MvcClientAPI.GetClientStartupScriptList();
 
             return this.View(model.Skin.RazorFile, "Layout", model);
         }

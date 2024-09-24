@@ -8,6 +8,7 @@ namespace DotNetNuke.Web.Mvc.Skins
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
+    using System.Text;
     using System.Threading;
     using System.Web;
     using System.Web.Mvc;
@@ -21,6 +22,8 @@ namespace DotNetNuke.Web.Mvc.Skins
     using DotNetNuke.Entities.Tabs;
     using DotNetNuke.Entities.Tabs.TabVersions;
     using DotNetNuke.Framework;
+    using DotNetNuke.Framework.JavaScriptLibraries;
+    using DotNetNuke.Mvc;
     using DotNetNuke.Security.Permissions;
     using DotNetNuke.Services.Exceptions;
     using DotNetNuke.Services.Localization;
@@ -29,6 +32,8 @@ namespace DotNetNuke.Web.Mvc.Skins
     using DotNetNuke.UI.Modules;
     using DotNetNuke.UI.Skins;
     using DotNetNuke.UI.Skins.Controls;
+    using DotNetNuke.UI.Skins.EventListeners;
+    using DotNetNuke.Web.Client;
     using DotNetNuke.Web.Client.ClientResourceManagement;
     using DotNetNuke.Web.Mvc.Skins.Controllers;
 
@@ -71,6 +76,32 @@ namespace DotNetNuke.Web.Mvc.Skins
         }
 
         public string ControlPanelRazor { get; set; }
+
+        public string PaneCssClass
+        {
+            get
+            {
+                if (Globals.IsEditMode())
+                {
+                    return "dnnSortable";
+                }
+
+                return string.Empty;
+            }
+        }
+
+        public string BodyCssClass
+        {
+            get
+            {
+                if (Globals.IsEditMode())
+                {
+                    return "dnnEditState";
+                }
+
+                return string.Empty;
+            }
+        }
 
         public static MvcSkin GetSkin(DnnPageController page)
         {
@@ -206,15 +237,13 @@ namespace DotNetNuke.Web.Mvc.Skins
             */
 
             // Load the Panes
-
-            // this.LoadPanes();
+            this.LoadPanes();
 
             // Load the Module Control(s)
-            /*
             bool success = Globals.IsAdminControl() ? this.ProcessSlaveModule() : this.ProcessMasterModules();
-            */
-
+            /*
             this.ProcessMasterModules();
+            */
 
             // Load the Control Panel
             this.InjectControlPanel(page);
@@ -260,9 +289,53 @@ namespace DotNetNuke.Web.Mvc.Skins
             */
 
             // Process the Panes attributes
-            /*
             this.ProcessPanes();
-            */
+        }
+
+        protected void OnLoad()
+        {
+            // this.InvokeSkinEvents(SkinEventType.OnSkinLoad);
+        }
+
+        protected void OnPreRender(DnnPageController page)
+        {
+            // this.InvokeSkinEvents(SkinEventType.OnSkinPreRender);
+            var isSpecialPageMode = UrlUtils.InPopUp() || page.Request.QueryString["dnnprintmode"] == "true";
+            if (TabPermissionController.CanAddContentToPage() && Globals.IsEditMode() && !isSpecialPageMode)
+            {
+                // Register Drag and Drop plugin
+                MvcJavaScript.RequestRegistration(CommonJs.DnnPlugins);
+                MvcClientResourceManager.RegisterStyleSheet(page.ControllerContext, "~/resources/shared/stylesheets/dnn.dragDrop.css", FileOrder.Css.FeatureCss);
+                MvcClientResourceManager.RegisterScript(page.ControllerContext, "~/resources/shared/scripts/dnn.dragDrop.js");
+
+                // Register Client Script
+                var sb = new StringBuilder();
+                sb.AppendLine(" (function ($) {");
+                sb.AppendLine("     $(document).ready(function () {");
+                sb.AppendLine("         $('.dnnSortable').dnnModuleDragDrop({");
+                sb.AppendLine("             tabId: " + this.PortalSettings.ActiveTab.TabID + ",");
+                sb.AppendLine("             draggingHintText: '" + Localization.GetSafeJSString("DraggingHintText", Localization.GlobalResourceFile) + "',");
+                sb.AppendLine("             dragHintText: '" + Localization.GetSafeJSString("DragModuleHint", Localization.GlobalResourceFile) + "',");
+                sb.AppendLine("             dropHintText: '" + Localization.GetSafeJSString("DropModuleHint", Localization.GlobalResourceFile) + "',");
+                sb.AppendLine("             dropTargetText: '" + Localization.GetSafeJSString("DropModuleTarget", Localization.GlobalResourceFile) + "'");
+                sb.AppendLine("         });");
+                sb.AppendLine("     });");
+                sb.AppendLine(" } (jQuery));");
+
+                var script = sb.ToString();
+                /*
+                if (ScriptManager.GetCurrent(this.Page) != null)
+                {
+                    // respect MS AJAX
+                    ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "DragAndDrop", script, true);
+                }
+                else
+                {
+                    this.Page.ClientScript.RegisterStartupScript(this.GetType(), "DragAndDrop", script, true);
+                }
+                */
+                MvcClientAPI.RegisterStartupScript("DragAndDrop", script);
+            }
         }
 
         private static MvcSkin LoadSkin(DnnPageController page, string skinPath)
@@ -289,6 +362,7 @@ namespace DotNetNuke.Web.Mvc.Skins
                 */
 
                 ctlSkin.OnInit(page); // new
+                ctlSkin.OnPreRender(page); // new
             }
             catch (Exception exc)
             {
@@ -310,8 +384,20 @@ namespace DotNetNuke.Web.Mvc.Skins
             return ctlSkin;
         }
 
+        private void ProcessPanes()
+        {
+            foreach (KeyValuePair<string, MvcPane> kvp in this.Panes)
+            {
+                kvp.Value.ProcessPane();
+            }
+        }
+
         private void LoadPanes()
         {
+            this.PortalSettings.ActiveTab.Panes.Add("HeaderPane");
+            this.PortalSettings.ActiveTab.Panes.Add("ContentPane");
+            this.PortalSettings.ActiveTab.Panes.Add("ContentPaneLower");
+
             /*
             // iterate page controls
             foreach (Control ctlControl in this.Controls)
@@ -434,6 +520,69 @@ namespace DotNetNuke.Web.Mvc.Skins
             return success;
         }
 
+        private bool ProcessSlaveModule()
+        {
+            var success = true;
+            var key = UIUtilities.GetControlKey();
+            var moduleId = UIUtilities.GetModuleId(key);
+            var slaveModule = UIUtilities.GetSlaveModule(moduleId, key, this.PortalSettings.ActiveTab.TabID);
+
+            MvcPane pane;
+            this.Panes.TryGetValue(Globals.glbDefaultPane.ToLowerInvariant(), out pane);
+            if (pane == null)
+            {
+                this.Panes.Add(Globals.glbDefaultPane.ToLowerInvariant(), new MvcPane(Globals.glbDefaultPane.ToLowerInvariant()));
+                this.Panes.TryGetValue(Globals.glbDefaultPane.ToLowerInvariant(), out pane);
+            }
+
+            slaveModule.PaneName = Globals.glbDefaultPane;
+            slaveModule.ContainerSrc = this.PortalSettings.ActiveTab.ContainerSrc;
+            if (string.IsNullOrEmpty(slaveModule.ContainerSrc))
+            {
+                slaveModule.ContainerSrc = this.PortalSettings.DefaultPortalContainer;
+            }
+
+            slaveModule.ContainerSrc = SkinController.FormatSkinSrc(slaveModule.ContainerSrc, this.PortalSettings);
+            slaveModule.ContainerPath = SkinController.FormatSkinPath(slaveModule.ContainerSrc);
+
+            var moduleControl = ModuleControlController.GetModuleControlByControlKey(key, slaveModule.ModuleDefID);
+            if (moduleControl != null)
+            {
+                slaveModule.ModuleControlId = moduleControl.ModuleControlID;
+                slaveModule.IconFile = moduleControl.IconFile;
+
+                string permissionKey;
+                switch (slaveModule.ModuleControl.ControlSrc)
+                {
+                    case "Admin/Modules/ModuleSettings.ascx":
+                        permissionKey = "MANAGE";
+                        break;
+                    case "Admin/Modules/Import.ascx":
+                        permissionKey = "IMPORT";
+                        break;
+                    case "Admin/Modules/Export.ascx":
+                        permissionKey = "EXPORT";
+                        break;
+                    default:
+                        permissionKey = "CONTENT";
+                        break;
+                }
+
+                if (ModulePermissionController.HasModuleAccess(slaveModule.ModuleControl.ControlType, permissionKey, slaveModule))
+                {
+                    success = this.InjectModule(pane, slaveModule);
+                }
+                else
+                {
+                    /*
+                    this.Response.Redirect(Globals.AccessDeniedURL(Localization.GetString("ModuleAccess.Error")), true);
+                    */
+                }
+            }
+
+            return success;
+        }
+
         private bool ProcessModule(ModuleInfo module)
         {
             var success = true;
@@ -524,7 +673,8 @@ namespace DotNetNuke.Web.Mvc.Skins
             // if querystring dnnprintmode=true, controlpanel will not be shown
             if (page.Request.QueryString["dnnprintmode"] != "true" && !UrlUtils.InPopUp() && page.Request.QueryString["hidecommandbar"] != "true")
             {
-                if (Host.AllowControlPanelToDetermineVisibility || (ControlPanelBase.IsPageAdminInternal() || ControlPanelBase.IsModuleAdminInternal()))
+                // if (Host.AllowControlPanelToDetermineVisibility || (ControlPanelBase.IsPageAdminInternal() || ControlPanelBase.IsModuleAdminInternal()))
+                if (ControlPanelBase.IsPageAdminInternal() || ControlPanelBase.IsModuleAdminInternal())
                 {
                     // ControlPanel processing
                     this.ControlPanelRazor = Path.GetFileNameWithoutExtension(Host.ControlPanel);

@@ -30,5 +30,37 @@ namespace DotNetNuke.Framework.Controllers
                 Html = html,
             });
         }
+
+        public ActionResult EditHTML(ModuleInfo module)
+        {
+            var ctrl = new HtmlTextController();
+
+            // ModuleInfo module = ModuleController.Instance.GetModule(moduleId, Null.NullInteger, true);
+            int workflowID = ctrl.GetWorkflow(module.ModuleID, module.TabID, module.PortalID).Value;
+
+            HtmlTextInfo content = ctrl.GetTopHtmlText(module.ModuleID, true, workflowID);
+            var html = System.Web.HttpUtility.HtmlDecode(content.Content);
+            return this.View(new HtmlModuleModel()
+            {
+                Html = html,
+            });
+        }
+
+        [HttpPost]
+        public ActionResult SaveHTML(ModuleInfo module)
+        {
+            var input = this.Request.Form["Html"];
+            var ctrl = new HtmlTextController();
+
+            // ModuleInfo module = ModuleController.Instance.GetModule(moduleId, Null.NullInteger, true);
+            int workflowID = ctrl.GetWorkflow(module.ModuleID, module.TabID, module.PortalID).Value;
+
+            HtmlTextInfo content = ctrl.GetTopHtmlText(module.ModuleID, true, workflowID);
+            var html = System.Web.HttpUtility.HtmlDecode(content.Content);
+            return this.View(new HtmlModuleModel()
+            {
+                Html = html + "/" + input,
+            });
+        }
     }
 }

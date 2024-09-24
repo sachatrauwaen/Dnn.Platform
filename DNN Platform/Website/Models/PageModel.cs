@@ -41,6 +41,9 @@ namespace DotNetNuke.Framework.Models
 
         public object MetaRobots { get; internal set; }
 
-        public bool EditMode { get; internal set; }
+        // public bool EditMode { get; internal set; }
+        public Dictionary<string, string> StartupScripts { get; internal set; }
+
+        public bool IsEditMode { get; internal set; }
     }
 }
