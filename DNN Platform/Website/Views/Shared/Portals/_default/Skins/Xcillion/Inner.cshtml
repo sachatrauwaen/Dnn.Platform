@@ -1,0 +1,186 @@
+@using DotNetNuke.Web.Mvc.Skins
+@using ClientDependency.Core.Mvc
+@model DotNetNuke.Framework.Models.PageModel
+@{
+	var SkinPath = Path.GetDirectoryName(Model.Skin.SkinSrc);
+	Html.RequiresCss("/Portals/_default/Skins/Xcillion/bootstrap/css/bootstrap.min.css", 10);
+	Html.RequiresCss("/Portals/_default/Skins/Xcillion/css/jquery.smartmenus.bootstrap.css", 10);
+	Html.RequiresCss("/Portals/_default/Skins/Xcillion/Menus/MainMenu/MainMenu.css", 10);
+		
+	Html.RequiresJs("/Portals/_default/Skins/Xcillion/bootstrap/js/bootstrap.min.js");
+	Html.RequiresJs("/Portals/_default/Skins/Xcillion/js/jquery.smartmenus.js");
+	Html.RequiresJs("/Portals/_default/Skins/Xcillion/js/jquery.smartmenus.bootstrap.js");
+	Html.RequiresJs("/Portals/_default/Skins/Xcillion/js/scripts.js");
+}
+
+@helper Pane(string key) {
+	<div id="dnn_@(key)" class="dnnPane @(Model.Skin.PaneCssClass)" data-name="@(key)">
+	@if ( Model.Skin.Panes.ContainsKey(key)){
+		
+		foreach (var container in Model.Skin.Panes[key].Containers)
+		{
+		
+			<div class="DnnModule DnnModule-DNN_HTML DnnModule-@(container.Value.ModuleConfiguration.ModuleID)">
+			<a name="@(container.Value.ModuleConfiguration.ModuleID)"></a>
+			@Html.Partial("~/Views/Shared"+container.Value.ContainerRazorFile+".cshtml", container.Value)
+			</div>
+		}
+		
+	}	
+	</div>
+}
+
+
+ 
+<div id="siteWrapper">
+	<!--Tob bar -->
+    <div id="topHeader">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div id="search-top" class="pull-right small-screens hidden-sm hidden-md hidden-lg">
+                        <dnn:SEARCH ID="dnnSearch2" runat="server" ShowSite="false" ShowWeb="false" EnableTheming="true" Submit="Search" CssClass="SearchButton" />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="language">
+                        <dnn:LANGUAGE runat="server" ID="LANGUAGE1" ShowMenu="False" ShowLinks="True" />
+                    </div>
+                    <div class="search hidden-xs">
+                        <dnn:SEARCH ID="dnnSearch" runat="server" ShowSite="false" ShowWeb="false" EnableTheming="true" Submit="Search" CssClass="SearchButton" />
+                    </div>
+                    <%-- search action for Search function on small devices --%>
+                    <a id="search-action" aria-label="Search"></a>
+                    <div id="login" class="pull-right">
+						<div id="dnn_dnnLogin_loginGroup" class="loginGroup">
+							<a id="dnn_dnnLogin_enhancedLoginLink" title="Connexion" class="LoginLink" rel="nofollow" onclick="return dnnModal.show('http://dnndev.local/Login?returnurl=/xxx&amp;popUp=true',/*showReturn*/true,300,650,true,'')" href="http://dnndev.local/Login?returnurl=%2fxxx">Connexion</a>
+						</div>
+						@*
+                        <dnn:LOGIN ID="dnnLogin" CssClass="LoginLink" runat="server" LegacyMode="false" />
+                        <dnn:USER ID="dnnUser" runat="server" LegacyMode="false" />
+						*@
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Header -->
+    <header role="banner">
+        <div id="mainHeader-inner" class="container">
+            <div class="navbar navbar-default" role="navigation">
+                <div id="navbar-top-wrapper">
+                    <div id="logo">
+                        <span class="brand">
+                            @* <dnn:LOGO runat="server" ID="dnnLOGO" /> *@
+							@Html.Logo()
+							
+									@*
+							<a id="dnn_dnnLOGO_hypLogo" title="My Website" aria-label="My Website" href="http://dnndev.local/">
+								<img id="dnn_dnnLOGO_imgLogo" src="/Portals/0/Images/logo.png?ver=iQ_5jD494yqztgqRg6ESQA%3d%3d" alt="My Website">
+								</a>
+								*@
+                        </span>
+                    </div>
+                </div>
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <div id="navbar" class="collapse navbar-collapse pull-right">
+					@*
+                    <dnn:MENU ID="MENU" MenuStyle="Menus/MainMenu" runat="server" NodeSelector="*"></dnn:MENU>
+					*@
+					@Html.Raw(DotNetNuke.Web.DDRMenu.SkinExtensions.DDRMenu("MENU","Menus/MainMenu" ))
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Content -->
+    <div class="container">
+        <main role="main">
+            <div class="row dnnpane">
+                <div id="HeaderPane" class="col-md-12 headerPane" >@Pane("headerpane")</div> 
+            </div>
+            <div id="breadcrumb" class="col-md-12">
+                <dnn:BREADCRUMB ID="dnnBreadcrumb" runat="server" CssClass="breadcrumbLink" RootLevel="0" Separator="&lt;img src=&quot;/Portals/_default/Skins/Xcillion/Images/breadcrumb-arrow.png&quot; alt=&quot;breadcrumb separator&quot;&gt;" HideWithNoBreadCrumb="true" />
+            </div>
+            <div id="mainContent-inner">
+                <div class="row dnnpane">
+                    <div id="ContentPane" class="col-md-12 contentPane " >@Pane("contentpane")</div>
+                </div>
+
+                <div class="row dnnpane">
+                    <div id="P1_75_1" class="col-md-8 leftPane spacingTop " >@Pane("p1_75_1")</div>
+                    <div id="P1_25_2" class="col-md-4 rightPane spacingTop " runat="server">@Pane("p1_25_2")</div>
+                </div>
+
+                <div class="row dnnpane">
+                    <div id="P2_25_1" class="col-md-4 spacingTop " >@Pane("p2_25_1")</div>
+                    <div id="P2_75_2" class="col-md-8 spacingTop " >@Pane("p2_75_2")</div>
+                </div>
+
+                <div class="row dnnpane">
+                    <div id="P3_33_1" class="col-md-4 spacingTop " >@Pane("p3_33_1")</div>
+                    <div id="P3_33_2" class="col-md-4 spacingTop " >@Pane("p3_33_2")</div>
+                    <div id="P3_33_3" class="col-md-4 spacingTop " >@Pane("p3_33_3")</div>
+                </div>
+
+                <div class="row dnnpane">
+                    <div id="ContentPaneLower" class="col-md-12 contentPane spacingTop " >@Pane("contentpanelower")</div>
+                </div>
+            </div><!-- /.mainContent-inner -->
+        </main>
+        <!-- /.mainContent -->
+    </div>
+    <!-- /.container -->
+
+    <!-- Footer -->
+    <footer role="contentinfo">
+        <div class="footer-above">
+            <div class="container">
+                <div class="row dnnpane">
+                    <div id="footer_25_1" class="footer-col col-md-3 col-sm-6" runat="server"></div>
+                    <div id="footer_25_2" class="footer-col col-md-3 col-sm-6" runat="server"></div>
+                    <div class="clearfix visible-sm"></div>
+                    <div id="footer_25_3" class="footer-col col-md-3 col-sm-6" runat="server"></div>
+                    <div id="footer_25_4" class="footer-col col-md-3 col-sm-6" runat="server"></div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-below">
+            <div class="container">
+                <div class="row dnnpane">
+                    <div class="col-md-12">
+                        <div class="copyright">
+                            <dnn:COPYRIGHT ID="dnnCopyright" runat="server" CssClass="" />
+                        </div>
+						@*
+                        <div class="terms-priv">
+                            <dnn:LINKTOMOBILE ID="dnnLinkToMobile" runat="server" />
+                            <dnn:TERMS ID="dnnTerms" runat="server" />
+                            |
+					        <dnn:PRIVACY ID="dnnPrivacy" runat="server" />
+                        </div>
+						*@
+						<div class="terms-priv">
+                            
+                            <a id="dnn_dnnTerms_hypTerms" class="SkinObject" rel="nofollow" href="http://dnndev.local/Terms">Conditions d'utilisation</a>
+                            |
+					        <a id="dnn_dnnPrivacy_hypPrivacy" class="SkinObject" rel="nofollow" href="http://dnndev.local/Privacy">Déclaration de confidentialité</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</div>
