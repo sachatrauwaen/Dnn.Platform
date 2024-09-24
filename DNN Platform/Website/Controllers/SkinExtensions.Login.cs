@@ -17,7 +17,7 @@ namespace DotNetNuke.Web.Mvc.Skins
 
     public static partial class SkinExtensions
     {
-        public static IHtmlString Login(this HtmlHelper<DotNetNuke.Framework.Models.PageModel> helper, string cssClass = "SkinObject", string text = "", string logoffText = "")
+        public static IHtmlString Login(this HtmlHelper<DotNetNuke.Framework.Models.PageModel> helper, string cssClass = "SkinObject", string text = "", string logoffText = "", bool legacyMode = true, bool showInErrorPage = false)
         {
             var portalSettings = PortalSettings.Current;
             var navigationManager = Globals.DependencyProvider.GetRequiredService<INavigationManager>();
@@ -88,9 +88,19 @@ namespace DotNetNuke.Web.Mvc.Skins
                 }
             }
 
-            if (!portalSettings.HideLoginControl || HttpContext.Current.Request.IsAuthenticated)
+            if ((!portalSettings.HideLoginControl || HttpContext.Current.Request.IsAuthenticated)
+                && (!portalSettings.InErrorPageRequest() || showInErrorPage))
             {
-                sb.Append(loginLink.ToString());
+                if (!legacyMode)
+                {
+                    sb.Append("<div class=\"loginGroup\" id=\"loginGroup\">");
+                    sb.Append(loginLink.ToString());
+                    sb.Append("</div>");
+                }
+                else
+                {
+                    sb.Append(loginLink.ToString());
+                }
             }
 
             if (!HttpContext.Current.Request.IsAuthenticated)
