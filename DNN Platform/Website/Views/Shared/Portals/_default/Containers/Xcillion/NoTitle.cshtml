@@ -1,0 +1,22 @@
+@using DotNetNuke.Web.Mvc.Skins
+
+@model DotNetNuke.Web.Mvc.Skins.MvcContainer
+@{
+	var SkinPath = Path.GetDirectoryName(Model.ContainerSrc);
+}
+
+@* Model.ModuleConfiguration.ModuleID - @Model.ModuleConfiguration.ModuleTitle *@
+
+@if(Model.EditMode){
+@*
+<p>
+<a href="javascript:dnnModal.show('http://dnndev.local/xxx/ctl/Edit/mid/@(Model.ModuleConfiguration.ModuleID)?popUp=true%27,/*showReturn*/false,550,950,true,%27%27)">Edit content</a>
+</p>
+*@
+
+@Html.Action("Index", "ModuleActions", Model.ModuleConfiguration)
+}
+<div>	
+	@Html.Action(Model.ActionName, Model.ControllerName, Model.ModuleConfiguration)
+</div>
+   

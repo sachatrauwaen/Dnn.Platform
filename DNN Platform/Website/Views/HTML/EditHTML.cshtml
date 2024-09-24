@@ -1,0 +1,13 @@
+@using DotNetNuke.Modules.Html
+@using DotNetNuke.Entities.Modules
+@model DotNetNuke.Framework.Controllers.HtmlModuleModel
+@{}
+
+<div>@Html.Raw(Model.Html)</div>
+
+
+<form method="post">
+<textarea  id="edithtml" name="Html" rows="5" cols="33">@Html.Raw(Model.Html)</textarea>
+    <input type="submit" value="Submit weakly typed form" />
+</form>
+

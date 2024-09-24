@@ -1,0 +1,167 @@
+@using ClientDependency.Core.Mvc
+@model DotNetNuke.Framework.Models.PageModel
+@{
+}
+
+<!DOCTYPE html>
+
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+	
+	@Html.RenderCssHere()
+	
+	<!-- start hardcode !-->
+	<link href="/Portals/_default/admin.css?cdv=47" type="text/css" rel="stylesheet"/>
+	<link href="/resources/shared/stylesheets/dnn.dragDrop.css?cdv=47" type="text/css" rel="stylesheet"/>
+	<link href="/admin/menus/ModuleActions/ModuleActions.css?cdv=47" type="text/css" rel="stylesheet"/>
+	
+	<link href="/Resources/Shared/stylesheets/dnnicons/css/dnnicon.min.css?cdv=47" type="text/css" rel="stylesheet"/>
+	<link href="/Resources/Search/SearchSkinObjectPreview.css?cdv=47" type="text/css" rel="stylesheet"/>
+	<link href="/Resources/Shared/components/DropDownList/dnn.DropDownList.css?cdv=47" type="text/css" rel="stylesheet"/>
+	<link href="/Resources/Shared/scripts/jquery/dnn.jScrollBar.css?cdv=47" type="text/css" rel="stylesheet"/>
+	
+	<link href="/DesktopModules/admin/Dnn.EditBar/Resources/ContentEditorManager/Styles/ContentEditor.css?cdv=47" type="text/css" rel="stylesheet"/>
+	
+	<link href="/DesktopModules/admin/Dnn.EditBar/css/editBarContainer.css?cdv=47" type="text/css" rel="stylesheet"/>
+	
+	
+	@RenderSection("stylesheets", required: false)	
+	
+	<script src="/ScriptResource.axd?d=dyDTs7gNF_mytV8ZHTrSz0270yTaDThYGPlmWaUUewS2C4978dXCk7MDJqzG-VhASpmd7KCM6OkICWS-CDoDO1YJieg8SPRC2MHDDcsaLyh5NfLKHO9JPIbbtIXaG6M409nz3g2&amp;t=3ed5a90" type="text/javascript"></script>
+	<script src="/ScriptResource.axd?d=ct1HG-wRSULsRM9A7_XH-eDvytVnIkDh4UM45BOIoIU_b78Ng7SDIwxXiDiZRiN6dG4Vu90XO6jYCu-WayGD4MnNYbenBr2XnuaUaXb8NplHfVOmTgyyDRDSxhx17_BlBfESLdL9uYoJb9Wo0&amp;t=3ed5a90" type="text/javascript"></script>
+	
+	@Html.RenderJsHere()
+<!-- start hardcode !-->
+	<script src="/Resources/libraries/HoverIntent/01_10_01/jquery.hoverIntent.min.js?cdv=47" type="text/javascript"></script>
+	
+	@*
+	<script src="/Resources/libraries/Knockout/03_05_01/knockout.js?cdv=47" type="text/javascript"></script>
+*@
+
+  <script src="/js/dnn.xmlhttp.js?cdv=47" type="text/javascript"></script>
+  <script src="/js/dnn.xmlhttp.jsxmlhttprequest.js?cdv=47" type="text/javascript"></script>
+  <script src="/js/dnn.controls.js?cdv=47" type="text/javascript"></script>
+  <script src="/js/dnn.controls.dnnlabeledit.js?cdv=47" type="text/javascript"></script>
+  <script src="/js/dnncore.js?cdv=47" type="text/javascript"></script>
+  <script src="/admin/menus/ModuleActions/ModuleActions.js?cdv=47" type="text/javascript"></script>
+  <script src="/Resources/Shared/scripts/dnn.extensions.js?cdv=47" type="text/javascript"></script>
+  <script src="/Resources/Shared/scripts/dnn.jquery.extensions.js?cdv=47" type="text/javascript"></script>
+  <script src="/Resources/Shared/scripts/dnn.DataStructures.js?cdv=47" type="text/javascript"></script>
+  <script src="/Resources/Shared/scripts/jquery/jquery.mousewheel.js?cdv=47" type="text/javascript"></script>
+  <script src="/Resources/Shared/scripts/jquery/dnn.jScrollBar.js?cdv=47" type="text/javascript"></script>
+  <script src="/Resources/Shared/scripts/TreeView/dnn.TreeView.js?cdv=47" type="text/javascript"></script>
+  <script src="/Resources/Shared/scripts/TreeView/dnn.DynamicTreeView.js?cdv=47" type="text/javascript"></script>
+  <script src="/Resources/Shared/Components/DropDownList/dnn.DropDownList.js?cdv=47" type="text/javascript"></script>
+  
+@*  
+  <script src="/DesktopModules/admin/Dnn.EditBar/Resources/ContentEditorManager/Js/ModuleManager.js?cdv=47" type="text/javascript"></script>
+  <script src="/DesktopModules/admin/Dnn.EditBar/Resources/ContentEditorManager/Js/ModuleDialog.js?cdv=47" type="text/javascript"></script>
+  <script src="/DesktopModules/admin/Dnn.EditBar/Resources/ContentEditorManager/Js/ExistingModuleDialog.js?cdv=47" type="text/javascript"></script>
+  <script src="/DesktopModules/admin/Dnn.EditBar/Resources/ContentEditorManager/Js/ModuleService.js?cdv=47" type="text/javascript"></script>
+  <script src="/DesktopModules/admin/Dnn.EditBar/Resources/ContentEditorManager/Js/ContentEditor.js?cdv=47" type="text/javascript"></script>
+  
+  <script src="/DesktopModules/admin/Dnn.EditBar/scripts/editBarContainer.js?cdv=47" type="text/javascript"></script>
+  
+*@  
+  <script src="/Resources/Search/SearchSkinObjectPreview.js?cdv=47" type="text/javascript"></script>
+  <script src="/resources/shared/scripts/dnn.dragDrop.js?cdv=47" type="text/javascript"></script>
+  <script src="/js/dnn.dom.positioning.js?cdv=47" type="text/javascript"></script>
+  
+	
+	
+	@RenderSection("scripts", required: false)
+	
+	
+</head>
+<body class="@(Model.Skin.BodyCssClass)">
+    <form id="Form">
+        <input name="ScrollTop" type="hidden" id="ScrollTop" />
+
+        <input name="__dnnVariable" type="hidden" id="__dnnVariable" autocomplete="off" value="@Newtonsoft.Json.JsonConvert.SerializeObject(Model.ClientVariables)">
+        @*
+            <input name="__dnnVariable" type="hidden" id="__dnnVariable" autocomplete="off" value="{&quot;dnn_current_userid&quot;:&quot;1&quot;,&quot;__scdoff&quot;:&quot;1&quot;,&quot;sf_siteRoot&quot;:&quot;/&quot;,&quot;sf_tabId&quot;:&quot;21&quot;}">
+        *@
+        @Html.Raw(Model.AntiForgery)
+    </form>
+
+
+
+
+    @if (!string.IsNullOrEmpty(Model.Skin.ControlPanelRazor))
+    {
+        @Html.Action("Index", Model.Skin.ControlPanelRazor, Model);
+    }
+
+@*	
+    <div id="ctl06_PersonaBarPanel" class="personaBarContainer personalBarContainer">
+
+        <div id="personabar-placeholder" class="personabar-placeholder">
+            <!--
+                A temporary UI placeholder to avoid the sliding effect when PersonaBar loads
+            -->
+        </div>
+        <iframe id="personaBar-iframe" allowtransparency="true" frameborder="0" scrolling="false" src="/DesktopModules/admin/Dnn.PersonaBar/index.html?cdv=47" style="width: 80px;"></iframe>
+        <script type="text/javascript">
+            (function ($) {
+                // Add a class to parent body immediately to indicate PB will be visible
+                // This is useful to make room for PB placeholder
+                var parentBody = window.parent.document.body;
+                var parentBody$ = $(parentBody);
+                parentBody$.addClass('personabar-visible');
+
+                $(document.body).ready(function () {
+                    var w = window,
+                        d = document,
+                        e = d.documentElement,
+                        g = d.getElementsByTagName('body')[0],
+                        x = w.innerWidth || e.clientWidth || g.clientWidth,
+                        desktopIframe = document.getElementById('personaBar-iframe');
+
+                    w["personaBarSettings"] = { "applicationPath": "", "buildNumber": "47", "userId": 1, "avatarUrl": "/DnnImageHandler.ashx?mode=profilepic&userId=1&h=64&w=64", "culture": "fr-FR", "logOff": "http://dnndev.local/Home/ctl/Logoff", "visible": true, "userMode": "View", "userSettings": { "expandPersonaBar": false, "activeIdentifier": "Dnn.Pages", "activePath": null }, "menuStructure": { "MenuItems": [{ "Parent": "", "DisplayName": "Contenu", "MenuId": 1, "Identifier": "Content", "ModuleName": "Content", "FolderName": "", "ResourceKey": "nav_Content", "Path": "", "Link": "", "CssClass": "", "IconFile": "Images/nav_Content.svg", "ParentId": -1, "Order": 5, "AllowHost": true, "Enabled": false, "Settings": "{\"permissions\":{\"EDIT\":true}}", "Children": [{ "Parent": "Content", "DisplayName": "Pages", "MenuId": 14, "Identifier": "Dnn.Pages", "ModuleName": "Pages", "FolderName": "", "ResourceKey": "nav_Pages", "Path": "Pages", "Link": "", "CssClass": "", "IconFile": "", "ParentId": 1, "Order": 20, "AllowHost": true, "Enabled": false, "Settings": "{\"canSeePagesList\":true,\"canAddPages\":true,\"portalName\":\"My Website\",\"currentPagePermissions\":{\"addContentToPage\":true,\"addPage\":true,\"adminPage\":true,\"copyPage\":true,\"deletePage\":true,\"exportPage\":true,\"importPage\":true,\"managePage\":true},\"currentPageName\":\"Home\",\"productSKU\":\"DNN\",\"isAdmin\":true,\"currentParentHasChildren\":false,\"isAdminHostSystemPage\":false,\"permissions\":{\"EDIT\":true,\"VIEW_PAGE_LIST\":true}}", "Children": [] }, { "Parent": "Content", "DisplayName": "Corbeille", "MenuId": 16, "Identifier": "Dnn.Recyclebin", "ModuleName": "Recyclebin", "FolderName": "", "ResourceKey": "nav_Recyclebin", "Path": "Recyclebin", "Link": "", "CssClass": "", "IconFile": "", "ParentId": 1, "Order": 30, "AllowHost": true, "Enabled": false, "Settings": "{\"permissions\":{\"EDIT\":true,\"RECYCLEBIN_PAGES_VIEW\":true,\"RECYCLEBIN_PAGES_EDIT\":true,\"RECYCLEBIN_MODULES_VIEW\":true,\"RECYCLEBIN_MODULES_EDIT\":true,\"RECYCLEBIN_USERS_VIEW\":true,\"RECYCLEBIN_USERS_EDIT\":true}}", "Children": [] }] }, { "Parent": "", "DisplayName": "Gérer", "MenuId": 2, "Identifier": "Manage", "ModuleName": "Manage", "FolderName": "", "ResourceKey": "nav_Manage", "Path": "", "Link": "", "CssClass": "", "IconFile": "Images/nav_Manage.svg", "ParentId": -1, "Order": 10, "AllowHost": true, "Enabled": false, "Settings": "{\"permissions\":{\"EDIT\":true}}", "Children": [{ "Parent": "Manage", "DisplayName": "Utilisateurs", "MenuId": 28, "Identifier": "Dnn.Users", "ModuleName": "Users", "FolderName": "", "ResourceKey": "nav_Users", "Path": "Users", "Link": "", "CssClass": "", "IconFile": "", "ParentId": 2, "Order": 10, "AllowHost": true, "Enabled": false, "Settings": "{\"userId\":1,\"requiresQuestionAndAnswer\":false,\"dataConsentActive\":false,\"userNameMinLength\":5,\"permissions\":{\"EDIT\":true,\"ADD_USER\":true,\"MANAGE_ROLES\":true,\"MANAGE_PROFILE\":true,\"VIEW_SETTINGS\":true,\"EDIT_SETTINGS\":true,\"DELETE_USER\":true,\"AUTHORIZE_UNAUTHORIZE_USER\":true,\"MANAGE_PASSWORD\":true}}", "Children": [] }, { "Parent": "Manage", "DisplayName": "Rôles", "MenuId": 17, "Identifier": "Dnn.Roles", "ModuleName": "Roles", "FolderName": "", "ResourceKey": "nav_Roles", "Path": "Roles", "Link": "", "CssClass": "", "IconFile": "", "ParentId": 2, "Order": 20, "AllowHost": true, "Enabled": false, "Settings": "{\"permissions\":{\"EDIT\":true}}", "Children": [] }, { "Parent": "Manage", "DisplayName": "Ressources du site", "MenuId": 6, "Identifier": "SiteAssets", "ModuleName": "SiteAssets", "FolderName": "", "ResourceKey": "nav_SiteAssets", "Path": "LinkMenu?path=//Admin//FileManagement", "Link": "Admin/File-Management", "CssClass": "", "IconFile": "", "ParentId": 2, "Order": 22, "AllowHost": true, "Enabled": false, "Settings": "{\"permissions\":{\"EDIT\":true}}", "Children": [] }, { "Parent": "Manage", "DisplayName": "Thèmes", "MenuId": 27, "Identifier": "Dnn.Themes", "ModuleName": "Themes", "FolderName": "", "ResourceKey": "nav_Themes", "Path": "Themes", "Link": "", "CssClass": "", "IconFile": "", "ParentId": 2, "Order": 30, "AllowHost": true, "Enabled": false, "Settings": "{\"previewUrl\":\"http://dnndev.local/\",\"permissions\":{\"EDIT\":true}}", "Children": [] }, { "Parent": "Manage", "DisplayName": "Sites", "MenuId": 19, "Identifier": "Dnn.Sites", "ModuleName": "Sites", "FolderName": "", "ResourceKey": "nav_Sites", "Path": "Sites", "Link": "", "CssClass": "", "IconFile": "", "ParentId": 2, "Order": 40, "AllowHost": true, "Enabled": false, "Settings": "{\"permissions\":{\"EDIT\":true}}", "Children": [] }, { "Parent": "Manage", "DisplayName": "Site Groups", "MenuId": 20, "Identifier": "Dnn.SiteGroups", "ModuleName": "SiteGroups", "FolderName": "", "ResourceKey": "nav_SiteGroups", "Path": "SiteGroups", "Link": "", "CssClass": "", "IconFile": "", "ParentId": 2, "Order": 45, "AllowHost": true, "Enabled": false, "Settings": "{\"permissions\":{\"EDIT\":true}}", "Children": [] }, { "Parent": "Manage", "DisplayName": "Journaux Admin", "MenuId": 8, "Identifier": "Dnn.AdminLogs", "ModuleName": "AdminLogs", "FolderName": "", "ResourceKey": "nav_AdminLogs", "Path": "AdminLogs", "Link": "", "CssClass": "", "IconFile": "", "ParentId": 2, "Order": 50, "AllowHost": true, "Enabled": false, "Settings": "{\"permissions\":{\"EDIT\":true,\"ADMIN_LOGS_VIEW\":true,\"ADMIN_LOGS_EDIT\":true,\"LOG_SETTINGS_VIEW\":true,\"LOG_SETTINGS_EDIT\":true}}", "Children": [] }, { "Parent": "Manage", "DisplayName": "Global Assets", "MenuId": 30, "Identifier": "Link_-1_32", "ModuleName": "LinkMenu", "FolderName": "", "ResourceKey": "Global Assets", "Path": "LinkMenu?portalId=-1&tabId=32", "Link": "Host/Global-Assets/portalid/0", "CssClass": "", "IconFile": "", "ParentId": 2, "Order": 300, "AllowHost": true, "Enabled": false, "Settings": "{\"permissions\":{\"EDIT\":true}}", "Children": [] }, { "Parent": "Manage", "DisplayName": "Telerik Removal", "MenuId": 31, "Identifier": "Link_-1_33", "ModuleName": "LinkMenu", "FolderName": "", "ResourceKey": "Telerik Removal", "Path": "LinkMenu?portalId=-1&tabId=33", "Link": "Host/Telerik-Removal/portalid/0", "CssClass": "", "IconFile": "", "ParentId": 2, "Order": 300, "AllowHost": true, "Enabled": false, "Settings": "{\"permissions\":{\"EDIT\":true}}", "Children": [] }] }, { "Parent": "", "DisplayName": "Paramètres", "MenuId": 3, "Identifier": "Settings", "ModuleName": "Settings", "FolderName": "", "ResourceKey": "nav_Settings", "Path": "", "Link": "", "CssClass": "", "IconFile": "Images/nav_Settings.svg", "ParentId": -1, "Order": 15, "AllowHost": true, "Enabled": false, "Settings": "{\"permissions\":{\"EDIT\":true}}", "Children": [{ "Parent": "Settings", "DisplayName": "Paramétrage", "MenuId": 24, "Identifier": "Dnn.SiteSettings", "ModuleName": "SiteSettings", "FolderName": "", "ResourceKey": "nav_SiteSettings", "Path": "SiteSettings", "Link": "", "CssClass": "", "IconFile": "", "ParentId": 3, "Order": 10, "AllowHost": true, "Enabled": false, "Settings": "{\"permissions\":{\"EDIT\":true,\"SITE_INFO_VIEW\":true,\"SITE_INFO_EDIT\":true}}", "Children": [] }, { "Parent": "Settings", "DisplayName": "Sécurité", "MenuId": 18, "Identifier": "Dnn.Security", "ModuleName": "Security", "FolderName": "", "ResourceKey": "nav_Security", "Path": "Security", "Link": "", "CssClass": "", "IconFile": "", "ParentId": 3, "Order": 20, "AllowHost": true, "Enabled": false, "Settings": "{\"permissions\":{\"EDIT\":true,\"BASIC_LOGIN_SETTINGS_VIEW\":true,\"BASIC_LOGIN_SETTINGS_EDIT\":true,\"REGISTRATION_SETTINGS_VIEW\":true,\"REGISTRATION_SETTINGS_EDIT\":true}}", "Children": [] }, { "Parent": "Settings", "DisplayName": "S E O", "MenuId": 21, "Identifier": "Dnn.Seo", "ModuleName": "Seo", "FolderName": "", "ResourceKey": "nav_Seo", "Path": "Seo", "Link": "", "CssClass": "", "IconFile": "", "ParentId": 3, "Order": 30, "AllowHost": true, "Enabled": false, "Settings": "{\"permissions\":{\"EDIT\":true}}", "Children": [] }, { "Parent": "Settings", "DisplayName": "Vocabulaires", "MenuId": 29, "Identifier": "Dnn.Vocabularies", "ModuleName": "Vocabularies", "FolderName": "", "ResourceKey": "nav_Vocabularies", "Path": "vocabularies", "Link": "", "CssClass": "", "IconFile": "", "ParentId": 3, "Order": 40, "AllowHost": true, "Enabled": false, "Settings": "{\"permissions\":{\"EDIT\":true}}", "Children": [] }, { "Parent": "Settings", "DisplayName": "Connecteurs", "MenuId": 10, "Identifier": "Dnn.Connectors", "ModuleName": "Connectors", "FolderName": "", "ResourceKey": "nav_Connectors", "Path": "Connectors", "Link": "", "CssClass": "", "IconFile": "", "ParentId": 3, "Order": 43, "AllowHost": true, "Enabled": false, "Settings": "{\"permissions\":{\"EDIT\":true}}", "Children": [] }, { "Parent": "Settings", "DisplayName": "Extensions", "MenuId": 13, "Identifier": "Dnn.Extensions", "ModuleName": "Extensions", "FolderName": "", "ResourceKey": "nav_Extensions", "Path": "extensions", "Link": "", "CssClass": "", "IconFile": "", "ParentId": 3, "Order": 47, "AllowHost": true, "Enabled": false, "Settings": "{\"portalId\":0,\"installUrl\":\"http://dnndev.local/Home/ctl/Install?popUp=true\",\"permissions\":{\"EDIT\":true}}", "Children": [] }, { "Parent": "Settings", "DisplayName": "Serveurs", "MenuId": 22, "Identifier": "Dnn.Servers", "ModuleName": "Servers", "FolderName": "", "ResourceKey": "nav_Servers", "Path": "Servers", "Link": "", "CssClass": "", "IconFile": "", "ParentId": 3, "Order": 50, "AllowHost": true, "Enabled": false, "Settings": "{\"permissions\":{\"EDIT\":true}}", "Children": [] }, { "Parent": "Settings", "DisplayName": "Import / Export", "MenuId": 23, "Identifier": "Dnn.SiteImportExport", "ModuleName": "SiteImportExport", "FolderName": "", "ResourceKey": "nav_SiteImportExport", "Path": "SiteImportExport", "Link": "", "CssClass": "", "IconFile": "", "ParentId": 3, "Order": 50, "AllowHost": true, "Enabled": false, "Settings": "{\"permissions\":{\"EDIT\":true}}", "Children": [] }, { "Parent": "Settings", "DisplayName": "Planificateur", "MenuId": 26, "Identifier": "Dnn.TaskScheduler", "ModuleName": "TaskScheduler", "FolderName": "", "ResourceKey": "nav_TaskScheduler", "Path": "TaskScheduler", "Link": "", "CssClass": "", "IconFile": "", "ParentId": 3, "Order": 60, "AllowHost": true, "Enabled": false, "Settings": "{\"permissions\":{\"EDIT\":true}}", "Children": [] }, { "Parent": "Settings", "DisplayName": "CSS personnalisée", "MenuId": 11, "Identifier": "Dnn.CssEditor", "ModuleName": "CssEditor", "FolderName": "", "ResourceKey": "nav_CssEditor", "Path": "CssEditor", "Link": "", "CssClass": "", "IconFile": "", "ParentId": 3, "Order": 70, "AllowHost": true, "Enabled": false, "Settings": "{\"permissions\":{\"EDIT\":true}}", "Children": [] }, { "Parent": "Settings", "DisplayName": "Console SQL", "MenuId": 25, "Identifier": "Dnn.SqlConsole", "ModuleName": "SqlConsole", "FolderName": "", "ResourceKey": "nav_SqlConsole", "Path": "SqlConsole", "Link": "", "CssClass": "", "IconFile": "", "ParentId": 3, "Order": 80, "AllowHost": true, "Enabled": false, "Settings": "{\"permissions\":{\"EDIT\":true}}", "Children": [] }, { "Parent": "Settings", "DisplayName": "Gestionnaire de configuration", "MenuId": 9, "Identifier": "Dnn.ConfigConsole", "ModuleName": "ConfigConsole", "FolderName": "", "ResourceKey": "nav_ConfigConsole", "Path": "ConfigConsole", "Link": "", "CssClass": "", "IconFile": "", "ParentId": 3, "Order": 90, "AllowHost": true, "Enabled": false, "Settings": "{\"permissions\":{\"EDIT\":true}}", "Children": [] }, { "Parent": "Settings", "DisplayName": "Prompt", "MenuId": 15, "Identifier": "Dnn.Prompt", "ModuleName": "Prompt", "FolderName": "", "ResourceKey": "nav_Prompt", "Path": "Prompt", "Link": "", "CssClass": "", "IconFile": "", "ParentId": 3, "Order": 95, "AllowHost": true, "Enabled": false, "Settings": "{\"permissions\":{\"EDIT\":true}}", "Children": [] }, { "Parent": "Settings", "DisplayName": "A propos", "MenuId": 12, "Identifier": "Dnn.Licensing", "ModuleName": "Licensing", "FolderName": "", "ResourceKey": "nav_Licensing", "Path": "Licensing", "Link": "", "CssClass": "", "IconFile": "", "ParentId": 3, "Order": 100, "AllowHost": true, "Enabled": false, "Settings": "{\"permissions\":{\"EDIT\":true}}", "Children": [] }] }, { "Parent": "", "DisplayName": "Modifier", "MenuId": 5, "Identifier": "Edit", "ModuleName": "Edit", "FolderName": "", "ResourceKey": "nav_Edit", "Path": "", "Link": "", "CssClass": "", "IconFile": "Images/nav_Edit.svg", "ParentId": -1, "Order": 1000, "AllowHost": true, "Enabled": false, "Settings": "{\"permissions\":{\"EDIT\":true}}", "Children": [] }] }, "sku": "DNN", "debugMode": false, "portalId": 0, "preferredTimeZone": { "id": "Romance Standard Time", "displayName": "(UTC+01:00) Bruxelles, Copenhague, Madrid, Paris", "baseUtcOffset": "+01:00", "currentUtcOffset": "+02:00" }, "isAdmin": true, "isHost": true, "customModules": ["serversummary"], "disableEditBar": false, "personaBarTheme": false };
+
+                    var src = '/DesktopModules/admin/Dnn.PersonaBar/index.html';
+                    src += '?cdv=' + '47';
+
+                    desktopIframe.src = src;
+
+                    if (/iPad/i.test(navigator.userAgent)) {
+                        $(desktopIframe)
+                            .addClass('ipad')
+                            .width(x)
+                            .wrap('<div class="pb-scroll-wrapper"></div>');
+                    }
+                });
+            })(jQuery);
+        </script>
+
+    </div>
+*@
+    @RenderBody()
+
+
+<script>
+	var dnn = dnn || {};
+	
+	dnn.panes= [];
+	dnn.panesClientIds= [];
+	
+	$(".dnnPane").each(function () {
+                    //$(this).removeClass('DNNEmptyPane').addClass('dnnDropEmptyPanes');
+					dnn.panes.push($(this).attr("data-name"));
+					dnn.panesClientIds.push($(this).attr("id"));
+    });
+	
+	</script>
+
+	<script>
+	@foreach(var s in Model.StartupScripts) 
+	{
+		@Html.Raw(s.Value);
+	}
+	</script>
+
+</body>
+</html>

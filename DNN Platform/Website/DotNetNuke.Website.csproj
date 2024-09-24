@@ -1267,6 +1267,16 @@
     <Content Include="Install\Config\09.13.04.config" />
     <Content Include="Providers\DataProviders\SqlDataProvider\09.13.04.SqlDataProvider" />
     <Content Include="Views\web.config" />
+    <Content Include="Views\Default\Index.cshtml" />
+    <Content Include="Views\Default\Layout.cshtml" />
+    <Content Include="Views\Default\Page.cshtml" />
+    <Content Include="Views\Default\Terms.cshtml" />
+    <Content Include="Views\HTML\EditHTML.cshtml" />
+    <Content Include="Views\HTML\HtmlModule.cshtml" />
+    <Content Include="Views\ModuleActions\Index.cshtml" />
+    <Content Include="Views\PersonaBarContainer\Index.cshtml" />
+    <Content Include="Views\Shared\Portals\_default\Containers\Xcillion\NoTitle.cshtml" />
+    <Content Include="Views\Shared\Portals\_default\Skins\Xcillion\Inner.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
