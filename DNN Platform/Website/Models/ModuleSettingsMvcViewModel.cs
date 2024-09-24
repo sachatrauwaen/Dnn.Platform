@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.ComponentModel.DataAnnotations;
 using DotNetNuke.Services.Localization;
 using System.Collections.Generic;
@@ -10,6 +10,10 @@ using DotNetNuke.Entities.Tabs;
 using DotNetNuke.Security.Permissions;
 using DotNetNuke.Services.ModuleCache;
 using DotNetNuke.UI.WebControls;
+using System.ComponentModel.DataAnnotations;
+using DotNetNuke.Services.Localization;
+using System.Collections.Generic;
+using System.Web.Mvc;
 
 public class ModuleSettingsMvcViewModel
 {

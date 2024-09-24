@@ -1,6 +1,5 @@
-﻿using System;
+﻿﻿using System;
 using System.Web.Mvc;
-using DotNetNuke.Web.Mvc.Framework.Controllers;
 using DotNetNuke.Security;
 using DotNetNuke.Entities.Modules;
 using DotNetNuke.Services.Localization;
@@ -9,9 +8,9 @@ using DotNetNuke.Security.Permissions;
 using DotNetNuke.Abstractions;
 using DotNetNuke.Common;
 using DotNetNuke.Common.Utilities;
-using DotNetNuke.Web.Mvc.Framework.ActionFilters;
+using DotNetNuke.Common.Utilities;
 
-public class ModuleSettingsMvcController : DnnController
+public class ModuleSettingsMvcController : Controller
 {
     private readonly INavigationManager _navigationManager;
 
