@@ -1,12 +1,16 @@
-﻿using System;
-using System.Web;
-using System.Web.Mvc;
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information
 
 namespace DotNetNuke.Web.Mvc.Skins
 {
+    using System;
     using System.Collections.Generic;
     using System.Globalization;
+    using System.Web;
+    using System.Web.Mvc;
     using System.Web.UI.WebControls;
+
     using DotNetNuke.Entities.Portals;
     using DotNetNuke.Entities.Tabs;
     using DotNetNuke.Security;
@@ -17,16 +21,29 @@ namespace DotNetNuke.Web.Mvc.Skins
 
     public static partial class SkinExtensions
     {
-        public static IHtmlString Language(this HtmlHelper<DotNetNuke.Framework.Models.PageModel> helper, string cssClass = "", string itemTemplate = "", string headerTemplate = "", string footerTemplate = "", string alternateTemplate = "", string separatorTemplate = "", string commonHeaderTemplate = "", string commonFooterTemplate = "", bool showMenu = true, bool showLinks = false, bool useCurrentCultureForTemplate = false)
+        public static IHtmlString Language(
+            this HtmlHelper<DotNetNuke.Framework.Models.PageModel> helper,
+            string cssClass = "",
+            string itemTemplate = "",
+            string selectedItemTemplate = "",
+            string headerTemplate = "",
+            string footerTemplate = "",
+            string alternateTemplate = "",
+            string separatorTemplate = "",
+            string commonHeaderTemplate = "",
+            string commonFooterTemplate = "",
+            bool showMenu = true,
+            bool showLinks = false,
+            bool useCurrentCultureForTemplate = false)
         {
             var portalSettings = PortalSettings.Current;
             var currentCulture = CultureInfo.CurrentCulture.ToString();
             var templateCulture = useCurrentCultureForTemplate ? currentCulture : "en-US";
-            var localResourceFile = Localization.GetResourceFile(helper.ViewContext.Controller, "Language.ascx");
+            var localResourceFile = GetSkinsResourceFile("Language.ascx");
             var localTokenReplace = new LanguageTokenReplace { resourceFile = localResourceFile };
 
             var locales = new Dictionary<string, Locale>();
-            IEnumerable<ListItem> cultureListItems = DotNetNuke.Services.Localization.Localization.LoadCultureInListItems(CultureDropDownTypes.NativeName, currentCulture, string.Empty, false);
+            IEnumerable<ListItem> cultureListItems = Localization.LoadCultureInListItems(CultureDropDownTypes.NativeName, currentCulture, string.Empty, false);
             foreach (Locale loc in LocaleController.Instance.GetLocales(portalSettings.PortalId).Values)
             {
                 string defaultRoles = PortalController.GetPortalSetting(string.Format("DefaultTranslatorRoles-{0}", loc.Code), portalSettings.PortalId, "Administrators");
@@ -58,13 +75,24 @@ namespace DotNetNuke.Web.Mvc.Skins
                     {
                         option.Attributes.Add("selected", "selected");
                     }
+
                     selectCulture.InnerHtml += option.ToString();
                 }
             }
 
+            if (string.IsNullOrEmpty(commonHeaderTemplate))
+            {
+                commonHeaderTemplate = Localization.GetString("CommonHeaderTemplate.Default", localResourceFile, templateCulture);
+            }
+
+            if (string.IsNullOrEmpty(commonFooterTemplate))
+            {
+                commonFooterTemplate = Localization.GetString("CommonFooterTemplate.Default", localResourceFile, templateCulture);
+            }
+
             var languageContainer = new TagBuilder("div");
             languageContainer.AddCssClass("languageContainer");
-
+            languageContainer.InnerHtml += commonHeaderTemplate;
             if (showMenu)
             {
                 languageContainer.InnerHtml += selectCulture.ToString();
@@ -72,19 +100,64 @@ namespace DotNetNuke.Web.Mvc.Skins
 
             if (showLinks)
             {
+                if (string.IsNullOrEmpty(itemTemplate))
+                {
+                    itemTemplate = Localization.GetString("ItemTemplate.Default", localResourceFile, templateCulture);
+                }
+
+                if (string.IsNullOrEmpty(alternateTemplate))
+                {
+                    alternateTemplate = Localization.GetString("AlternateTemplate.Default", localResourceFile, templateCulture);
+                }
+
+                if (string.IsNullOrEmpty(headerTemplate))
+                {
+                    headerTemplate = Localization.GetString("HeaderTemplate.Default", localResourceFile, templateCulture);
+                }
+
+                if (string.IsNullOrEmpty(footerTemplate))
+                {
+                    footerTemplate = Localization.GetString("FooterTemplate.Default", localResourceFile, templateCulture);
+                }
+
+                if (string.IsNullOrEmpty(selectedItemTemplate))
+                {
+                    selectedItemTemplate = Localization.GetString("SelectedItemTemplate.Default", localResourceFile, templateCulture);
+                }
+
+                languageContainer.InnerHtml += headerTemplate;
                 var rptLanguages = new TagBuilder("ul");
                 rptLanguages.AddCssClass("languageList");
-
+                bool alt = false;
                 foreach (var locale in locales.Values)
                 {
                     var listItem = new TagBuilder("li");
-                    listItem.InnerHtml = ParseTemplate(itemTemplate, locale.Code, localTokenReplace, currentCulture);
+                    if (locale.Code == currentCulture && !string.IsNullOrEmpty(selectedItemTemplate))
+                    {
+                        listItem.InnerHtml = ParseTemplate(selectedItemTemplate, locale.Code, localTokenReplace, currentCulture);
+                    }
+                    else
+                    {
+                        if (alt)
+                        {
+                            listItem.InnerHtml = ParseTemplate(alternateTemplate, locale.Code, localTokenReplace, currentCulture);
+                        }
+                        else
+                        {
+                            listItem.InnerHtml = ParseTemplate(itemTemplate, locale.Code, localTokenReplace, currentCulture);
+                        }
+
+                        alt = !alt;
+                    }
+
                     rptLanguages.InnerHtml += listItem.ToString();
                 }
 
                 languageContainer.InnerHtml += rptLanguages.ToString();
+                languageContainer.InnerHtml += footerTemplate;
             }
 
+            languageContainer.InnerHtml += commonFooterTemplate;
             return new MvcHtmlString(languageContainer.ToString());
         }
 

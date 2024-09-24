@@ -3,8 +3,18 @@
 // See the LICENSE file in the project root for more information
 namespace DotNetNuke.Web.Mvc.Skins
 {
+    using DotNetNuke.Services.Localization;
+
     public static partial class SkinExtensions
     {
-        // Gemeenschappelijke methoden en eigenschappen kunnen hier worden geplaatst
+        public static string GetResourceFile(string templateSourceDirectory, string fileName)
+        {
+            return templateSourceDirectory + "/" + Localization.LocalResourceDirectory + "/" + fileName;
+        }
+
+        public static string GetSkinsResourceFile(string fileName)
+        {
+            return GetResourceFile("/admin/Skins", fileName);
+        }
     }
 }

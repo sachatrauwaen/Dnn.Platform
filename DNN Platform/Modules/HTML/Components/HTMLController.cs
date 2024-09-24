@@ -24,7 +24,12 @@ namespace DotNetNuke.Framework.Controllers
             int workflowID = ctrl.GetWorkflow(module.ModuleID, module.TabID, module.PortalID).Value;
 
             HtmlTextInfo content = ctrl.GetTopHtmlText(module.ModuleID, true, workflowID);
-            var html = System.Web.HttpUtility.HtmlDecode(content.Content);
+            var html = string.Empty;
+            if (content != null)
+            {
+                html = System.Web.HttpUtility.HtmlDecode(content.Content);
+            }
+
             return this.View(new HtmlModuleModel()
             {
                 Html = html,

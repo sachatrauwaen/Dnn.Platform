@@ -1,9 +1,13 @@
-﻿using System;
-using System.Web;
-using System.Web.Mvc;
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information
 
 namespace DotNetNuke.Web.Mvc.Skins
 {
+    using System;
+    using System.Web;
+    using System.Web.Mvc;
+
     using DotNetNuke.Entities.Portals;
     using DotNetNuke.Services.Localization;
 
@@ -13,9 +17,8 @@ namespace DotNetNuke.Web.Mvc.Skins
         {
             var portalSettings = PortalSettings.Current;
             var link = new TagBuilder("a");
-
             link.Attributes.Add("href", portalSettings.PortalAlias.HTTPAlias);
-            link.SetInnerText(Localization.GetString("Login.Text", Localization.GetResourceFile(helper.ViewContext.Controller, "Login.ascx")));
+            link.SetInnerText(Localization.GetString("Login.Text", GetSkinsResourceFile("Login.ascx")));
 
             return new MvcHtmlString(link.ToString());
         }
