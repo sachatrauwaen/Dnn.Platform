@@ -4,20 +4,80 @@ using System.Web.Mvc;
 
 namespace DotNetNuke.Web.Mvc.Skins
 {
+    using DotNetNuke.Common;
+    using DotNetNuke.Common.Utilities;
     using DotNetNuke.Entities.Portals;
+    using DotNetNuke.Services.Authentication;
     using DotNetNuke.Services.Localization;
+    using Microsoft.Extensions.DependencyInjection;
 
     public static partial class SkinExtensions
     {
-        public static IHtmlString Login(this HtmlHelper<DotNetNuke.Framework.Models.PageModel> helper, string cssClass = "SkinObject")
+        public static IHtmlString Login(this HtmlHelper<DotNetNuke.Framework.Models.PageModel> helper, string cssClass = "SkinObject", string text = "", string logoffText = "")
         {
             var portalSettings = PortalSettings.Current;
-            var link = new TagBuilder("a");
+            var navigationManager = Globals.DependencyProvider.GetRequiredService<INavigationManager>();
+            var loginLink = new TagBuilder("a");
+            loginLink.AddCssClass(cssClass);
+            loginLink.Attributes.Add("rel", "nofollow");
 
-            link.Attributes.Add("href", portalSettings.PortalAlias.HTTPAlias);
-            link.SetInnerText(Localization.GetString("Login.Text", Localization.GetResourceFile(helper.ViewContext.Controller, "Login.ascx")));
+            if (HttpContext.Current.Request.IsAuthenticated)
+            {
+                if (!string.IsNullOrEmpty(logoffText))
+                {
+                    if (logoffText.IndexOf("src=") != -1)
+                    {
+                        logoffText = logoffText.Replace("src=\"", "src=\"" + portalSettings.ActiveTab.SkinPath);
+                    }
+                    loginLink.InnerHtml = logoffText;
+                }
+                else
+                {
+                    loginLink.InnerHtml = Localization.GetString("Logout", Localization.GetResourceFile(helper.ViewContext.Controller, "Login.ascx"));
+                }
+                loginLink.Attributes.Add("title", loginLink.InnerHtml);
+                loginLink.Attributes.Add("href", navigationManager.NavigateURL(portalSettings.ActiveTab.TabID, "Logoff"));
+            }
+            else
+            {
+                if (!string.IsNullOrEmpty(text))
+                {
+                    if (text.IndexOf("src=") != -1)
+                    {
+                        text = text.Replace("src=\"", "src=\"" + portalSettings.ActiveTab.SkinPath);
+                    }
+                    loginLink.InnerHtml = text;
+                }
+                else
+                {
+                    loginLink.InnerHtml = Localization.GetString("Login", Localization.GetResourceFile(helper.ViewContext.Controller, "Login.ascx"));
+                }
+                loginLink.Attributes.Add("title", loginLink.InnerHtml);
 
-            return new MvcHtmlString(link.ToString());
+                string returnUrl = HttpContext.Current.Request.RawUrl;
+                if (returnUrl.IndexOf("?returnurl=") != -1)
+                {
+                    returnUrl = returnUrl.Substring(0, returnUrl.IndexOf("?returnurl="));
+                }
+                returnUrl = HttpUtility.UrlEncode(returnUrl);
+
+                loginLink.Attributes.Add("href", Globals.LoginURL(returnUrl, HttpContext.Current.Request.QueryString["override"] != null));
+
+                // Avoid issues caused by multiple clicks of login link
+                var oneclick = "this.disabled=true;";
+                if (HttpContext.Current.Request.UserAgent != null && !HttpContext.Current.Request.UserAgent.Contains("MSIE 8.0"))
+                {
+                    loginLink.Attributes.Add("onclick", oneclick);
+                }
+
+                if (portalSettings.EnablePopUps && portalSettings.LoginTabId == Null.NullInteger && !AuthenticationController.HasSocialAuthenticationEnabled(portalSettings))
+                {
+                    var clickEvent = "return " + UrlUtils.PopUpUrl(HttpUtility.UrlDecode(loginLink.Attributes["href"]), helper, portalSettings, true, false, 300, 650);
+                    loginLink.Attributes.Add("onclick", clickEvent);
+                }
+            }
+
+            return new MvcHtmlString(loginLink.ToString());
         }
     }
 }
