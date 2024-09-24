@@ -8,6 +8,7 @@ namespace DotNetNuke.Web.Mvc.Skins
     using System.Web;
     using System.Web.Mvc;
 
+    using DotNetNuke.Abstractions;
     using DotNetNuke.Common;
     using DotNetNuke.Common.Utilities;
     using DotNetNuke.Entities.Portals;
@@ -40,12 +41,14 @@ namespace DotNetNuke.Web.Mvc.Skins
                     {
                         logoffText = logoffText.Replace("src=\"", "src=\"" + portalSettings.ActiveTab.SkinPath);
                     }
+
                     loginLink.InnerHtml = logoffText;
                 }
                 else
                 {
-                    loginLink.InnerHtml = Localization.GetString("Logout", Localization.GetResourceFile(helper.ViewContext.Controller, "Login.ascx"));
+                    loginLink.InnerHtml = Localization.GetString("Logout", GetSkinsResourceFile("Login.ascx"));
                 }
+
                 loginLink.Attributes.Add("title", loginLink.InnerHtml);
                 loginLink.Attributes.Add("href", navigationManager.NavigateURL(portalSettings.ActiveTab.TabID, "Logoff"));
             }
@@ -57,12 +60,14 @@ namespace DotNetNuke.Web.Mvc.Skins
                     {
                         text = text.Replace("src=\"", "src=\"" + portalSettings.ActiveTab.SkinPath);
                     }
+
                     loginLink.InnerHtml = text;
                 }
                 else
                 {
-                    loginLink.InnerHtml = Localization.GetString("Login", Localization.GetResourceFile(helper.ViewContext.Controller, "Login.ascx"));
+                    loginLink.InnerHtml = Localization.GetString("Login", GetSkinsResourceFile("Login.ascx"));
                 }
+
                 loginLink.Attributes.Add("title", loginLink.InnerHtml);
 
                 string returnUrl = HttpContext.Current.Request.RawUrl;
@@ -70,6 +75,7 @@ namespace DotNetNuke.Web.Mvc.Skins
                 {
                     returnUrl = returnUrl.Substring(0, returnUrl.IndexOf("?returnurl="));
                 }
+
                 returnUrl = HttpUtility.UrlEncode(returnUrl);
 
                 loginLink.Attributes.Add("href", Globals.LoginURL(returnUrl, HttpContext.Current.Request.QueryString["override"] != null));
@@ -81,9 +87,9 @@ namespace DotNetNuke.Web.Mvc.Skins
                     loginLink.Attributes.Add("onclick", oneclick);
                 }
 
-                if (portalSettings.EnablePopUps && portalSettings.LoginTabId == Null.NullInteger && !AuthenticationController.HasSocialAuthenticationEnabled(portalSettings))
+                if (portalSettings.EnablePopUps && portalSettings.LoginTabId == Null.NullInteger /*&& !AuthenticationController.HasSocialAuthenticationEnabled(portalSettings)*/)
                 {
-                    var clickEvent = "return " + UrlUtils.PopUpUrl(HttpUtility.UrlDecode(loginLink.Attributes["href"]), helper, portalSettings, true, false, 300, 650);
+                    var clickEvent = "return " + UrlUtils.PopUpUrl(HttpUtility.UrlDecode(loginLink.Attributes["href"]), portalSettings, true, false, 300, 650);
                     loginLink.Attributes["onclick"] = clickEvent;
                 }
             }
