@@ -55,12 +55,6 @@ namespace DotNetNuke.Framework.Controllers
             return this.View();
         }
 
-        public ActionResult Terms(ModuleInfo module)
-        {
-            var terms = Localization.GetSystemMessage(this.PortalSettings, "MESSAGE_PORTAL_TERMS");
-            return this.View("Terms", string.Empty, terms);
-        }
-
         public ActionResult Page(int tabid, string language)
         {
             var antiForgery = string.Empty;
