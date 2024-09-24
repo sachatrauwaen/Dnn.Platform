@@ -19,7 +19,7 @@ namespace DotNetNuke.Web.Mvc.Skins
 
     public static class SkinExtensions
     {
-        public static System.Web.IHtmlString Logo(this HtmlHelper<DotNetNuke.Framework.Models.PageModel> helper, string borderWidth = "", string cssClass = "", string linkCssClass = "")
+        public static IHtmlString Logo(this HtmlHelper<DotNetNuke.Framework.Models.PageModel> helper, string borderWidth = "", string cssClass = "", string linkCssClass = "", bool injectSvg = false)
         {
             var portalSettings = PortalSettings.Current;
             var navigationManager = Globals.DependencyProvider.GetRequiredService<INavigationManager>();
@@ -27,17 +27,18 @@ namespace DotNetNuke.Web.Mvc.Skins
             TagBuilder tbImage = new TagBuilder("img");
             if (!string.IsNullOrEmpty(borderWidth))
             {
-                // this.imgLogo.BorderWidth = Unit.Parse(this.BorderWidth);
+                tbImage.Attributes.Add("style", $"border-width:{borderWidth};");
             }
 
             if (!string.IsNullOrEmpty(cssClass))
             {
-                // this.imgLogo.CssClass = this.CssClass;
+                tbImage.AddCssClass(cssClass);
             }
 
+            TagBuilder tbLink = new TagBuilder("a");
             if (!string.IsNullOrEmpty(linkCssClass))
             {
-                // this.hypLogo.CssClass = linkCssClass;
+                tbLink.AddCssClass(linkCssClass);
             }
 
             if (!string.IsNullOrEmpty(portalSettings.LogoFile))
@@ -45,23 +46,27 @@ namespace DotNetNuke.Web.Mvc.Skins
                 var fileInfo = GetLogoFileInfo(portalSettings);
                 if (fileInfo != null)
                 {
-                    /*
-                    if (this.InjectSvg && "svg".Equals(fileInfo.Extension, StringComparison.OrdinalIgnoreCase))
+                    if (injectSvg && "svg".Equals(fileInfo.Extension, StringComparison.OrdinalIgnoreCase))
                     {
-                        this.litLogo.Text = this.GetSvgContent(fileInfo);
-                        this.litLogo.Visible = !string.IsNullOrEmpty(this.litLogo.Text);
+                        string svgContent = GetSvgContent(fileInfo, portalSettings, cssClass);
+                        if (!string.IsNullOrEmpty(svgContent))
+                        {
+                            tbLink.InnerHtml = svgContent;
+                        }
                     }
-                    */
-                    string imageUrl = FileManager.Instance.GetUrl(fileInfo);
-                    if (!string.IsNullOrEmpty(imageUrl))
+                    else
                     {
-                        tbImage.Attributes.Add("src", imageUrl);
+                        string imageUrl = FileManager.Instance.GetUrl(fileInfo);
+                        if (!string.IsNullOrEmpty(imageUrl))
+                        {
+                            tbImage.Attributes.Add("src", imageUrl);
+                            tbLink.InnerHtml = tbImage.ToString();
+                        }
                     }
                 }
             }
 
             tbImage.Attributes.Add("alt", portalSettings.PortalName);
-            TagBuilder tbLink = new TagBuilder("a");
             tbLink.Attributes.Add("title", portalSettings.PortalName);
             tbLink.Attributes.Add("aria-label", portalSettings.PortalName);
 
@@ -74,7 +79,6 @@ namespace DotNetNuke.Web.Mvc.Skins
                 tbLink.Attributes.Add("href", Globals.AddHTTP(portalSettings.PortalAlias.HTTPAlias));
             }
 
-            tbLink.InnerHtml = tbImage.ToString();
             return new MvcHtmlString(tbLink.ToString());
         }
 
@@ -89,6 +93,62 @@ namespace DotNetNuke.Web.Mvc.Skins
                 });
 
             return file;
+        }
+
+        private static string GetSvgContent(IFileInfo svgFile, PortalSettings portalSettings, string cssClass)
+        {
+            var cacheKey = string.Format(DataCache.PortalCacheKey, portalSettings.PortalId, portalSettings.CultureCode) + "LogoSvg";
+            return CBO.GetCachedObject<string>(
+                new CacheItemArgs(cacheKey, DataCache.PortalCacheTimeOut, DataCache.PortalCachePriority, svgFile),
+                (_) =>
+                {
+                    try
+                    {
+                        XDocument svgDocument;
+                        using (var fileContent = FileManager.Instance.GetFileContent(svgFile))
+                        {
+                            svgDocument = XDocument.Load(fileContent);
+                        }
+
+                        var svgXmlNode = svgDocument.Descendants()
+                            .SingleOrDefault(x => x.Name.LocalName.Equals("svg", StringComparison.Ordinal));
+                        if (svgXmlNode == null)
+                        {
+                            throw new InvalidFileContentException("The svg file has no svg node.");
+                        }
+
+                        if (!string.IsNullOrEmpty(cssClass))
+                        {
+                            // Append the css class.
+                            var classes = svgXmlNode.Attribute("class")?.Value;
+                            svgXmlNode.SetAttributeValue("class", string.IsNullOrEmpty(classes) ? cssClass : $"{classes} {cssClass}");
+                        }
+
+                        if (svgXmlNode.Descendants().FirstOrDefault(x => x.Name.LocalName.Equals("title", StringComparison.Ordinal)) == null)
+                        {
+                            // Add the title for ADA compliance.
+                            var ns = svgXmlNode.GetDefaultNamespace();
+                            var titleNode = new XElement(
+                                ns + "title",
+                                new XAttribute("id", "logoTitle"),
+                                portalSettings.PortalName);
+
+                            svgXmlNode.AddFirst(titleNode);
+
+                            // Link the title to the svg node.
+                            svgXmlNode.SetAttributeValue("aria-labelledby", "logoTitle");
+                        }
+
+                        // Ensure we have the image role for ADA Compliance
+                        svgXmlNode.SetAttributeValue("role", "img");
+
+                        return svgDocument.ToString();
+                    }
+                    catch (XmlException ex)
+                    {
+                        throw new InvalidFileContentException("Invalid SVG file: " + ex.Message);
+                    }
+                });
         }
     }
 }
