@@ -1,9 +1,15 @@
-using System;
-using System.Web;
-using System.Web.Mvc;
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information
 
 namespace DotNetNuke.Web.Mvc.Skins
 {
+    using System;
+    using System.Web;
+    using System.Web.Mvc;
+
+    using DotNetNuke.Entities.Portals;
+
     public static partial class SkinExtensions
     {
         public static IHtmlString Tags(this HtmlHelper<DotNetNuke.Framework.Models.PageModel> helper, string cssClass = "", string addImageUrl = "", string cancelImageUrl = "", string saveImageUrl = "", bool allowTagging = true, bool showCategories = true, bool showTags = true, string separator = ",&nbsp;", string objectType = "Page", string repeatDirection = "Horizontal")

@@ -1,17 +1,24 @@
-﻿using System;
-using System.Web;
-using System.Web.Mvc;
-using DotNetNuke.Entities.Portals;
-using DotNetNuke.Services.Localization;
-
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information
 
 namespace DotNetNuke.Web.Mvc.Skins
 {
+    using System;
+    using System.Web;
+    using System.Web.Mvc;
+
     using DotNetNuke.Abstractions;
+    using DotNetNuke.Common;
     using DotNetNuke.Entities.Icons;
+    using DotNetNuke.Entities.Portals;
+    using DotNetNuke.Services.Localization;
+    using Microsoft.Extensions.DependencyInjection;
 
     public static partial class SkinExtensions
     {
+        private const string SearchAscxFileName = "Search.ascx";
+
         public static IHtmlString Search(this HtmlHelper<DotNetNuke.Framework.Models.PageModel> helper, string cssClass = "SkinObject", bool showSite = true, bool showWeb = true, bool useWebForSite = false, bool useDropDownList = false, int minCharRequired = 2, int autoSearchDelayInMilliSecond = 400, bool enableWildSearch = true)
         {
             var portalSettings = PortalSettings.Current;
@@ -32,8 +39,8 @@ namespace DotNetNuke.Web.Mvc.Skins
 
             var searchInputContainer = new TagBuilder("span");
             searchInputContainer.AddCssClass("searchInputContainer");
-            searchInputContainer.Attributes.Add("data-moreresults", Localization.GetSafeJSString("SeeMoreResults", Localization.GetResourceFile(helper.ViewContext.Controller, "Search.ascx")));
-            searchInputContainer.Attributes.Add("data-noresult", Localization.GetSafeJSString("NoResult", Localization.GetResourceFile(helper.ViewContext.Controller, "Search.ascx")));
+            searchInputContainer.Attributes.Add("data-moreresults", Localization.GetSafeJSString("SeeMoreResults", GetSkinsResourceFile(SearchAscxFileName)));
+            searchInputContainer.Attributes.Add("data-noresult", Localization.GetSafeJSString("NoResult", GetSkinsResourceFile(SearchAscxFileName)));
 
             var txtSearchNew = new TagBuilder("input");
             txtSearchNew.Attributes.Add("type", "text");
@@ -41,12 +48,12 @@ namespace DotNetNuke.Web.Mvc.Skins
             txtSearchNew.Attributes.Add("maxlength", "255");
             txtSearchNew.Attributes.Add("aria-label", "Search");
             txtSearchNew.Attributes.Add("autocomplete", "off");
-            txtSearchNew.Attributes.Add("placeholder", Localization.GetSafeJSString("Placeholder", Localization.GetResourceFile(helper.ViewContext.Controller, "Search.ascx")));
+            txtSearchNew.Attributes.Add("placeholder", Localization.GetSafeJSString("Placeholder", GetSkinsResourceFile(SearchAscxFileName)));
             searchInputContainer.InnerHtml = txtSearchNew.ToString();
 
             var clearText = new TagBuilder("a");
             clearText.AddCssClass("dnnSearchBoxClearText");
-            clearText.Attributes.Add("title", Localization.GetSafeJSString("SearchClearQuery", Localization.GetResourceFile(helper.ViewContext.Controller, "Search.ascx")));
+            clearText.Attributes.Add("title", Localization.GetSafeJSString("SearchClearQuery", GetSkinsResourceFile(SearchAscxFileName)));
             searchInputContainer.InnerHtml += clearText.ToString();
 
             searchBorder.InnerHtml = searchIcon.ToString() + searchInputContainer.ToString();
@@ -56,19 +63,19 @@ namespace DotNetNuke.Web.Mvc.Skins
 
             var searchIconSite = new TagBuilder("li");
             searchIconSite.AddCssClass("SearchIconSite");
-            searchIconSite.SetInnerText(Localization.GetString("Site", Localization.GetResourceFile(helper.ViewContext.Controller, "Search.ascx")));
+            searchIconSite.SetInnerText(Localization.GetString("Site", GetSkinsResourceFile(SearchAscxFileName)));
             searchChoices.InnerHtml = searchIconSite.ToString();
 
             var searchIconWeb = new TagBuilder("li");
             searchIconWeb.AddCssClass("SearchIconWeb");
-            searchIconWeb.SetInnerText(Localization.GetString("Web", Localization.GetResourceFile(helper.ViewContext.Controller, "Search.ascx")));
+            searchIconWeb.SetInnerText(Localization.GetString("Web", GetSkinsResourceFile(SearchAscxFileName)));
             searchChoices.InnerHtml += searchIconWeb.ToString();
 
             searchBorder.InnerHtml += searchChoices.ToString();
 
             var cmdSearchNew = new TagBuilder("button");
             cmdSearchNew.AddCssClass("SkinObject SearchButton");
-            cmdSearchNew.SetInnerText(Localization.GetString("Search", Localization.GetResourceFile(helper.ViewContext.Controller, "Search.ascx")));
+            cmdSearchNew.SetInnerText(Localization.GetString("Search", GetSkinsResourceFile(SearchAscxFileName)));
             searchBorder.InnerHtml += cmdSearchNew.ToString();
 
             searchContainer.InnerHtml = searchBorder.ToString();

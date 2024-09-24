@@ -2272,7 +2272,7 @@ namespace DotNetNuke.Entities.Urls
                         }
                         else
                         {
-                            if (queryStringCol["mvc"] != null)
+                            if (result.RawUrl.EndsWith("mvc") && queryStringCol["mvc"] != "no" && queryStringCol["ctl"] == null)
                             {
                                 RewriterUtils.RewriteUrl(context, "~/" + result.RewritePath.Replace(Globals.glbDefaultPage, "mvc/Default/Page/" + result.TabId + "/" + result.CultureCode));
                             }

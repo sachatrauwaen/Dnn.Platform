@@ -5,21 +5,16 @@
 namespace DotNetNuke.Framework.Controllers
 {
     using System.Web.Mvc;
+
+    using DotNetNuke.Entities.Portals;
     using DotNetNuke.Services.Localization;
 
-    public class TermsController : DnnPageController
+    public class TermsController : Controller
     {
-        private readonly ILocalization _localization;
-
-        public TermsController(ILocalization localization)
-        {
-            _localization = localization;
-        }
-
         [Authorize]
         public ActionResult Index()
         {
-            var terms = _localization.GetSystemMessage(this.PortalSettings, "MESSAGE_PORTAL_TERMS");
+            var terms = Localization.GetSystemMessage(PortalSettings.Current, "MESSAGE_PORTAL_TERMS");
             return this.View("Index", string.Empty, terms);
         }
     }
