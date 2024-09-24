@@ -5,10 +5,12 @@
 namespace DotNetNuke.Web.Mvc.Skins
 {
     using System;
+    using System.Collections.Generic;
+    using System.Text;
     using System.Web;
     using System.Web.Mvc;
-    using System.Text;
-    using System.Globalization;
+
+    using DotNetNuke.Abstractions;
     using DotNetNuke.Common;
     using DotNetNuke.Common.Utilities;
     using DotNetNuke.Entities.Controllers;
@@ -60,8 +62,8 @@ namespace DotNetNuke.Web.Mvc.Skins
                 var unreadAlerts = NotificationsController.Instance.CountNotifications(userInfo.UserID, portalSettings.PortalId);
                 var messageTabId = GetMessageTab(portalSettings);
 
-                sb.Append($"<li class=\"userMessages\"><a id=\"messagesLink\" href=\"{navigationManager.NavigateURL(messageTabId, string.Empty, $"userId={userInfo.UserID}")}\"><span id=\"messageCount\" {(unreadMessages > 0 ? "" : "style=\"display:none;\"")}>{unreadMessages}</span>{LocalizeString(helper, "Messages")}</a></li>");
-                sb.Append($"<li class=\"userNotifications\"><a id=\"notificationsLink\" href=\"{navigationManager.NavigateURL(messageTabId, string.Empty, $"userId={userInfo.UserID}", "view=notifications", "action=notifications")}\"><span id=\"notificationCount\" {(unreadAlerts > 0 ? "" : "style=\"display:none;\"")}>{unreadAlerts}</span>{LocalizeString(helper, "Notifications")}</a></li>");
+                sb.Append($"<li class=\"userMessages\"><a id=\"messagesLink\" href=\"{navigationManager.NavigateURL(messageTabId, string.Empty, $"userId={userInfo.UserID}")}\"><span id=\"messageCount\" {(unreadMessages > 0 ? string.Empty : "style=\"display:none;\"")}>{unreadMessages}</span>{LocalizeString(helper, "Messages")}</a></li>");
+                sb.Append($"<li class=\"userNotifications\"><a id=\"notificationsLink\" href=\"{navigationManager.NavigateURL(messageTabId, string.Empty, $"userId={userInfo.UserID}", "view=notifications", "action=notifications")}\"><span id=\"notificationCount\" {(unreadAlerts > 0 ? string.Empty : "style=\"display:none;\"")}>{unreadAlerts}</span>{LocalizeString(helper, "Notifications")}</a></li>");
                 sb.Append($"<li class=\"userSettings\"><a id=\"accountLink\" href=\"{navigationManager.NavigateURL(portalSettings.UserTabId, "Profile", $"userId={userInfo.UserID}", "pageno=1")}\">{LocalizeString(helper, "Account")}</a></li>");
                 sb.Append($"<li class=\"userProfilename\"><a id=\"editProfileLink\" href=\"{navigationManager.NavigateURL(portalSettings.UserTabId, "Profile", $"userId={userInfo.UserID}", "pageno=2")}\">{LocalizeString(helper, "EditProfile")}</a></li>");
                 sb.Append($"<li class=\"userLogout\"><a id=\"logoffLink\" href=\"{navigationManager.NavigateURL(portalSettings.ActiveTab.TabID, "Logoff")}\"><strong>{LocalizeString(helper, "Logout")}</strong></a></li>");
@@ -69,12 +71,11 @@ namespace DotNetNuke.Web.Mvc.Skins
 
                 sb.Append("<li class=\"userProfile\">");
                 sb.Append($"<a id=\"viewProfileImageLink\" href=\"{Globals.UserProfileURL(userInfo.UserID)}\"><span class=\"userProfileImg\"><img id=\"profilePicture\" src=\"{UserController.Instance.GetUserProfilePictureUrl(userInfo.UserID, 32, 32)}\" alt=\"{LocalizeString(helper, "ProfilePicture")}\" /></span></a>");
-                
                 if (unreadMessages > 0)
                 {
                     sb.Append($"<span id=\"messages\" class=\"userMessages\" title=\"{(unreadMessages == 1 ? LocalizeString(helper, "OneMessage") : string.Format(LocalizeString(helper, "MessageCount"), unreadMessages))}\">{unreadMessages}</span>");
                 }
-                
+
                 sb.Append("</li>");
             }
 
@@ -119,22 +120,22 @@ namespace DotNetNuke.Web.Mvc.Skins
         {
             return portalSettings.EnablePopUps
                 && portalSettings.LoginTabId == Null.NullInteger
-                && !AuthenticationController.HasSocialAuthenticationEnabled(portalSettings);
+               /* && !AuthenticationController.HasSocialAuthenticationEnabled(portalSettings)*/;
         }
 
         private static string RegisterUrlForClickEvent(INavigationManager navigationManager, PortalSettings portalSettings, HtmlHelper helper)
         {
-            return "return " + UrlUtils.PopUpUrl(HttpUtility.UrlDecode(RegisterUrl(navigationManager)), helper, portalSettings, true, false, 600, 950);
+            return "return " + UrlUtils.PopUpUrl(HttpUtility.UrlDecode(RegisterUrl(navigationManager)), portalSettings, true, false, 600, 950);
         }
 
         private static string LoginUrlForClickEvent(PortalSettings portalSettings, HtmlHelper helper)
         {
-            return "return " + UrlUtils.PopUpUrl(HttpUtility.UrlDecode(LoginUrl()), helper, portalSettings, true, false, 300, 650);
+            return "return " + UrlUtils.PopUpUrl(HttpUtility.UrlDecode(LoginUrl()), portalSettings, true, false, 300, 650);
         }
 
         private static string LocalizeString(HtmlHelper helper, string key)
         {
-            return Localization.GetString(key, Localization.GetResourceFile(helper.ViewContext.Controller, "UserAndLogin.ascx"));
+            return Localization.GetString(key, GetSkinsResourceFile("UserAndLogin.ascx"));
         }
 
         private static int GetMessageTab(PortalSettings portalSettings)

@@ -58,8 +58,9 @@
                             <a id="dnn_dnnLogin_enhancedLoginLink" title="Connexion" class="LoginLink" rel="nofollow" onclick="return dnnModal.show('http://dnndev.local/Login?returnurl=/xxx&amp;popUp=true',/*showReturn*/true,300,650,true,'')" href="http://dnndev.local/Login?returnurl=%2fxxx">Connexion</a>
                         </div>
 
+
+                        @Html.Login(cssClass: "LoginLink")
                         @*
-                                @Html.Login(cssClass : "LoginLink")
                             <dnn:LOGIN ID="dnnLogin" CssClass="LoginLink" runat="server" LegacyMode="false" />
                             <dnn:USER ID="dnnUser" runat="server" LegacyMode="false" />
                         *@
@@ -115,9 +116,9 @@
             <div id="breadcrumb" class="col-md-12">
                 @*<dnn:BREADCRUMB ID="dnnBreadcrumb" runat="server" CssClass="breadcrumbLink" RootLevel="0" Separator="&lt;img src=&quot;/Portals/_default/Skins/Xcillion/Images/breadcrumb-arrow.png&quot; alt=&quot;breadcrumb separator&quot;&gt;" HideWithNoBreadCrumb="true" />*@
                 @Html.BreadCrumb(@*ID="dnnBreadcrumb",*@cssClass: "breadcrumbLink",
-                rootLevel: 0,
-                separator: "<img src=\"/Portals/_default/Skins/Xcillion/Images/breadcrumb-arrow.png\" alt=\"breadcrumb separator\" />",
-                hideWithNoBreadCrumb: true)
+rootLevel: 0,
+separator: "<img src=\"/Portals/_default/Skins/Xcillion/Images/breadcrumb-arrow.png\" alt=\"breadcrumb separator\" />",
+hideWithNoBreadCrumb: true)
             </div>
             <div id="mainContent-inner">
                 <div class="row dnnpane">
