@@ -556,6 +556,7 @@
     </Compile>
     <Compile Include="Controllers\ModuleActionsController.cs" />
     <Compile Include="Controllers\ModuleActionsModel.cs" />
+    <Compile Include="Controllers\ModuleSettingsMvcController.cs" />
     <Compile Include="Controllers\PrivacyController.cs" />
     <Compile Include="Controllers\SkinExtensions.BreadCrumb.cs" />
     <Compile Include="Controllers\SkinExtensions.ControlPanel.cs" />
@@ -593,6 +594,7 @@
     <Compile Include="Controllers\SkinExtensions.User.cs" />
     <Compile Include="Controllers\SkinExtensions.UserAndLogin.cs" />
     <Compile Include="Controllers\TermsController.cs" />
+    <Compile Include="Models\ModuleSettingsMvcViewModel.cs" />
     <Compile Include="Models\PageModel.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Default.aspx.cs">
@@ -1315,6 +1317,7 @@
     <Content Include="Views\Shared\Portals\_default\Skins\Xcillion\Inner.cshtml" />
     <Content Include="Views\Privacy\Index.cshtml" />
     <Content Include="Views\Terms\Index.cshtml" />
+    <Content Include="Views\ModuleSettingsMvc\Index.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
