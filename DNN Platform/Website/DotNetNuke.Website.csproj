@@ -79,7 +79,7 @@
     </Reference>
     <Reference Include="ClientDependency.Core.Mvc, Version=1.9.10.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\dnnClientDependency\src\ClientDependency.Mvc\bin\Debug-MVC5\ClientDependency.Core.Mvc.dll</HintPath>
+      <HintPath>..\..\Refs\ClientDependency.Core.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="DotNetNuke.WebControls">
       <SpecificVersion>False</SpecificVersion>
@@ -556,7 +556,6 @@
     </Compile>
     <Compile Include="Controllers\ModuleActionsController.cs" />
     <Compile Include="Controllers\ModuleActionsModel.cs" />
-    <Compile Include="Controllers\ModuleSettingsMvcController.cs" />
     <Compile Include="Controllers\PrivacyController.cs" />
     <Compile Include="Controllers\SkinExtensions.BreadCrumb.cs" />
     <Compile Include="Controllers\SkinExtensions.ControlPanel.cs" />
@@ -594,7 +593,6 @@
     <Compile Include="Controllers\SkinExtensions.User.cs" />
     <Compile Include="Controllers\SkinExtensions.UserAndLogin.cs" />
     <Compile Include="Controllers\TermsController.cs" />
-    <Compile Include="Models\ModuleSettingsMvcViewModel.cs" />
     <Compile Include="Models\PageModel.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Default.aspx.cs">

@@ -5,18 +5,21 @@
 namespace DotNetNuke.Web.Mvc.Skins
 {
     using System;
+    using System.Collections.Generic;
+    using System.Text;
     using System.Web;
     using System.Web.Mvc;
-    using DotNetNuke.Entities.Portals;
-    using DotNetNuke.Services.Localization;
-    using System.Text;
+
+    using DotNetNuke.Abstractions;
     using DotNetNuke.Common;
     using DotNetNuke.Common.Utilities;
     using DotNetNuke.Entities.Controllers;
     using DotNetNuke.Entities.Modules;
+    using DotNetNuke.Entities.Portals;
     using DotNetNuke.Entities.Tabs;
     using DotNetNuke.Entities.Users;
     using DotNetNuke.Services.Authentication;
+    using DotNetNuke.Services.Localization;
     using DotNetNuke.Services.Social.Messaging.Internal;
     using DotNetNuke.Services.Social.Notifications;
     using Microsoft.Extensions.DependencyInjection;
@@ -51,17 +54,12 @@ namespace DotNetNuke.Web.Mvc.Skins
                     var registerLink = new TagBuilder("a");
                     registerLink.AddCssClass(cssClass);
                     registerLink.Attributes.Add("rel", "nofollow");
-                    registerLink.InnerHtml = !string.IsNullOrEmpty(text) 
-                        ? text.Replace("src=\"", "src=\"" + portalSettings.ActiveTab.SkinPath) 
-                        : Localization.GetString("Register", Localization.GetResourceFile(helper.ViewContext.Controller, "UserAndLogin.ascx"));
-                    registerLink.Attributes.Add("href", !string.IsNullOrEmpty(url) 
-                        ? url 
-                        : Globals.RegisterURL(HttpUtility.UrlEncode(navigationManager.NavigateURL()), Null.NullString));
+                    registerLink.InnerHtml = !string.IsNullOrEmpty(text) ? text.Replace("src=\"", "src=\"" + portalSettings.ActiveTab.SkinPath) : Localization.GetString("Register", GetSkinsResourceFile("UserAndLogin.ascx"));
+                    registerLink.Attributes.Add("href", !string.IsNullOrEmpty(url) ? url : Globals.RegisterURL(HttpUtility.UrlEncode(navigationManager.NavigateURL()), Null.NullString));
 
-                    if (portalSettings.EnablePopUps && portalSettings.RegisterTabId == Null.NullInteger
-                        && !AuthenticationController.HasSocialAuthenticationEnabled(portalSettings))
+                    if (portalSettings.EnablePopUps && portalSettings.RegisterTabId == Null.NullInteger/*&& !AuthenticationController.HasSocialAuthenticationEnabled(portalSettings)*/)
                     {
-                        var clickEvent = "return " + UrlUtils.PopUpUrl(registerLink.Attributes["href"], helper, portalSettings, true, false, 600, 950);
+                        var clickEvent = "return " + UrlUtils.PopUpUrl(registerLink.Attributes["href"], portalSettings, true, false, 600, 950);
                         registerLink.Attributes.Add("onclick", clickEvent);
                     }
 
@@ -77,13 +75,12 @@ namespace DotNetNuke.Web.Mvc.Skins
                     var loginLink = new TagBuilder("a");
                     loginLink.AddCssClass(cssClass);
                     loginLink.Attributes.Add("rel", "nofollow");
-                    loginLink.InnerHtml = Localization.GetString("Login", Localization.GetResourceFile(helper.ViewContext.Controller, "UserAndLogin.ascx"));
+                    loginLink.InnerHtml = Localization.GetString("Login", GetSkinsResourceFile("UserAndLogin.ascx"));
                     loginLink.Attributes.Add("href", Globals.LoginURL(HttpUtility.UrlEncode(HttpContext.Current.Request.RawUrl), HttpContext.Current.Request.QueryString["override"] != null));
 
-                    if (portalSettings.EnablePopUps && portalSettings.LoginTabId == Null.NullInteger
-                        && !AuthenticationController.HasSocialAuthenticationEnabled(portalSettings))
+                    if (portalSettings.EnablePopUps && portalSettings.LoginTabId == Null.NullInteger/*&& !AuthenticationController.HasSocialAuthenticationEnabled(portalSettings)*/)
                     {
-                        var clickEvent = "return " + UrlUtils.PopUpUrl(loginLink.Attributes["href"], helper, portalSettings, true, false, 300, 650);
+                        var clickEvent = "return " + UrlUtils.PopUpUrl(loginLink.Attributes["href"], portalSettings, true, false, 300, 650);
                         loginLink.Attributes.Add("onclick", clickEvent);
                     }
 
@@ -134,7 +131,7 @@ namespace DotNetNuke.Web.Mvc.Skins
 
                     var profileImg = new TagBuilder("img");
                     profileImg.Attributes.Add("src", UserController.Instance.GetUserProfilePictureUrl(userInfo.UserID, 32, 32));
-                    profileImg.Attributes.Add("alt", Localization.GetString("ProfilePicture", Localization.GetResourceFile(helper.ViewContext.Controller, "UserAndLogin.ascx")));
+                    profileImg.Attributes.Add("alt", Localization.GetString("ProfilePicture", GetSkinsResourceFile("UserAndLogin.ascx")));
 
                     var profileImgSpan = new TagBuilder("span");
                     profileImgSpan.AddCssClass("userProfileImg");

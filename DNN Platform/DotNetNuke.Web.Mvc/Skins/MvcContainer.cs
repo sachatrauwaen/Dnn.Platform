@@ -23,7 +23,8 @@ namespace DotNetNuke.Web.Mvc.Skins
         {
             get
             {
-                return Path.GetFileNameWithoutExtension(this.moduleConfiguration.ModuleControl.ControlSrc);
+                var action = Path.GetFileNameWithoutExtension(this.moduleConfiguration.ModuleControl.ControlSrc);
+                return string.IsNullOrEmpty(this.FolderName) ? "Index" : action;
             }
         }
 
@@ -31,7 +32,7 @@ namespace DotNetNuke.Web.Mvc.Skins
         {
             get
             {
-                return this.moduleConfiguration.DesktopModule.FolderName;
+                return string.IsNullOrEmpty(this.FolderName) ? string.Empty : this.FolderName;
             }
         }
 
@@ -60,6 +61,14 @@ namespace DotNetNuke.Web.Mvc.Skins
         }
 
         public bool EditMode { get; internal set; }
+
+        private string FolderName
+        {
+            get
+            {
+                return this.moduleConfiguration.DesktopModule.FolderName;
+            }
+        }
 
         public void SetModuleConfiguration(ModuleInfo configuration)
         {

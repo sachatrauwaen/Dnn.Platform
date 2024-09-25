@@ -3,7 +3,10 @@
 @model DotNetNuke.Framework.Models.PageModel
 @{
     var SkinPath = Path.GetDirectoryName(Model.Skin.SkinSrc);
-    Html.RequiresCss("/Portals/_default/Skins/Xcillion/bootstrap/css/bootstrap.min.css", 10);
+    Html.DnnCssInclude(filePath: "/Portals/_default/Skins/Xcillion/bootstrap/css/bootstrap.min.css", priority: 10);
+
+    //Html.RequiresCss("/Portals/_default/Skins/Xcillion/bootstrap/css/bootstrap.min.css", 10);
+
     Html.RequiresCss("/Portals/_default/Skins/Xcillion/css/jquery.smartmenus.bootstrap.css", 10);
     Html.RequiresCss("/Portals/_default/Skins/Xcillion/Menus/MainMenu/MainMenu.css", 10);
 
@@ -167,7 +170,8 @@ hideWithNoBreadCrumb: true)
                 <div class="row dnnpane">
                     <div class="col-md-12">
                         <div class="copyright">
-                            <dnn:COPYRIGHT ID="dnnCopyright" runat="server" CssClass="" />
+                            @*<dnn:COPYRIGHT ID="dnnCopyright" runat="server" CssClass="" />*@
+                            @Html.Copyright(cssClass: "")
                         </div>
                         @*
                             <div class="terms-priv">
@@ -180,6 +184,7 @@ hideWithNoBreadCrumb: true)
                         <div class="terms-priv">
                             @Html.LinkToMobileSite()
                             @Html.Terms()
+                            |
                             @Html.Privacy()
                         </div>
                     </div>

@@ -5,14 +5,19 @@
 namespace DotNetNuke.Web.Mvc.Skins
 {
     using System;
+    using System.Net.NetworkInformation;
     using System.Web;
     using System.Web.Mvc;
+
+    using ClientDependency.Core.Mvc;
 
     public static partial class SkinExtensions
     {
         public static IHtmlString DnnCssInclude(this HtmlHelper<DotNetNuke.Framework.Models.PageModel> helper, string filePath, string pathNameAlias = "", int priority = 100, bool addTag = false, string name = "", string version = "", bool forceVersion = false, string forceProvider = "", bool forceBundle = false, string cssMedia = "")
         {
-            var cssInclude = new TagBuilder("dnn:DnnCssInclude");
+            helper.RequiresCss(filePath, priority);
+
+            var cssInclude = new TagBuilder("div");
             cssInclude.Attributes.Add("ID", "ctlInclude");
             cssInclude.Attributes.Add("runat", "server");
             cssInclude.Attributes.Add("FilePath", filePath);
@@ -26,7 +31,8 @@ namespace DotNetNuke.Web.Mvc.Skins
             cssInclude.Attributes.Add("ForceBundle", forceBundle.ToString());
             cssInclude.Attributes.Add("CssMedia", cssMedia);
 
-            return new MvcHtmlString(cssInclude.ToString());
+            // return new MvcHtmlString(cssInclude.ToString());
+            return new MvcHtmlString($"<!-- FilePath={filePath}, Priority={priority} -->");
         }
     }
 }

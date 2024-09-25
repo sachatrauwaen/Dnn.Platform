@@ -138,6 +138,7 @@ namespace DotNetNuke.Web.Mvc.Skins
             return Localization.GetString(key, GetSkinsResourceFile("UserAndLogin.ascx"));
         }
 
+        /*
         private static int GetMessageTab(PortalSettings portalSettings)
         {
             var cacheKey = $"MessageCenterTab:{portalSettings.PortalId}:{portalSettings.CultureCode}";
@@ -152,7 +153,6 @@ namespace DotNetNuke.Web.Mvc.Skins
 
             return messageTabId;
         }
-
         private static int FindMessageTab(PortalSettings portalSettings)
         {
             var profileTab = TabController.Instance.GetTab(portalSettings.UserTabId, portalSettings.PortalId, false);
@@ -174,5 +174,6 @@ namespace DotNetNuke.Web.Mvc.Skins
 
             return portalSettings.UserTabId;
         }
+        */
     }
 }
