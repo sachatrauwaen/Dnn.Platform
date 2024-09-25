@@ -23,8 +23,7 @@ namespace DotNetNuke.Web.Mvc.Skins
         {
             get
             {
-                var action = Path.GetFileNameWithoutExtension(this.moduleConfiguration.ModuleControl.ControlSrc);
-                return string.IsNullOrEmpty(this.FolderName) ? "Index" : action;
+                return string.IsNullOrEmpty(this.FolderName) ? "Index" : this.FileNameWithoutExtension;
             }
         }
 
@@ -32,7 +31,7 @@ namespace DotNetNuke.Web.Mvc.Skins
         {
             get
             {
-                return string.IsNullOrEmpty(this.FolderName) ? string.Empty : this.FolderName;
+                return string.IsNullOrEmpty(this.FolderName) ? this.FileNameWithoutExtension : this.FolderName;
             }
         }
 
@@ -67,6 +66,14 @@ namespace DotNetNuke.Web.Mvc.Skins
             get
             {
                 return this.moduleConfiguration.DesktopModule.FolderName;
+            }
+        }
+
+        private string FileNameWithoutExtension
+        {
+            get
+            {
+                return Path.GetFileNameWithoutExtension(this.moduleConfiguration.ModuleControl.ControlSrc);
             }
         }
 

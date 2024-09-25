@@ -4,16 +4,15 @@
 @{
     var SkinPath = Path.GetDirectoryName(Model.Skin.SkinSrc);
     Html.DnnCssInclude(filePath: "/Portals/_default/Skins/Xcillion/bootstrap/css/bootstrap.min.css", priority: 10);
-
     //Html.RequiresCss("/Portals/_default/Skins/Xcillion/bootstrap/css/bootstrap.min.css", 10);
 
-    Html.RequiresCss("/Portals/_default/Skins/Xcillion/css/jquery.smartmenus.bootstrap.css", 10);
-    Html.RequiresCss("/Portals/_default/Skins/Xcillion/Menus/MainMenu/MainMenu.css", 10);
+    Html.DnnCssInclude("/Portals/_default/Skins/Xcillion/css/jquery.smartmenus.bootstrap.css", 10);
+    Html.DnnCssInclude("/Portals/_default/Skins/Xcillion/Menus/MainMenu/MainMenu.css", 10);
 
-    Html.RequiresJs("/Portals/_default/Skins/Xcillion/bootstrap/js/bootstrap.min.js");
-    Html.RequiresJs("/Portals/_default/Skins/Xcillion/js/jquery.smartmenus.js");
-    Html.RequiresJs("/Portals/_default/Skins/Xcillion/js/jquery.smartmenus.bootstrap.js");
-    Html.RequiresJs("/Portals/_default/Skins/Xcillion/js/scripts.js");
+    Html.DnnJsInclude("/Portals/_default/Skins/Xcillion/bootstrap/js/bootstrap.min.js");
+    Html.DnnJsInclude("/Portals/_default/Skins/Xcillion/js/jquery.smartmenus.js");
+    Html.DnnJsInclude("/Portals/_default/Skins/Xcillion/js/jquery.smartmenus.bootstrap.js");
+    Html.DnnJsInclude("/Portals/_default/Skins/Xcillion/js/scripts.js");
 }
 
 @helper Pane(string key)

@@ -11,7 +11,6 @@ namespace DotNetNuke.Framework.Controllers
 
     public class TermsController : Controller
     {
-        [Authorize]
         public ActionResult Index()
         {
             var terms = Localization.GetSystemMessage(PortalSettings.Current, "MESSAGE_PORTAL_TERMS");

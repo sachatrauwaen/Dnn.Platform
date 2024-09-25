@@ -11,7 +11,6 @@ namespace DotNetNuke.Framework.Controllers
 
     public class PrivacyController : Controller
     {
-        [Authorize]
         public ActionResult Index()
         {
             var privacy = Localization.GetSystemMessage(PortalSettings.Current, "MESSAGE_PORTAL_PRIVACY");
