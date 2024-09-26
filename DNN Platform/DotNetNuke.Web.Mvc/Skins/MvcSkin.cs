@@ -63,7 +63,7 @@ namespace DotNetNuke.Web.Mvc.Skins
         {
             get
             {
-                return this.SkinSrc.Replace(".ascx", string.Empty).Substring(1);
+                return "~" + Path.GetDirectoryName(this.SkinSrc) + "/Views/" + Path.GetFileName(this.SkinSrc).Replace(".ascx", ".cshtml");
             }
         }
 

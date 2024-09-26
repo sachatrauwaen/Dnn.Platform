@@ -36,6 +36,8 @@ namespace DotNetNuke.Web.Mvc.Skins
                 tbImage.AddCssClass(cssClass);
             }
 
+            tbImage.Attributes.Add("alt", portalSettings.PortalName);
+
             TagBuilder tbLink = new TagBuilder("a");
             if (!string.IsNullOrEmpty(linkCssClass))
             {
@@ -67,7 +69,6 @@ namespace DotNetNuke.Web.Mvc.Skins
                 }
             }
 
-            tbImage.Attributes.Add("alt", portalSettings.PortalName);
             tbLink.Attributes.Add("title", portalSettings.PortalName);
             tbLink.Attributes.Add("aria-label", portalSettings.PortalName);
 

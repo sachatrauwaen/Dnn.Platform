@@ -3,35 +3,36 @@
 @model DotNetNuke.Framework.Models.PageModel
 @{
     var SkinPath = Path.GetDirectoryName(Model.Skin.SkinSrc);
-    Html.DnnCssInclude(filePath: "/Portals/_default/Skins/Xcillion/bootstrap/css/bootstrap.min.css", priority: 10);
-    //Html.RequiresCss("/Portals/_default/Skins/Xcillion/bootstrap/css/bootstrap.min.css", 10);
 
-    Html.DnnCssInclude("/Portals/_default/Skins/Xcillion/css/jquery.smartmenus.bootstrap.css", 10);
-    Html.DnnCssInclude("/Portals/_default/Skins/Xcillion/Menus/MainMenu/MainMenu.css", 10);
+    @*<dnn:DnnCssInclude ID="BootstrapCSS" runat="server" FilePath="bootstrap/css/bootstrap.min.css" PathNameAlias="SkinPath" Priority="12" />
+        <dnn:DnnCssInclude ID="SmartMenuBootstrapCSS" runat="server" FilePath="css/jquery.smartmenus.bootstrap.css" PathNameAlias="SkinPath" Priority="13" />
+        <dnn:DnnCssInclude ID="MainMenuCSS" runat="server" FilePath="Menus/MainMenu/MainMenu.css" PathNameAlias="SkinPath" Priority="14" />
+        <dnn:DnnCssInclude ID="SkinCSS" runat="server" FilePath="skin.css" PathNameAlias="SkinPath" />
 
-    Html.DnnJsInclude("/Portals/_default/Skins/Xcillion/bootstrap/js/bootstrap.min.js");
-    Html.DnnJsInclude("/Portals/_default/Skins/Xcillion/js/jquery.smartmenus.js");
-    Html.DnnJsInclude("/Portals/_default/Skins/Xcillion/js/jquery.smartmenus.bootstrap.js");
-    Html.DnnJsInclude("/Portals/_default/Skins/Xcillion/js/scripts.js");
+
+        <dnn:DnnJsInclude ID="BootstrapJS" runat="server" FilePath="bootstrap/js/bootstrap.min.js" PathNameAlias="SkinPath" />
+        <dnn:DnnJsInclude ID="SmartMenusJquery" runat="server" FilePath="js/jquery.smartmenus.js" PathNameAlias="SkinPath" />
+        <dnn:DnnJsInclude ID="SmartMenusJqueryBootstrap" runat="server" FilePath="js/jquery.smartmenus.bootstrap.js" PathNameAlias="SkinPath" />
+        <dnn:DnnJsInclude ID="scriptJS" runat="server" FilePath="js/scripts.js" PathNameAlias="SkinPath" />*@
+
 }
 
-@helper Pane(string key)
-{
-    <div id="dnn_@(key)" class="dnnPane @(Model.Skin.PaneCssClass)" data-name="@(key)">
-        @if (Model.Skin.Panes.ContainsKey(key))
-        {
+@Html.DnnCssInclude(filePath: "bootstrap/css/bootstrap.min.css", pathNameAlias: "SkinPath", priority: 12)
+@Html.DnnCssInclude("css/jquery.smartmenus.bootstrap.css", pathNameAlias: "SkinPath", priority: 13)
+@Html.DnnCssInclude("Menus/MainMenu/MainMenu.css", pathNameAlias: "SkinPath", priority: 14)
 
-            foreach (var container in Model.Skin.Panes[key].Containers)
-            {
+@Html.DnnJsInclude("bootstrap/js/bootstrap.min.js", pathNameAlias: "SkinPath")
+@Html.DnnJsInclude("js/jquery.smartmenus.js", pathNameAlias: "SkinPath")
+@Html.DnnJsInclude("js/jquery.smartmenus.bootstrap.js", pathNameAlias: "SkinPath")
+@Html.DnnJsInclude("js/scripts.js", pathNameAlias: "SkinPath")
 
-                <div class="DnnModule DnnModule-DNN_HTML DnnModule-@(container.Value.ModuleConfiguration.ModuleID)">
-                    <a name="@(container.Value.ModuleConfiguration.ModuleID)"></a>
-                    @Html.Partial("~/Views/Shared" + container.Value.ContainerRazorFile + ".cshtml", container.Value)
-                </div>
-            }
-        }
-    </div>
+@section metas {
+    @*<dnn:META ID="META1" runat="server" Name="viewport" Content="width=device-width,initial-scale=1" />*@
+    @Html.Meta(name:  "viewport", content: "width=device-width,initial-scale=1")
 }
+<!--[if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
+<![endif]-->
 
 <div id="siteWrapper">
     <!--Tob bar -->
@@ -59,8 +60,6 @@
                         <div id="dnn_dnnLogin_loginGroup" class="loginGroup">
                             <a id="dnn_dnnLogin_enhancedLoginLink" title="Connexion" class="LoginLink" rel="nofollow" onclick="return dnnModal.show('http://dnndev.local/Login?returnurl=/xxx&amp;popUp=true',/*showReturn*/true,300,650,true,'')" href="http://dnndev.local/Login?returnurl=%2fxxx">Connexion</a>
                         </div>
-
-
                         @Html.Login(cssClass: "LoginLink")
                         @*
                             <dnn:LOGIN ID="dnnLogin" CssClass="LoginLink" runat="server" LegacyMode="false" />
@@ -71,7 +70,6 @@
             </div>
         </div>
     </div>
-
     <!--Header -->
     <header role="banner">
         <div id="mainHeader-inner" class="container">
@@ -81,7 +79,6 @@
                         <span class="brand">
                             @* <dnn:LOGO runat="server" ID="dnnLOGO" /> *@
                             @Html.Logo()
-
                             @*
                                 <a id="dnn_dnnLOGO_hypLogo" title="My Website" aria-label="My Website" href="http://dnndev.local/">
                                     <img id="dnn_dnnLOGO_imgLogo" src="/Portals/0/Images/logo.png?ver=iQ_5jD494yqztgqRg6ESQA%3d%3d" alt="My Website">
@@ -108,43 +105,38 @@
             </div>
         </div>
     </header>
-
     <!-- Page Content -->
     <div class="container">
         <main role="main">
             <div class="row dnnpane">
-                <div id="HeaderPane" class="col-md-12 headerPane">@Pane("headerpane")</div>
+                <div id="HeaderPane" class="col-md-12 headerPane">@Html.Pane("headerpane")</div>
             </div>
             <div id="breadcrumb" class="col-md-12">
                 @*<dnn:BREADCRUMB ID="dnnBreadcrumb" runat="server" CssClass="breadcrumbLink" RootLevel="0" Separator="&lt;img src=&quot;/Portals/_default/Skins/Xcillion/Images/breadcrumb-arrow.png&quot; alt=&quot;breadcrumb separator&quot;&gt;" HideWithNoBreadCrumb="true" />*@
-                @Html.BreadCrumb(@*ID="dnnBreadcrumb",*@cssClass: "breadcrumbLink",
-rootLevel: 0,
-separator: "<img src=\"/Portals/_default/Skins/Xcillion/Images/breadcrumb-arrow.png\" alt=\"breadcrumb separator\" />",
-hideWithNoBreadCrumb: true)
+                @Html.BreadCrumb(cssClass: "breadcrumbLink",
+                                    rootLevel: 0,
+                                    separator: "<img src=\"/Portals/_default/Skins/Xcillion/Images/breadcrumb-arrow.png\" alt=\"breadcrumb separator\" />",
+                                    hideWithNoBreadCrumb: true)
             </div>
             <div id="mainContent-inner">
                 <div class="row dnnpane">
-                    <div id="ContentPane" class="col-md-12 contentPane ">@Pane("contentpane")</div>
+                    <div id="ContentPane" class="col-md-12 contentPane ">@Html.Pane("contentpane")</div>
                 </div>
-
                 <div class="row dnnpane">
-                    <div id="P1_75_1" class="col-md-8 leftPane spacingTop ">@Pane("p1_75_1")</div>
-                    <div id="P1_25_2" class="col-md-4 rightPane spacingTop " runat="server">@Pane("p1_25_2")</div>
+                    <div id="P1_75_1" class="col-md-8 leftPane spacingTop ">@Html.Pane("p1_75_1")</div>
+                    <div id="P1_25_2" class="col-md-4 rightPane spacingTop " runat="server">@Html.Pane("p1_25_2")</div>
                 </div>
-
                 <div class="row dnnpane">
-                    <div id="P2_25_1" class="col-md-4 spacingTop ">@Pane("p2_25_1")</div>
-                    <div id="P2_75_2" class="col-md-8 spacingTop ">@Pane("p2_75_2")</div>
+                    <div id="P2_25_1" class="col-md-4 spacingTop ">@Html.Pane("p2_25_1")</div>
+                    <div id="P2_75_2" class="col-md-8 spacingTop ">@Html.Pane("p2_75_2")</div>
                 </div>
-
                 <div class="row dnnpane">
-                    <div id="P3_33_1" class="col-md-4 spacingTop ">@Pane("p3_33_1")</div>
-                    <div id="P3_33_2" class="col-md-4 spacingTop ">@Pane("p3_33_2")</div>
-                    <div id="P3_33_3" class="col-md-4 spacingTop ">@Pane("p3_33_3")</div>
+                    <div id="P3_33_1" class="col-md-4 spacingTop ">@Html.Pane("p3_33_1")</div>
+                    <div id="P3_33_2" class="col-md-4 spacingTop ">@Html.Pane("p3_33_2")</div>
+                    <div id="P3_33_3" class="col-md-4 spacingTop ">@Html.Pane("p3_33_3")</div>
                 </div>
-
                 <div class="row dnnpane">
-                    <div id="ContentPaneLower" class="col-md-12 contentPane spacingTop ">@Pane("contentpanelower")</div>
+                    <div id="ContentPaneLower" class="col-md-12 contentPane spacingTop ">@Html.Pane("contentpanelower")</div>
                 </div>
             </div><!-- /.mainContent-inner -->
         </main>
@@ -156,11 +148,11 @@ hideWithNoBreadCrumb: true)
         <div class="footer-above">
             <div class="container">
                 <div class="row dnnpane">
-                    <div id="footer_25_1" class="footer-col col-md-3 col-sm-6" runat="server"></div>
-                    <div id="footer_25_2" class="footer-col col-md-3 col-sm-6" runat="server"></div>
+                    <div id="footer_25_1" class="footer-col col-md-3 col-sm-6" runat="server">@Html.Pane("footer_25_1")</div>
+                    <div id="footer_25_2" class="footer-col col-md-3 col-sm-6" runat="server">@Html.Pane("footer_25_2")</div>
                     <div class="clearfix visible-sm"></div>
-                    <div id="footer_25_3" class="footer-col col-md-3 col-sm-6" runat="server"></div>
-                    <div id="footer_25_4" class="footer-col col-md-3 col-sm-6" runat="server"></div>
+                    <div id="footer_25_3" class="footer-col col-md-3 col-sm-6" runat="server">@Html.Pane("footer_25_3")</div>
+                    <div id="footer_25_4" class="footer-col col-md-3 col-sm-6" runat="server">@Html.Pane("footer_25_4")</div>
                 </div>
             </div>
         </div>
@@ -191,5 +183,4 @@ hideWithNoBreadCrumb: true)
             </div>
         </div>
     </footer>
-
 </div>

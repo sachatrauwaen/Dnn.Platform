@@ -199,7 +199,11 @@
     </AdditionalFiles>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Container\Views\NoTitle.cshtml" />
+    <Content Include="Container\Views\web.config" />
     <None Include="packages.config" />
+    <Content Include="Skin\Views\Inner.cshtml" />
+    <Content Include="Skin\Views\web.config" />
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\..\..\packages\StyleCop.Analyzers.1.1.118\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />

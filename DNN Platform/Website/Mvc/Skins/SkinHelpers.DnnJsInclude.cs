@@ -8,29 +8,21 @@ namespace DotNetNuke.Web.Mvc.Skins
     using System.Web;
     using System.Web.Mvc;
 
+    using ClientDependency.Core;
     using ClientDependency.Core.Mvc;
 
     public static partial class SkinHelpers
     {
         public static IHtmlString DnnJsInclude(this HtmlHelper<DotNetNuke.Framework.Models.PageModel> helper, string filePath, string pathNameAlias = "", int priority = 100, bool addTag = false, string name = "", string version = "", bool forceVersion = false, string forceProvider = "", bool forceBundle = false)
         {
-            helper.RequiresJs(filePath);
+            helper.RequiresJs(filePath, pathNameAlias, priority);
 
-            var jsInclude = new TagBuilder("dnn:DnnJsInclude");
-            jsInclude.Attributes.Add("ID", "ctlInclude");
-            jsInclude.Attributes.Add("runat", "server");
-            jsInclude.Attributes.Add("FilePath", filePath);
-            jsInclude.Attributes.Add("PathNameAlias", pathNameAlias);
-            jsInclude.Attributes.Add("Priority", priority.ToString());
-            jsInclude.Attributes.Add("AddTag", addTag.ToString());
-            jsInclude.Attributes.Add("Name", name);
-            jsInclude.Attributes.Add("Version", version);
-            jsInclude.Attributes.Add("ForceVersion", forceVersion.ToString());
-            jsInclude.Attributes.Add("ForceProvider", forceProvider);
-            jsInclude.Attributes.Add("ForceBundle", forceBundle.ToString());
+            if (addTag || helper.ViewContext.HttpContext.IsDebuggingEnabled)
+            {
+                return new MvcHtmlString(string.Format("<!--CDF({0}|{1}|{2}|{3})-->", ClientDependencyType.Javascript, filePath, forceProvider, priority));
+            }
 
-            // return new MvcHtmlString(jsInclude.ToString());
-            return new MvcHtmlString($"<!-- DnnJsInclude FilePath={filePath}, Priority={priority} -->");
+            return new MvcHtmlString(string.Empty);
         }
     }
 }

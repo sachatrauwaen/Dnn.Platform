@@ -557,6 +557,8 @@
     <Compile Include="Controllers\ModuleActionsController.cs" />
     <Compile Include="Models\ModuleActionsModel.cs" />
     <Compile Include="Controllers\PrivacyController.cs" />
+    <Compile Include="Mvc\Skins\SkinHelpers.Content.cs" />
+    <Compile Include="Mvc\Skins\SkinHelpers.Pane.cs" />
     <Compile Include="Mvc\Skins\SkinHelpers.BreadCrumb.cs" />
     <Compile Include="Mvc\Skins\SkinHelpers.ControlPanel.cs" />
     <Compile Include="Mvc\Skins\SkinHelpers.Copyright.cs" />

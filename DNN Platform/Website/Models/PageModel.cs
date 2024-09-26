@@ -39,7 +39,7 @@ namespace DotNetNuke.Framework.Models
 
         public string Generator { get; internal set; }
 
-        public object MetaRobots { get; internal set; }
+        public string MetaRobots { get; internal set; }
 
         // public bool EditMode { get; internal set; }
         public Dictionary<string, string> StartupScripts { get; internal set; }
