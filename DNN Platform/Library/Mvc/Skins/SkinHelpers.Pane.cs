@@ -11,6 +11,7 @@ namespace DotNetNuke.Web.Mvc.Skins
 
     using DotNetNuke.Common;
     using DotNetNuke.Common.Utilities;
+    using DotNetNuke.Entities.Modules;
     using DotNetNuke.Framework.Models;
 
     public static partial class SkinExtensions
@@ -43,6 +44,10 @@ namespace DotNetNuke.Web.Mvc.Skins
                     moduleDiv.AddCssClass("DnnModule-" + container.Value.ModuleConfiguration.ModuleID);
                     moduleDiv.AddCssClass("DnnModule-" + sanitizedModuleName);
                     moduleDiv.AddCssClass("DnnModule");
+                    if (model.IsEditMode)
+                    {
+                        moduleDiv.Attributes["data-module-title"] = container.Value.ModuleConfiguration.ModuleTitle;
+                    }
 
                     var anchor = new TagBuilder("a");
                     anchor.Attributes["name"] = container.Value.ModuleConfiguration.ModuleID.ToString();

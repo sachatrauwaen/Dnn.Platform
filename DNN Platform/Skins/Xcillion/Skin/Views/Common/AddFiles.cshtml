@@ -1,0 +1,12 @@
+@using DotNetNuke.Web.Mvc.Skins
+
+@model DotNetNuke.Framework.Models.PageModel
+
+@Html.DnnCssInclude(filePath: "bootstrap/css/bootstrap.min.css", pathNameAlias: "SkinPath", priority: 12)
+@Html.DnnCssInclude("css/jquery.smartmenus.bootstrap.css", pathNameAlias: "SkinPath", priority: 13)
+@Html.DnnCssInclude("Menus/MainMenu/MainMenu.css", pathNameAlias: "SkinPath", priority: 14)
+
+@Html.DnnJsInclude("bootstrap/js/bootstrap.min.js", pathNameAlias: "SkinPath")
+@Html.DnnJsInclude("js/jquery.smartmenus.js", pathNameAlias: "SkinPath")
+@Html.DnnJsInclude("js/jquery.smartmenus.bootstrap.js", pathNameAlias: "SkinPath")
+@Html.DnnJsInclude("js/scripts.js", pathNameAlias: "SkinPath")

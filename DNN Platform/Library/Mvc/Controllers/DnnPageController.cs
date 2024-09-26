@@ -17,9 +17,12 @@ namespace DotNetNuke.Web.Mvc.Skins.Controllers
     using DotNetNuke.Entities.Users;
     using DotNetNuke.Services.Localization;
     using DotNetNuke.UI.Modules;
+
+    /*
     using DotNetNuke.Web.Mvc.Framework.ActionResults;
     using DotNetNuke.Web.Mvc.Framework.Modules;
     using DotNetNuke.Web.Mvc.Helpers;
+    */
 
     public abstract class DnnPageController : Controller // IDnnController
     {
@@ -42,6 +45,7 @@ namespace DotNetNuke.Web.Mvc.Skins.Controllers
             }
         }
 
+        /*
         public ActionResult ResultOfLastExecute
         {
             get
@@ -50,7 +54,7 @@ namespace DotNetNuke.Web.Mvc.Skins.Controllers
                 return (actionInvoker != null) ? actionInvoker.ResultOfLastInvoke : null;
             }
         }
-
+        */
         /*
         public new UserInfo User
         {

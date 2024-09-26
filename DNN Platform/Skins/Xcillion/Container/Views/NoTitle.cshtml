@@ -1,15 +1,8 @@
-@using DotNetNuke.Web.Mvc.Skins
-
+@using DotNetNuke.Web.Mvc.Containers
 @model DotNetNuke.Web.Mvc.Skins.MvcContainer
-@{
-//var SkinPath = Path.GetDirectoryName(Model.ContainerSrc);
-}
-@*@if(Model.EditMode){
-	@Html.Action("Index", "ModuleActions", Model.ModuleConfiguration)
-}*@
+
 <div class="DNNContainer_noTitle">
-    <div>
-        @* Html.Action(Model.ActionName, Model.ControllerName, Model.ModuleConfiguration) *@
+    <div>        
         @Html.Content()
     </div>
 	<div class="clear"></div>

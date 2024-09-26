@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information
 
-namespace DotNetNuke.Web.Mvc.Skins
+namespace DotNetNuke.Web.Mvc.Containers
 {
     using System;
     using System.Web;
@@ -13,10 +13,11 @@ namespace DotNetNuke.Web.Mvc.Skins
     using DotNetNuke.Common.Utilities;
     using DotNetNuke.Entities.Modules;
     using DotNetNuke.Framework.Models;
+    using DotNetNuke.Web.Mvc.Skins;
 
     public static partial class SkinHelpers
     {
-        public static IHtmlString Content(this HtmlHelper<MvcContainer> htmlHelper)
+        public static IHtmlString Title(this HtmlHelper<MvcContainer> htmlHelper, string cssClass)
         {
             var model = htmlHelper.ViewData.Model;
             if (model == null)
@@ -24,17 +25,14 @@ namespace DotNetNuke.Web.Mvc.Skins
                 throw new InvalidOperationException("The model need to be present.");
             }
 
-            var moduleDiv = new TagBuilder("div");
-            try
+            var labelDiv = new TagBuilder("div");
+            labelDiv.InnerHtml = model.ModuleConfiguration.ModuleTitle;
+            if (!string.IsNullOrEmpty(cssClass))
             {
-                moduleDiv.InnerHtml += htmlHelper.Action(model.ActionName, model.ControllerName, model.ModuleConfiguration);
-            }
-            catch (Exception ex)
-            {
-                moduleDiv.InnerHtml += $"Error : {ex.Message} (Controller : {model.ControllerName}, Action : {model.ActionName}, module : {model.ModuleConfiguration.ModuleTitle})";
+                labelDiv.AddCssClass(cssClass);
             }
 
-            return MvcHtmlString.Create(moduleDiv.InnerHtml);
+            return MvcHtmlString.Create(labelDiv.ToString());
         }
     }
 }

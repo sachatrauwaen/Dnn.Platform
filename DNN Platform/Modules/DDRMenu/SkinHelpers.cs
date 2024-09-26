@@ -6,7 +6,9 @@ namespace DotNetNuke.Web.DDRMenu
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.Web;
     using System.Web.Mvc;
+    using System.Web.Mvc.Html;
     using System.Web.UI;
     using System.Web.WebPages.Html;
 
@@ -15,9 +17,10 @@ namespace DotNetNuke.Web.DDRMenu
     using DotNetNuke.Web.DDRMenu.Localisation;
     using DotNetNuke.Web.DDRMenu.TemplateEngine;
 
-    public static class SkinExtensions
+    public static class SkinHelpers
     {
-        public static string DDRMenu(
+        public static IHtmlString DDRMenu(
+                                        this System.Web.Mvc.HtmlHelper htmlHelper,
                                         string clientID,
                                         string menuStyle,
                                         string nodeXmlPath = "",
@@ -68,7 +71,7 @@ namespace DotNetNuke.Web.DDRMenu
                 menu.Render(writer);
             }
 
-            return stringWriter.ToString();
+            return MvcHtmlString.Create(stringWriter.ToString());
         }
     }
 }

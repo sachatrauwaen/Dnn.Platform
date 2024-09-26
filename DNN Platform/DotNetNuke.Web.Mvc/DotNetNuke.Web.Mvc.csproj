@@ -196,10 +196,6 @@
     <Compile Include="Routing\MvcRoutingManager.cs" />
     <Compile Include="Routing\PortalAliasMvcRouteManager.cs" />
     <Compile Include="Routing\StandardModuleRoutingProvider.cs" />
-    <Compile Include="Skins\Controllers\DnnPageController.cs" />
-    <Compile Include="Skins\MvcContainer.cs" />
-    <Compile Include="Skins\MvcPane.cs" />
-    <Compile Include="Skins\MvcSkin.cs" />
     <Compile Include="StandardTabAndModuleInfoProvider.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -244,6 +240,9 @@
   <ItemGroup>
     <Analyzer Include="..\..\packages\StyleCop.Analyzers.1.1.118\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
     <Analyzer Include="..\..\packages\StyleCop.Analyzers.1.1.118\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Skins\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

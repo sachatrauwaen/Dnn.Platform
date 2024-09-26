@@ -89,6 +89,10 @@
     <Reference Include="ClientDependency.Core, Version=1.9.10.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Dnn.ClientDependency.1.9.10\lib\net45\ClientDependency.Core.dll</HintPath>
     </Reference>
+    <Reference Include="ClientDependency.Core.Mvc, Version=1.9.10.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Refs\ClientDependency.Core.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="DotNetNuke.WebControls">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Controls\DotNetNuke.WebControls\bin\DotNetNuke.WebControls.dll</HintPath>
@@ -271,7 +275,52 @@
     <Compile Include="ExtensionPoints\PanelTabExtensionControl.cs" />
     <Compile Include="Framework\JavaScriptLibraries\MvcJavaScript.cs" />
     <Compile Include="Modules\NavigationEventArgs.cs" />
+    <Compile Include="Mvc\Containers\SkinHelpers.Content.cs" />
+    <Compile Include="Mvc\Containers\SkinHelpers.Title.cs" />
+    <Compile Include="Mvc\Controllers\DnnPageController.cs" />
+    <Compile Include="Mvc\Models\ModuleActionsModel.cs" />
+    <Compile Include="Mvc\Models\MvcContainer.cs" />
+    <Compile Include="Mvc\Models\MvcPane.cs" />
+    <Compile Include="Mvc\Models\MvcSkin.cs" />
+    <Compile Include="Mvc\Models\PageModel.cs" />
     <Compile Include="Mvc\MvcClientAPI.cs" />
+    <Compile Include="Mvc\Skins\SkinHelpers.BreadCrumb.cs" />
+    <Compile Include="Mvc\Skins\SkinHelpers.ControlPanel.cs" />
+    <Compile Include="Mvc\Skins\SkinHelpers.Copyright.cs" />
+    <Compile Include="Mvc\Skins\SkinHelpers.cs" />
+    <Compile Include="Mvc\Skins\SkinHelpers.CurrentDate.cs" />
+    <Compile Include="Mvc\Skins\SkinHelpers.DnnCssExclude.cs" />
+    <Compile Include="Mvc\Skins\SkinHelpers.DnnCssInclude.cs" />
+    <Compile Include="Mvc\Skins\SkinHelpers.DnnJsExclude.cs" />
+    <Compile Include="Mvc\Skins\SkinHelpers.DnnJsInclude.cs" />
+    <Compile Include="Mvc\Skins\SkinHelpers.DnnLink.cs" />
+    <Compile Include="Mvc\Skins\SkinHelpers.DotNetNuke.cs" />
+    <Compile Include="Mvc\Skins\SkinHelpers.Help.cs" />
+    <Compile Include="Mvc\Skins\SkinHelpers.HostName.cs" />
+    <Compile Include="Mvc\Skins\SkinHelpers.JavaScriptLibraryInclude.cs" />
+    <Compile Include="Mvc\Skins\SkinHelpers.jQuery.cs" />
+    <Compile Include="Mvc\Skins\SkinHelpers.Language.cs" />
+    <Compile Include="Mvc\Skins\SkinHelpers.LeftMenu.cs" />
+    <Compile Include="Mvc\Skins\SkinHelpers.Links.cs" />
+    <Compile Include="Mvc\Skins\SkinHelpers.LinkToFullSite.cs" />
+    <Compile Include="Mvc\Skins\SkinHelpers.LinkToMobileSite.cs" />
+    <Compile Include="Mvc\Skins\SkinHelpers.LinkToTabletSite.cs" />
+    <Compile Include="Mvc\Skins\SkinHelpers.Login.cs" />
+    <Compile Include="Mvc\Skins\SkinHelpers.Logo.cs" />
+    <Compile Include="Mvc\Skins\SkinHelpers.SkinPartial.cs" />
+    <Compile Include="Mvc\Skins\SkinHelpers.Meta.cs" />
+    <Compile Include="Mvc\Skins\SkinHelpers.ModuleMessage.cs" />
+    <Compile Include="Mvc\Skins\SkinHelpers.Pane.cs" />
+    <Compile Include="Mvc\Skins\SkinHelpers.Privacy.cs" />
+    <Compile Include="Mvc\Skins\SkinHelpers.Search.cs" />
+    <Compile Include="Mvc\Skins\SkinHelpers.Styles.cs" />
+    <Compile Include="Mvc\Skins\SkinHelpers.Tags.cs" />
+    <Compile Include="Mvc\Skins\SkinHelpers.Terms.cs" />
+    <Compile Include="Mvc\Skins\SkinHelpers.Text.cs" />
+    <Compile Include="Mvc\Skins\SkinHelpers.Toast.cs" />
+    <Compile Include="Mvc\Skins\SkinHelpers.TreeViewMenu.cs" />
+    <Compile Include="Mvc\Skins\SkinHelpers.User.cs" />
+    <Compile Include="Mvc\Skins\SkinHelpers.UserAndLogin.cs" />
     <Compile Include="Obsolete\EventLogController.cs" />
     <Compile Include="Obsolete\HostController.cs" />
     <Compile Include="Obsolete\LogInfo.cs" />

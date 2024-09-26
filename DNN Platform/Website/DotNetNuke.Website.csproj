@@ -555,47 +555,8 @@
       <DependentUpon>ViewProfile.ascx</DependentUpon>
     </Compile>
     <Compile Include="Controllers\ModuleActionsController.cs" />
-    <Compile Include="Models\ModuleActionsModel.cs" />
     <Compile Include="Controllers\PrivacyController.cs" />
-    <Compile Include="Mvc\Skins\SkinHelpers.Content.cs" />
-    <Compile Include="Mvc\Skins\SkinHelpers.Pane.cs" />
-    <Compile Include="Mvc\Skins\SkinHelpers.BreadCrumb.cs" />
-    <Compile Include="Mvc\Skins\SkinHelpers.ControlPanel.cs" />
-    <Compile Include="Mvc\Skins\SkinHelpers.Copyright.cs" />
-    <Compile Include="Mvc\Skins\SkinHelpers.cs" />
-    <Compile Include="Mvc\Skins\SkinHelpers.CurrentDate.cs" />
-    <Compile Include="Mvc\Skins\SkinHelpers.DnnCssExclude.cs" />
-    <Compile Include="Mvc\Skins\SkinHelpers.DnnCssInclude.cs" />
-    <Compile Include="Mvc\Skins\SkinHelpers.DnnJsExclude.cs" />
-    <Compile Include="Mvc\Skins\SkinHelpers.DnnJsInclude.cs" />
-    <Compile Include="Mvc\Skins\SkinHelpers.DnnLink.cs" />
-    <Compile Include="Mvc\Skins\SkinHelpers.DotNetNuke.cs" />
-    <Compile Include="Mvc\Skins\SkinHelpers.Help.cs" />
-    <Compile Include="Mvc\Skins\SkinHelpers.HostName.cs" />
-    <Compile Include="Mvc\Skins\SkinHelpers.JavaScriptLibraryInclude.cs" />
-    <Compile Include="Mvc\Skins\SkinHelpers.jQuery.cs" />
-    <Compile Include="Mvc\Skins\SkinHelpers.Language.cs" />
-    <Compile Include="Mvc\Skins\SkinHelpers.LeftMenu.cs" />
-    <Compile Include="Mvc\Skins\SkinHelpers.Links.cs" />
-    <Compile Include="Mvc\Skins\SkinHelpers.LinkToFullSite.cs" />
-    <Compile Include="Mvc\Skins\SkinHelpers.LinkToMobileSite.cs" />
-    <Compile Include="Mvc\Skins\SkinHelpers.LinkToTabletSite.cs" />
-    <Compile Include="Mvc\Skins\SkinHelpers.Login.cs" />
-    <Compile Include="Mvc\Skins\SkinHelpers.Logo.cs" />
-    <Compile Include="Mvc\Skins\SkinHelpers.Meta.cs" />
-    <Compile Include="Mvc\Skins\SkinHelpers.ModuleMessage.cs" />
-    <Compile Include="Mvc\Skins\SkinHelpers.Privacy.cs" />
-    <Compile Include="Mvc\Skins\SkinHelpers.Search.cs" />
-    <Compile Include="Mvc\Skins\SkinHelpers.Styles.cs" />
-    <Compile Include="Mvc\Skins\SkinHelpers.Tags.cs" />
-    <Compile Include="Mvc\Skins\SkinHelpers.Terms.cs" />
-    <Compile Include="Mvc\Skins\SkinHelpers.Text.cs" />
-    <Compile Include="Mvc\Skins\SkinHelpers.Toast.cs" />
-    <Compile Include="Mvc\Skins\SkinHelpers.TreeViewMenu.cs" />
-    <Compile Include="Mvc\Skins\SkinHelpers.User.cs" />
-    <Compile Include="Mvc\Skins\SkinHelpers.UserAndLogin.cs" />
     <Compile Include="Controllers\TermsController.cs" />
-    <Compile Include="Models\PageModel.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>

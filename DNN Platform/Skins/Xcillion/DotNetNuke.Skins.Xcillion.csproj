@@ -73,6 +73,9 @@
     <Reference Include="System.Web.Http.WebHost, Version=5.2.9.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.9\lib\net45\System.Web.Http.WebHost.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web.Mvc">
+      <HintPath>..\..\..\Packages\Microsoft.AspNet.Mvc.5.2.9\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
@@ -201,9 +204,25 @@
   <ItemGroup>
     <Content Include="Container\Views\NoTitle.cshtml" />
     <Content Include="Container\Views\web.config" />
+    <Content Include="Container\Views\404.cshtml" />
+    <Content Include="Container\Views\Boxed.cshtml" />
+    <Content Include="Container\Views\Title_h2.cshtml" />
+    <Content Include="Container\Views\Title_h2_centered.cshtml" />
+    <Content Include="Container\Views\Title_h2_circles.cshtml" />
+    <Content Include="Container\Views\Title_h2_elegant.cshtml" />
+    <Content Include="Container\Views\Title_h2_hexagon.cshtml" />
+    <Content Include="Container\Views\Title_h2_open_rectangle.cshtml" />
+    <Content Include="Container\Views\Title_h2_rectangle.cshtml" />
+    <Content Include="Container\Views\Title_h2_slashed.cshtml" />
+    <Content Include="Container\Views\Title_h3.cshtml" />
+    <Content Include="Container\Views\Title_h3_centered.cshtml" />
+    <Content Include="Container\Views\Title_h4.cshtml" />
+    <Content Include="Container\Views\Title_h4_centered.cshtml" />
     <None Include="packages.config" />
     <Content Include="Skin\Views\Inner.cshtml" />
     <Content Include="Skin\Views\web.config" />
+    <Content Include="Skin\Views\Common\AddFiles.cshtml" />
+    <Content Include="Skin\Views\Home.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\..\..\packages\StyleCop.Analyzers.1.1.118\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
