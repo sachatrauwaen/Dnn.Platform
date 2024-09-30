@@ -7,7 +7,7 @@
 
 
 <div class="dnnForm dnnEditHtml dnnClear" id="dnnEditHtml">
-    @using (Html.BeginForm("Save", "HTML"))
+    @using (Html.BeginForm("Save", "DNN_HTML"))
     {
         @Html.AntiForgeryToken()
         @Html.HiddenFor(x => x.TabID)
@@ -41,15 +41,15 @@
                     {
                     <div class="divCurrentVersion">
                         <div class="dnnFormItem" id="divCurrentWorkflowState">
-                            <label>@Localization.GetString("WorkflowState", Model.LocalResourceFile)</label>
-                            <span>@Model.CurrentWorkflowState</span>
-                            <span>(@Localization.GetString("Version", Model.LocalResourceFile) @Model.CurrentVersion) (@Model.CurrentWorkflowInUse)</span>
+                            <label>@Localization.GetString("plCurrentWorkflowState", Model.LocalResourceFile) :</label>
+                            <span>@Localization.GetString(Model.CurrentWorkflowState, Model.LocalResourceFile)</span>
+                            <span>(@Localization.GetString("plCurrentWorkVersion", Model.LocalResourceFile) @Model.CurrentVersion) (@Localization.GetString(Model.CurrentWorkflowInUse, Model.LocalResourceFile))</span>
                         </div>
                         @if (Model.ShowPublishOption)
                         {
                         <div class="dnnFormItem" id="divPublish">
-                            <label>@Localization.GetString("ActionOnSave", Model.LocalResourceFile)</label>
-                            @Html.CheckBoxFor(m => m.Publish)
+                            <label>@Localization.GetString("plActionOnSave", Model.LocalResourceFile)</label>
+                            @Html.CheckBoxFor(m => m.Publish) @Localization.GetString("chkPublish", Model.LocalResourceFile)
                         </div>
                         }
                     </div>
@@ -86,7 +86,7 @@
                     </fieldset>
                 }
 
-                if (Model.ShowHistoryView)
+                @if (Model.ShowHistoryView)
                 {
                 <fieldset>
                     <div class="ehvContent">
@@ -120,12 +120,12 @@
                 <li>
                     <span class="separator"></span>
                 </li>
-                <li>
+                @*<li>
                     <div class="dnnFormItem">
-                        Html.DropDownListFor(m => m.SelectedRenderOption, Model.RenderOptions, new { @@class = "dnnSecondaryAction", id = "ddlRender" })
+                        @Html.DropDownListFor(m => m.SelectedRenderOption, Model.RenderOptions, new { @class = "dnnSecondaryAction", id = "ddlRender" })
                     </div>
-                </li>
-                if (Model.ShowMasterContentButton)
+                </li>*@
+                @if (Model.ShowMasterContentButton)
                 {
                 <li>
                     <span class="separator"></span>
@@ -140,11 +140,15 @@
 </div>
 
 <script>
-    // wait for the DOM to be loaded
     $(function () {
-        // bind 'myForm' and provide a simple callback function
-        $('#dnnEditHtml form').ajaxForm(function () {
-            window.location = "@Model.RedirectUrl";
+        $('#dnnEditHtml form').ajaxForm({
+            success: function () {
+                window.location = "@Model.RedirectUrl";
+            },
+            beforeSerialize: function () {
+                for (var instanceName in CKEDITOR.instances)
+                    CKEDITOR.instances[instanceName].updateElement();
+            }
         });
     });
 </script>

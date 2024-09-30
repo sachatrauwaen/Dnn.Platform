@@ -276,7 +276,6 @@
     <Compile Include="Framework\JavaScriptLibraries\MvcJavaScript.cs" />
     <Compile Include="Modules\NavigationEventArgs.cs" />
     <Compile Include="Mvc\Containers\SkinHelpers.Content.cs" />
-    <Compile Include="Mvc\Containers\SkinHelpers.Localization.cs" />
     <Compile Include="Mvc\Containers\SkinHelpers.Title.cs" />
     <Compile Include="Mvc\Controllers\DnnPageController.cs" />
     <Compile Include="Mvc\Models\ModuleActionsModel.cs" />

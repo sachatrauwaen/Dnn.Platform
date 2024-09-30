@@ -9,7 +9,7 @@ namespace DotNetNuke.Modules.Html.Models
 
     using DotNetNuke.Web.Mvc.Page;
 
-    using static DotNetNuke.Framework.Controllers.HTMLController;
+    using static DotNetNuke.Framework.Controllers.DNN_HTMLController;
 
     public class EditHtmlViewModel : ModuleModelBase
     {
@@ -49,10 +49,16 @@ namespace DotNetNuke.Modules.Html.Models
 
         public List<SelectListItem> RenderOptions { get; set; }
 
+        public string SelectedRenderOption { get; set; }
+
         public bool ShowPreviewVersion { get; set; }
 
         public bool ShowPreviewView { get; set; }
 
         public string RedirectUrl { get; set; }
+
+        public bool ShowHistoryView { get; set; }
+
+        public bool ShowMasterContentButton { get; set; }
     }
 }

@@ -131,7 +131,7 @@ namespace DotNetNuke.Web.Mvc.Skins
         {
             get
             {
-                return this.moduleConfiguration.DesktopModule.FolderName;
+                return this.moduleConfiguration.DesktopModule.ModuleName;
             }
         }
 

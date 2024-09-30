@@ -42,7 +42,7 @@ namespace DotNetNuke.Modules.Html
                     ModuleActionType.AddContent,
                     string.Empty,
                     string.Empty,
-                    this.EditUrl(),
+                    this.EditUrl() + "?mvc=yes",
                     false,
                     SecurityAccessLevel.Edit,
                     true,

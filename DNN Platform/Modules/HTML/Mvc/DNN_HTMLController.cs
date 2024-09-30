@@ -26,14 +26,14 @@ namespace DotNetNuke.Framework.Controllers
     using DotNetNuke.Web.Mvc.Page;
     using Microsoft.Extensions.DependencyInjection;
 
-    public class HTMLController : ModuleControllerBase
+    public class DNN_HTMLController : ModuleControllerBase
     {
         private readonly INavigationManager navigationManager;
         private readonly HtmlTextController htmlTextController;
         private readonly HtmlTextLogController htmlTextLogController = new HtmlTextLogController();
         private readonly WorkflowStateController workflowStateController = new WorkflowStateController();
 
-        public HTMLController()
+        public DNN_HTMLController()
         {
             this.navigationManager = Globals.DependencyProvider.GetRequiredService<INavigationManager>();
             this.htmlTextController = new HtmlTextController(this.navigationManager);
@@ -144,6 +144,8 @@ namespace DotNetNuke.Framework.Controllers
                 model.ShowPublishOption = model.WorkflowType != WorkflowType.DirectPublish;
                 model.ShowCurrentVersion = model.WorkflowType != WorkflowType.DirectPublish;
                 model.ShowPreviewVersion = model.WorkflowType != WorkflowType.DirectPublish;
+                model.ShowHistoryView = false;
+                model.ShowMasterContentButton = false;
 
                 // model.RenderOptions = this.GetRenderOptions();
                 model.RedirectUrl = this.navigationManager.NavigateURL();
@@ -182,11 +184,25 @@ namespace DotNetNuke.Framework.Controllers
                     case WorkflowType.ContentStaging:
                         if (model.Publish)
                         {
-                            htmlContent.StateID = htmlContent.StateID == publishedStateID ? draftStateID : publishedStateID;
+                            // if it's already published set it to draft
+                            if (htmlContent.StateID == publishedStateID)
+                            {
+                                htmlContent.StateID = draftStateID;
+                            }
+                            else
+                            {
+                                htmlContent.StateID = publishedStateID;
+
+                                // here it's in published mode
+                            }
                         }
                         else
                         {
-                            htmlContent.StateID = draftStateID;
+                            // if it's already published set it back to draft
+                            if (htmlContent.StateID != draftStateID)
+                            {
+                                htmlContent.StateID = draftStateID;
+                            }
                         }
 
                         this.htmlTextController.UpdateHtmlText(htmlContent, this.htmlTextController.GetMaximumVersionHistory(this.PortalSettings.PortalId));
@@ -220,8 +236,8 @@ namespace DotNetNuke.Framework.Controllers
 
         private void PopulateModelWithContent(EditHtmlViewModel model, HtmlTextInfo htmlContent)
         {
-            // model.CurrentWorkflowInUse = this.LocalizeString(htmlContent.WorkflowName);
-            // model.CurrentWorkflowState = this.LocalizeString(htmlContent.StateName);
+            model.CurrentWorkflowInUse = htmlContent.WorkflowName;
+            model.CurrentWorkflowState = htmlContent.StateName;
             model.CurrentVersion = htmlContent.Version.ToString();
 
             // model.Content = this.FormatContent(htmlContent.Content);

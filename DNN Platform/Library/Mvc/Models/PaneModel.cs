@@ -8,6 +8,7 @@ namespace DotNetNuke.Web.Mvc.Skins
     using System.IO;
     using System.Threading;
     using System.Web;
+    using System.Web.UI;
     using System.Web.UI.HtmlControls;
 
     using DotNetNuke.Common;
@@ -36,6 +37,8 @@ namespace DotNetNuke.Web.Mvc.Skins
         public DnnPageController Page { get; private set; }
 
         public SkinModel ParentSkin { get; private set; }
+
+        public string CssClass { get; set; }
 
         public Dictionary<string, ContainerModel> Containers
         {
@@ -213,40 +216,63 @@ namespace DotNetNuke.Web.Mvc.Skins
                 if (this.PaneControl.Visible == false && TabPermissionController.CanAddContentToPage())
                 {
                     this.PaneControl.Visible = true;
-                }
+                }*/
                 if (this.CanCollapsePane())
                 {
                     // This pane has no controls so set the width to 0
+                    /*
                     if (this.PaneControl.Attributes["style"] != null)
                     {
                         this.PaneControl.Attributes.Remove("style");
                     }
-
-                    if (this.PaneControl.Attributes["class"] != null)
-                    {
-                        this.PaneControl.Attributes["class"] = this.PaneControl.Attributes["class"] + " DNNEmptyPane";
-                    }
-                    else
-                    {
-                        this.PaneControl.Attributes["class"] = "DNNEmptyPane";
-                    }
+                    */
+                    this.CssClass += " DNNEmptyPane";
                 }
 
                 // Add support for drag and drop
                 if (Globals.IsEditMode())
                 {
+                    this.CssClass += " dnnSortable";
+
                     // this call also checks for permission
-                    if (this.PaneControl.Attributes["class"] != null)
+                }
+            }
+        }
+
+        private bool CanCollapsePane()
+        {
+            // This section sets the width to "0" on panes that have no modules.
+            // This preserves the integrity of the HTML syntax so we don't have to set
+            // the visiblity of a pane to false. Setting the visibility of a pane to
+            // false where there are colspans and rowspans can render the skin incorrectly.
+            bool canCollapsePane = true;
+            if (this.Containers.Count > 0)
+            {
+                canCollapsePane = false;
+            }
+
+            /*
+            else if (this.PaneControl.Controls.Count == 1)
+            {
+                // Pane contains 1 control
+                canCollapsePane = false;
+                var literal = this.PaneControl.Controls[0] as LiteralControl;
+                if (literal != null)
+                {
+                    // Check  if the literal control is just whitespace - if so we can collapse panes
+                    if (string.IsNullOrEmpty(HtmlUtils.StripWhiteSpace(literal.Text, false)))
                     {
-                        this.PaneControl.Attributes["class"] = this.PaneControl.Attributes["class"] + " dnnSortable";
-                    }
-                    else
-                    {
-                        this.PaneControl.Attributes["class"] = "dnnSortable";
+                        canCollapsePane = true;
                     }
                 }
-                */
             }
+            else if (this.PaneControl.Controls.Count > 1)
+            {
+                // Pane contains more than 1 control
+                canCollapsePane = false;
+            }
+            */
+            return canCollapsePane;
         }
 
         private bool IsVesionableModule(ModuleInfo moduleInfo)

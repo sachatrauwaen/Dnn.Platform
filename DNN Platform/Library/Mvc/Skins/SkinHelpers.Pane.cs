@@ -15,6 +15,7 @@ namespace DotNetNuke.Web.Mvc.Skins
     using DotNetNuke.Framework.JavaScriptLibraries;
     using DotNetNuke.Framework.Models;
     using DotNetNuke.UI.Modules;
+    using DotNetNuke.UI.Skins;
     using DotNetNuke.Web.Client.ClientResourceManagement;
 
     public static partial class SkinExtensions
@@ -35,7 +36,9 @@ namespace DotNetNuke.Web.Mvc.Skins
 
             if (model.Skin.Panes.ContainsKey(paneName))
             {
-                foreach (var container in model.Skin.Panes[paneName].Containers)
+                var pane = model.Skin.Panes[paneName];
+                paneDiv.AddCssClass(pane.CssClass);
+                foreach (var container in pane.Containers)
                 {
                     string sanitizedModuleName = Null.NullString;
                     if (!string.IsNullOrEmpty(container.Value.ModuleConfiguration.DesktopModule.ModuleName))
@@ -60,6 +63,10 @@ namespace DotNetNuke.Web.Mvc.Skins
                     moduleDiv.InnerHtml += htmlHelper.Partial(container.Value.ContainerRazorFile, container.Value).ToHtmlString();
                     paneDiv.InnerHtml += moduleDiv.ToString();
                 }
+            }
+            else
+            {
+                paneDiv.AddCssClass("DNNEmptyPane");
             }
 
             if (model.IsEditMode)
