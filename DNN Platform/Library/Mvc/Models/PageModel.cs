@@ -15,7 +15,7 @@ namespace DotNetNuke.Framework.Models
 
         public int? PortalId { get; internal set; }
 
-        public MvcSkin Skin { get; internal set; }
+        public SkinModel Skin { get; internal set; }
 
         public string AntiForgery { get; internal set; }
 

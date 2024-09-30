@@ -1270,7 +1270,7 @@
     <Content Include="Views\Default\Layout.cshtml" />
     <Content Include="Views\Default\Page.cshtml" />
     <Content Include="Views\Default\Terms.cshtml" />
-    <Content Include="Views\HTML\EditHTML.cshtml" />
+    <Content Include="Views\HTML\XEditHTML.cshtml" />
     <Content Include="Views\HTML\HtmlModule.cshtml" />
     <Content Include="Views\ModuleActions\Index.cshtml" />
     <Content Include="Views\PersonaBarContainer\Index.cshtml" />
@@ -1279,6 +1279,7 @@
     <Content Include="Views\Privacy\Index.cshtml" />
     <Content Include="Views\Terms\Index.cshtml" />
     <Content Include="Views\ModuleSettingsMvc\Index.cshtml" />
+    <Content Include="Views\HTML\EditHTML.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

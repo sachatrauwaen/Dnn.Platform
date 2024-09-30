@@ -37,9 +37,16 @@ namespace DotNetNuke.Web.Mvc.Skins
     using DotNetNuke.Web.Client.ClientResourceManagement;
     using DotNetNuke.Web.Mvc.Skins.Controllers;
 
-    public class MvcSkin
+    public class SkinModel
     {
-        private Dictionary<string, MvcPane> panes;
+        private Dictionary<string, PaneModel> panes;
+
+        public SkinModel(DnnPageController page)
+        {
+            this.Page = page;
+        }
+
+        public DnnPageController Page { get; private set; }
 
         public string SkinSrc { get; set; }
 
@@ -51,11 +58,11 @@ namespace DotNetNuke.Web.Mvc.Skins
             }
         }
 
-        public Dictionary<string, MvcPane> Panes
+        public Dictionary<string, PaneModel> Panes
         {
             get
             {
-                return this.panes ?? (this.panes = new Dictionary<string, MvcPane>());
+                return this.panes ?? (this.panes = new Dictionary<string, PaneModel>());
             }
         }
 
@@ -103,9 +110,9 @@ namespace DotNetNuke.Web.Mvc.Skins
             }
         }
 
-        public static MvcSkin GetSkin(DnnPageController page)
+        public static SkinModel GetSkin(DnnPageController page)
         {
-            MvcSkin skin = null;
+            SkinModel skin = null;
             string skinSource = Null.NullString;
 
             // skin preview
@@ -162,9 +169,9 @@ namespace DotNetNuke.Web.Mvc.Skins
         /// <summary>GetPopUpSkin gets the Skin that is used in modal popup.</summary>
         /// <param name="page">The Page.</param>
         /// <returns>A <see cref="Skin"/> instance.</returns>
-        public static MvcSkin GetPopUpSkin(DnnPageController page)
+        public static SkinModel GetPopUpSkin(DnnPageController page)
         {
-            MvcSkin skin = null;
+            SkinModel skin = null;
 
             // attempt to find and load a popup skin from the assigned skinned source
             string skinSource = Globals.IsAdminSkin() ? SkinController.FormatSkinSrc(page.PortalSettings.DefaultAdminSkin, page.PortalSettings) : page.PortalSettings.ActiveTab.SkinSrc;
@@ -195,7 +202,7 @@ namespace DotNetNuke.Web.Mvc.Skins
             return skin;
         }
 
-        public bool InjectModule(MvcPane pane, ModuleInfo module)
+        public bool InjectModule(PaneModel pane, ModuleInfo module)
         {
             bool bSuccess = true;
 
@@ -240,7 +247,7 @@ namespace DotNetNuke.Web.Mvc.Skins
             this.LoadPanes();
 
             // Load the Module Control(s)
-            bool success = Globals.IsAdminControl() ? this.ProcessSlaveModule() : this.ProcessMasterModules();
+            bool success = Globals.IsAdminControl() ? this.ProcessSlaveModule(page) : this.ProcessMasterModules();
             /*
             this.ProcessMasterModules();
             */
@@ -338,9 +345,9 @@ namespace DotNetNuke.Web.Mvc.Skins
             }
         }
 
-        private static MvcSkin LoadSkin(DnnPageController page, string skinPath)
+        private static SkinModel LoadSkin(DnnPageController page, string skinPath)
         {
-            MvcSkin ctlSkin = null;
+            SkinModel ctlSkin = null;
             try
             {
                 string skinSrc = skinPath;
@@ -352,7 +359,7 @@ namespace DotNetNuke.Web.Mvc.Skins
                 /*
                 ctlSkin = ControlUtilities.LoadControl<Skin>(page, skinPath);
                 */
-                ctlSkin = new MvcSkin();
+                ctlSkin = new SkinModel(page);
 
                 ctlSkin.SkinSrc = skinSrc;
 
@@ -386,7 +393,7 @@ namespace DotNetNuke.Web.Mvc.Skins
 
         private void ProcessPanes()
         {
-            foreach (KeyValuePair<string, MvcPane> kvp in this.Panes)
+            foreach (KeyValuePair<string, PaneModel> kvp in this.Panes)
             {
                 kvp.Value.ProcessPane();
             }
@@ -520,18 +527,18 @@ namespace DotNetNuke.Web.Mvc.Skins
             return success;
         }
 
-        private bool ProcessSlaveModule()
+        private bool ProcessSlaveModule(DnnPageController page)
         {
             var success = true;
             var key = UIUtilities.GetControlKey();
             var moduleId = UIUtilities.GetModuleId(key);
             var slaveModule = UIUtilities.GetSlaveModule(moduleId, key, this.PortalSettings.ActiveTab.TabID);
 
-            MvcPane pane;
+            PaneModel pane;
             this.Panes.TryGetValue(Globals.glbDefaultPane.ToLowerInvariant(), out pane);
             if (pane == null)
             {
-                this.Panes.Add(Globals.glbDefaultPane.ToLowerInvariant(), new MvcPane(Globals.glbDefaultPane.ToLowerInvariant()));
+                this.Panes.Add(Globals.glbDefaultPane.ToLowerInvariant(), new PaneModel(Globals.glbDefaultPane.ToLowerInvariant(), page, this));
                 this.Panes.TryGetValue(Globals.glbDefaultPane.ToLowerInvariant(), out pane);
             }
 
@@ -591,7 +598,7 @@ namespace DotNetNuke.Web.Mvc.Skins
                 // We need to ensure that Content Item exists since in old versions Content Items are not needed for modules
                 this.EnsureContentItemForModule(module);
 
-                MvcPane pane = this.GetPane(module);
+                PaneModel pane = this.GetPane(module);
 
                 if (pane != null)
                 {
@@ -609,22 +616,22 @@ namespace DotNetNuke.Web.Mvc.Skins
             return success;
         }
 
-        private MvcPane GetPane(ModuleInfo module)
+        private PaneModel GetPane(ModuleInfo module)
         {
-            MvcPane pane;
+            PaneModel pane;
             bool found = this.Panes.TryGetValue(module.PaneName.ToLowerInvariant(), out pane);
 
             if (!found)
             {
                 // this.Panes.TryGetValue(Globals.glbDefaultPane.ToLowerInvariant(), out pane);
-                this.Panes.Add(module.PaneName.ToLowerInvariant(), new MvcPane(module.PaneName.ToLowerInvariant()));
+                this.Panes.Add(module.PaneName.ToLowerInvariant(), new PaneModel(module.PaneName.ToLowerInvariant(), this.Page, this));
                 found = this.Panes.TryGetValue(module.PaneName.ToLowerInvariant(), out pane);
             }
 
             return pane;
         }
 
-        private void AddPageMessage(MvcSkin mvcSkin, string empty, string v, object redError)
+        private void AddPageMessage(SkinModel mvcSkin, string empty, string v, object redError)
         {
             throw new NotImplementedException();
         }

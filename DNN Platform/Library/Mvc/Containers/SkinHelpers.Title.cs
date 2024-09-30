@@ -17,7 +17,7 @@ namespace DotNetNuke.Web.Mvc.Containers
 
     public static partial class SkinHelpers
     {
-        public static IHtmlString Title(this HtmlHelper<MvcContainer> htmlHelper, string cssClass)
+        public static IHtmlString Title(this HtmlHelper<ContainerModel> htmlHelper, string cssClass)
         {
             var model = htmlHelper.ViewData.Model;
             if (model == null)

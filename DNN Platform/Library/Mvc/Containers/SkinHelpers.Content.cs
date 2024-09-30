@@ -12,12 +12,15 @@ namespace DotNetNuke.Web.Mvc.Containers
     using DotNetNuke.Common;
     using DotNetNuke.Common.Utilities;
     using DotNetNuke.Entities.Modules;
+    using DotNetNuke.Framework.JavaScriptLibraries;
     using DotNetNuke.Framework.Models;
+    using DotNetNuke.UI.Modules;
+    using DotNetNuke.Web.Client.ClientResourceManagement;
     using DotNetNuke.Web.Mvc.Skins;
 
     public static partial class SkinHelpers
     {
-        public static IHtmlString Content(this HtmlHelper<MvcContainer> htmlHelper)
+        public static IHtmlString Content(this HtmlHelper<ContainerModel> htmlHelper)
         {
             var model = htmlHelper.ViewData.Model;
             if (model == null)
@@ -25,17 +28,54 @@ namespace DotNetNuke.Web.Mvc.Containers
                 throw new InvalidOperationException("The model need to be present.");
             }
 
+            var moduleContentPaneDiv = new TagBuilder("div");
+            if (!string.IsNullOrEmpty(model.ContentPaneCssClass))
+            {
+                moduleContentPaneDiv.AddCssClass(model.ContentPaneCssClass);
+            }
+
+            if (!ModuleHostModel.IsViewMode(model.ModuleConfiguration, model.ModuleHost.PortalSettings) && htmlHelper.ViewContext.HttpContext.Request.QueryString["dnnprintmode"] != "true")
+            {
+                MvcJavaScript.RequestRegistration(CommonJs.DnnPlugins);
+                if (model.EditMode && model.ModuleConfiguration.ModuleID > 0)
+                {
+                    moduleContentPaneDiv.InnerHtml += htmlHelper.Action("Index", "ModuleActions", model.ModuleConfiguration);
+                }
+
+                // register admin.css
+                MvcClientResourceManager.RegisterAdminStylesheet(htmlHelper.ViewContext, Globals.HostPath + "admin.css");
+            }
+
+            if (!string.IsNullOrEmpty(model.ContentPaneStyle))
+            {
+                moduleContentPaneDiv.Attributes["style"] = model.ContentPaneStyle;
+            }
+
+            if (!string.IsNullOrEmpty(model.Header))
+            {
+                moduleContentPaneDiv.InnerHtml += model.Header;
+            }
+
             var moduleDiv = new TagBuilder("div");
+            moduleDiv.AddCssClass(model.ModuleHost.CssClass);
+
             try
             {
                 moduleDiv.InnerHtml += htmlHelper.Action(model.ActionName, model.ControllerName, model.ModuleConfiguration);
             }
             catch (Exception ex)
             {
-                moduleDiv.InnerHtml += $"Error : {ex.Message} (Controller : {model.ControllerName}, Action : {model.ActionName}, module : {model.ModuleConfiguration.ModuleTitle})";
+                // moduleDiv.InnerHtml += $"Error : {ex.Message} (Controller : {model.ControllerName}, Action : {model.ActionName}, module : {model.ModuleConfiguration.ModuleTitle}) {ex.StackTrace}";
+                throw new Exception($"Error : {ex.Message} (Controller : {model.ControllerName}, Action : {model.ActionName}, module : {model.ModuleConfiguration.ModuleID})", ex);
             }
 
-            return MvcHtmlString.Create(moduleDiv.InnerHtml);
+            moduleContentPaneDiv.InnerHtml += moduleDiv.ToString();
+            if (!string.IsNullOrEmpty(model.Footer))
+            {
+                moduleContentPaneDiv.InnerHtml += model.Footer;
+            }
+
+            return MvcHtmlString.Create(moduleContentPaneDiv.InnerHtml);
         }
     }
 }

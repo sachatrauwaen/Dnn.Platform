@@ -99,7 +99,7 @@ namespace DotNetNuke.Framework.Controllers
         /// - add skin control placeholder.  This holds all the modules and content of the page.
         /// </remarks>
         /// <returns>skin.</returns>
-        protected MvcSkin OnInit(PageModel page)
+        protected SkinModel OnInit(PageModel page)
         {
             /*
             base.OnInit(e);
@@ -109,10 +109,10 @@ namespace DotNetNuke.Framework.Controllers
             this.InitializePage(page);
 
             // load skin control and register UI js
-            MvcSkin ctlSkin;
+            SkinModel ctlSkin;
             if (this.PortalSettings.EnablePopUps)
             {
-                ctlSkin = UrlUtils.InPopUp() ? MvcSkin.GetPopUpSkin(this) : MvcSkin.GetSkin(this);
+                ctlSkin = UrlUtils.InPopUp() ? SkinModel.GetPopUpSkin(this) : SkinModel.GetSkin(this);
 
                 // register popup js
                 JavaScriptLibraries.JavaScript.RequestRegistration(CommonJs.jQueryUI);
@@ -125,7 +125,7 @@ namespace DotNetNuke.Framework.Controllers
             }
             else
             {
-                ctlSkin = MvcSkin.GetSkin(this);
+                ctlSkin = SkinModel.GetSkin(this);
             }
 
             /*

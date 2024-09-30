@@ -98,6 +98,11 @@ namespace DotNetNuke.Web.Mvc
                 value = requestBase.Headers[key];
             }
 
+            if (requestBase.Form[key] != null)
+            {
+                value = requestBase.Headers[key];
+            }
+
             if (string.IsNullOrEmpty(value) && requestBase.Url != null)
             {
                 var queryString = HttpUtility.ParseQueryString(requestBase.Url.Query);
@@ -125,7 +130,7 @@ namespace DotNetNuke.Web.Mvc
             string value = null;
             if (requestBase.Headers[key] != null)
             {
-                value = requestBase.Headers[key];
+                value = requestBase.Form[key];
             }
 
             return GetTabModuleInfoFromMoniker(value);

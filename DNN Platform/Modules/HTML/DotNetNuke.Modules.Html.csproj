@@ -127,10 +127,13 @@
     <Compile Include="Components\CompareWorkflowStatePermissions.cs" />
     <Compile Include="Components\DataProvider.cs" />
     <Compile Include="Components\EditHTMLModel.cs" />
-    <Compile Include="Components\HTMLController.cs" />
+    <Compile Include="Mvc\EditHtmlViewModel.cs" />
+    <Compile Include="Mvc\ErrorViewModel.cs" />
+    <Compile Include="Mvc\HTMLController.cs" />
     <Compile Include="Components\HtmlModuleBase.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Components\HtmlModuleControl.cs" />
     <Compile Include="Components\HtmlModuleModel.cs" />
     <Compile Include="Components\HtmlModuleSettings.cs" />
     <Compile Include="Components\HtmlModuleSettingsRepository.cs" />
@@ -140,6 +143,7 @@
     <Compile Include="Components\HtmlTextLogInfo.cs" />
     <Compile Include="Components\HtmlTextUserController.cs" />
     <Compile Include="Components\HtmlTextUserInfo.cs" />
+    <Compile Include="Components\ModuleControlBase.cs" />
     <Compile Include="Components\WorkflowStateController.cs" />
     <Compile Include="Components\WorkflowStateInfo.cs" />
     <Compile Include="Components\WorkflowStatePermissionCollection.cs" />
@@ -223,6 +227,9 @@
     <None Include="Providers\DataProviders\SqlDataProvider\Uninstall.SqlDataProvider" />
     <None Include="Providers\DataProviders\SqlDataProvider\Upgrade.SqlDataProvider" />
     <Content Include="web.config" />
+    <Content Include="Views\EditHTML.cshtml" />
+    <Content Include="Views\HtmlModule.cshtml" />
+    <Content Include="Views\web.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\DotNetNuke.Internal.SourceGenerators\DotNetNuke.Internal.SourceGenerators.csproj" ReferenceOutputAssembly="false" OutputItemType="Analyzer">

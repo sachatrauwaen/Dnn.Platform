@@ -77,6 +77,9 @@
       <HintPath>..\..\..\Packages\Microsoft.AspNet.Mvc.5.2.9\lib\net45\System.Web.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Web.WebPages">
+      <HintPath>..\..\..\Packages\Microsoft.AspNet.WebPages.3.2.9\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
   </ItemGroup>
@@ -85,6 +88,10 @@
       <Project>{6b29aded-7b56-4484-bea5-c0e09079535b}</Project>
       <Name>DotNetNuke.Library</Name>
       <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Modules\DDRMenu\DotNetNuke.Modules.DDRMenu.csproj">
+      <Project>{a86ebc44-2bc8-4c4a-997b-2708e4aac345}</Project>
+      <Name>DotNetNuke.Modules.DDRMenu</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -35,7 +35,7 @@
         <meta id="MetaRobots" name="robots" Visible="@Model.MetaRobots" />
     }
     @RenderSection("metas", required: false)
-    <title>@Model.Title</title>
+    <title>[MVC] @Model.Title</title>
 
     @Html.RenderCssHere(new BasicPath("SkinPath", SkinPath), new BasicPath("SharedScripts", "~/Resources/Shared/Scripts/"))
 

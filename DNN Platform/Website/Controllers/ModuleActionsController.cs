@@ -30,6 +30,7 @@ namespace DotNetNuke.Website.Controllers
     using DotNetNuke.UI.Modules;
     using DotNetNuke.Web.Client;
     using DotNetNuke.Web.Client.ClientResourceManagement;
+    using DotNetNuke.Web.Mvc.Common;
     using Newtonsoft.Json;
 
     public class ModuleActionsController : Controller
@@ -107,111 +108,11 @@ namespace DotNetNuke.Website.Controllers
             }
         }
 
-        protected ModuleActionCollection HtmlModuleActions
-        {
-            get
-            {
-                // add the Edit Text action
-                var actions = new ModuleActionCollection();
-                actions.Add(
-                    this.ModuleContext.GetNextActionID(),
-                    "Edit"/*Localization.GetString(ModuleActionType.AddContent, this.LocalResourceFile)*/,
-                    ModuleActionType.AddContent,
-                    string.Empty,
-                    string.Empty,
-                    this.ModuleContext.EditUrl(),
-                    false,
-                    SecurityAccessLevel.Edit,
-                    true,
-                    false);
-
-                /*
-                // get the content
-                var objHTML = new HtmlTextController(this.navigationManager);
-                var objWorkflow = new WorkflowStateController();
-                this.workflowID = objHTML.GetWorkflow(this.ModuleId, this.TabId, this.PortalId).Value;
-
-                HtmlTextInfo objContent = objHTML.GetTopHtmlText(this.ModuleId, false, this.workflowID);
-                if (objContent != null)
-                {
-                    // if content is in the first state
-                    if (objContent.StateID == objWorkflow.GetFirstWorkflowStateID(this.workflowID))
-                    {
-                        // if not direct publish workflow
-                        if (objWorkflow.GetWorkflowStates(this.workflowID).Count > 1)
-                        {
-                            // add publish action
-                            actions.Add(
-                                this.GetNextActionID(),
-                                Localization.GetString("PublishContent.Action", this.LocalResourceFile),
-                                ModuleActionType.AddContent,
-                                "publish",
-                                "grant.gif",
-                                string.Empty,
-                                true,
-                                SecurityAccessLevel.Edit,
-                                true,
-                                false);
-                        }
-                    }
-                    else
-                    {
-                        // if the content is not in the last state of the workflow then review is required
-                        if (objContent.StateID != objWorkflow.GetLastWorkflowStateID(this.workflowID))
-                        {
-                            // if the user has permissions to review the content
-                            if (WorkflowStatePermissionController.HasWorkflowStatePermission(WorkflowStatePermissionController.GetWorkflowStatePermissions(objContent.StateID), "REVIEW"))
-                            {
-                                // add approve and reject actions
-                                actions.Add(
-                                    this.GetNextActionID(),
-                                    Localization.GetString("ApproveContent.Action", this.LocalResourceFile),
-                                    ModuleActionType.AddContent,
-                                    string.Empty,
-                                    "grant.gif",
-                                    this.EditUrl("action", "approve", "Review"),
-                                    false,
-                                    SecurityAccessLevel.Edit,
-                                    true,
-                                    false);
-                                actions.Add(
-                                    this.GetNextActionID(),
-                                    Localization.GetString("RejectContent.Action", this.LocalResourceFile),
-                                    ModuleActionType.AddContent,
-                                    string.Empty,
-                                    "deny.gif",
-                                    this.EditUrl("action", "reject", "Review"),
-                                    false,
-                                    SecurityAccessLevel.Edit,
-                                    true,
-                                    false);
-                            }
-                        }
-                    }
-                }
-
-                // add mywork to action menu
-                actions.Add(
-                    this.GetNextActionID(),
-                    Localization.GetString("MyWork.Action", this.LocalResourceFile),
-                    "MyWork.Action",
-                    string.Empty,
-                    "view.gif",
-                    this.EditUrl("MyWork"),
-                    false,
-                    SecurityAccessLevel.Edit,
-                    true,
-                    false);
-                */
-                return actions;
-            }
-        }
-
         public ActionResult Index(ModuleInfo moduleInfo)
         {
             this.ModuleContext = new ModuleInstanceContext(/*new FakeModuleControl()*/) { Configuration = moduleInfo };
             this.OnInit();
-            this.OnLoad();
+            this.OnLoad(moduleInfo);
 
             var viewModel = new ModuleActionsModel
             {
@@ -253,14 +154,37 @@ namespace DotNetNuke.Website.Controllers
             ServicesFramework.Instance.RequestAjaxAntiForgerySupport();
         }
 
-        protected void OnLoad()
+        protected void OnLoad(ModuleInfo moduleInfo)
         {
             // base.OnLoad(e);
+            this.ModuleContext = new ModuleInstanceContext() { Configuration = moduleInfo };
+            ModuleActionCollection moduleActions = new ModuleActionCollection();
+            var desktopModule = DesktopModuleControllerAdapter.Instance.GetDesktopModule(moduleInfo.DesktopModuleID, moduleInfo.PortalID);
+            if (!string.IsNullOrEmpty(desktopModule.BusinessControllerClass))
+            {
+                var businessController = Reflection.CreateType(desktopModule.BusinessControllerClass);
+                var controlClass = businessController.Namespace + "." + System.IO.Path.GetFileNameWithoutExtension(moduleInfo.ModuleControl.ControlSrc) + "Control," + businessController.Assembly;
+                try
+                {
+                    var controller = Reflection.CreateObject(controlClass, controlClass);
+
+                    var control = controller as IModuleControl;
+                    control.ModuleContext.Configuration = moduleInfo;
+
+                    var actionable = controller as IActionable;
+                    if (actionable != null)
+                    {
+                        moduleActions = actionable.ModuleActions;
+                    }
+                }
+                catch (Exception)
+                {
+                }
+            }
+
             this.ActionRoot.Actions.AddRange(this.Actions);
 
             var moduleSpecificActions = new ModuleAction(this.ModuleContext.GetNextActionID(), Localization.GetString("ModuleSpecificActions.Action", Localization.GlobalResourceFile), string.Empty, string.Empty, string.Empty);
-
-            ModuleActionCollection moduleActions = this.HtmlModuleActions;
 
             foreach (ModuleAction action in moduleActions)
             {
@@ -291,7 +215,6 @@ namespace DotNetNuke.Website.Controllers
                 this.ActionRoot.Actions.Add(moduleSpecificActions);
             }
 
-            // this.ActionRoot.Actions.AddRange(this.HtmlModuleActions);
             this.AdminActionsJSON = "[]";
             this.CustomActionsJSON = "[]";
             this.Panes = "[]";

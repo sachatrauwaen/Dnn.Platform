@@ -12,7 +12,10 @@ namespace DotNetNuke.Web.Mvc.Skins
     using DotNetNuke.Common;
     using DotNetNuke.Common.Utilities;
     using DotNetNuke.Entities.Modules;
+    using DotNetNuke.Framework.JavaScriptLibraries;
     using DotNetNuke.Framework.Models;
+    using DotNetNuke.UI.Modules;
+    using DotNetNuke.Web.Client.ClientResourceManagement;
 
     public static partial class SkinExtensions
     {
@@ -54,13 +57,7 @@ namespace DotNetNuke.Web.Mvc.Skins
 
                     moduleDiv.InnerHtml += anchor.ToString();
 
-                    if (model.IsEditMode)
-                    {
-                        moduleDiv.InnerHtml += htmlHelper.Action("Index", "ModuleActions", container.Value.ModuleConfiguration);
-                    }
-
                     moduleDiv.InnerHtml += htmlHelper.Partial(container.Value.ContainerRazorFile, container.Value).ToHtmlString();
-
                     paneDiv.InnerHtml += moduleDiv.ToString();
                 }
             }

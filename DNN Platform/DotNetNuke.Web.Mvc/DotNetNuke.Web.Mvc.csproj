@@ -127,8 +127,8 @@
     <Compile Include="Common\PropertyHelper.cs" />
     <Compile Include="Common\TypeHelper.cs" />
     <Compile Include="DnnMvcDependencyResolver.cs" />
-    <Compile Include="DnnMvcPageHandler.cs" />
-    <Compile Include="DnnMvcPageRouteHandler.cs" />
+    <Compile Include="Page\DnnMvcPageHandler.cs" />
+    <Compile Include="Page\DnnMvcPageRouteHandler.cs" />
     <Compile Include="Extensions\StartupExtensions.cs" />
     <Compile Include="Framework\ActionFilters\AuthFilterContext.cs" />
     <Compile Include="Framework\ActionFilters\AuthorizeAttributeBase.cs" />
@@ -150,6 +150,9 @@
     <Compile Include="Helpers\DnnHtmlHelper{TModel}.cs" />
     <Compile Include="HttpConfigurationExtensions.cs" />
     <Compile Include="HttpContextExtensions.cs" />
+    <Compile Include="Page\ModuleControllerBase.cs" />
+    <Compile Include="Page\ModuleHelpers.cs" />
+    <Compile Include="Page\ModuleModelBase.cs" />
     <Compile Include="Routing\HttpRequestExtensions.cs" />
     <Compile Include="ITabAndModuleInfoProvider.cs" />
     <Compile Include="Routing\ConstraintValidation.cs" />

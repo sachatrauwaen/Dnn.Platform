@@ -20,21 +20,28 @@ namespace DotNetNuke.Web.Mvc.Skins
     using DotNetNuke.UI;
     using DotNetNuke.UI.Skins;
     using DotNetNuke.UI.WebControls;
+    using DotNetNuke.Web.Mvc.Skins.Controllers;
 
-    public class MvcPane
+    public class PaneModel
     {
-        private Dictionary<string, MvcContainer> containers;
+        private Dictionary<string, ContainerModel> containers;
 
-        public MvcPane(string name)
+        public PaneModel(string name, DnnPageController page, SkinModel skin)
         {
             this.Name = name;
+            this.Page = page;
+            this.ParentSkin = skin;
         }
 
-        public Dictionary<string, MvcContainer> Containers
+        public DnnPageController Page { get; private set; }
+
+        public SkinModel ParentSkin { get; private set; }
+
+        public Dictionary<string, ContainerModel> Containers
         {
             get
             {
-                return this.containers ?? (this.containers = new Dictionary<string, MvcContainer>());
+                return this.containers ?? (this.containers = new Dictionary<string, ContainerModel>());
             }
         }
 
@@ -77,7 +84,7 @@ namespace DotNetNuke.Web.Mvc.Skins
                 }
 
                 // Load container control
-                MvcContainer container = this.LoadModuleContainer(module);
+                ContainerModel container = this.LoadModuleContainer(module);
 
                 // Add Container to Dictionary
                 this.Containers.Add(container.ID, container);
@@ -256,9 +263,9 @@ namespace DotNetNuke.Web.Mvc.Skins
         /// <summary>LoadModuleContainer gets the Container for cookie.</summary>
         /// <param name="request">Current Http Request.</param>
         /// <returns>A Container.</returns>
-        private MvcContainer LoadContainerFromCookie(HttpRequest request)
+        private ContainerModel LoadContainerFromCookie(HttpRequest request)
         {
-            MvcContainer container = null;
+            ContainerModel container = null;
             HttpCookie cookie = request.Cookies["_ContainerSrc" + this.PortalSettings.PortalId];
             if (cookie != null)
             {
@@ -271,12 +278,12 @@ namespace DotNetNuke.Web.Mvc.Skins
             return container;
         }
 
-        private MvcContainer LoadModuleContainer(ModuleInfo module)
+        private ContainerModel LoadModuleContainer(ModuleInfo module)
         {
             var containerSrc = Null.NullString;
 
             // var request = this.PaneControl.Page.Request;
-            MvcContainer container = null;
+            ContainerModel container = null;
 
             if (this.PortalSettings.EnablePopUps && UrlUtils.InPopUp())
             {
@@ -366,7 +373,7 @@ namespace DotNetNuke.Web.Mvc.Skins
             return container;
         }
 
-        private MvcContainer LoadContainerByPath(string containerPath)
+        private ContainerModel LoadContainerByPath(string containerPath)
         {
             if (containerPath.IndexOf("/skins/", StringComparison.InvariantCultureIgnoreCase) != -1 || containerPath.IndexOf("/skins\\", StringComparison.InvariantCultureIgnoreCase) != -1 || containerPath.IndexOf("\\skins\\", StringComparison.InvariantCultureIgnoreCase) != -1 ||
                 containerPath.IndexOf("\\skins/", StringComparison.InvariantCultureIgnoreCase) != -1)
@@ -374,7 +381,7 @@ namespace DotNetNuke.Web.Mvc.Skins
                 throw new Exception();
             }
 
-            MvcContainer container = null;
+            ContainerModel container = null;
 
             try
             {
@@ -385,7 +392,7 @@ namespace DotNetNuke.Web.Mvc.Skins
                 }
 
                 // container = ControlUtilities.LoadControl<MvcContainer>(this.PaneControl.Page, containerPath);
-                container = new MvcContainer();
+                container = new ContainerModel(this.Page, this.ParentSkin);
                 container.ContainerSrc = containerSrc;
 
                 // call databind so that any server logic in the container is executed
