@@ -119,7 +119,7 @@ namespace DotNetNuke.Modules.Html
                     "MyWork.Action",
                     string.Empty,
                     "view.gif",
-                    this.EditUrl("MyWork"),
+                    this.EditUrl("MyWork") + "?mvc=yes",
                     false,
                     SecurityAccessLevel.Edit,
                     true,

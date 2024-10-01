@@ -31,7 +31,8 @@ namespace DotNetNuke.Web.Mvc.Skins
             var paneDiv = new TagBuilder("div");
             paneDiv.GenerateId("dnn_" + paneName);
             paneDiv.AddCssClass("dnnPane");
-            paneDiv.AddCssClass(model.Skin.PaneCssClass);
+
+            // paneDiv.AddCssClass(model.Skin.PaneCssClass);
             paneDiv.Attributes["data-name"] = paneName;
 
             if (model.Skin.Panes.ContainsKey(paneName))
@@ -55,9 +56,13 @@ namespace DotNetNuke.Web.Mvc.Skins
                         moduleDiv.Attributes["data-module-title"] = container.Value.ModuleConfiguration.ModuleTitle;
                     }
 
+                    if (Globals.IsAdminControl())
+                    {
+                        moduleDiv.AddCssClass("DnnModule-Admin");
+                    }
+
                     var anchor = new TagBuilder("a");
                     anchor.Attributes["name"] = container.Value.ModuleConfiguration.ModuleID.ToString();
-
                     moduleDiv.InnerHtml += anchor.ToString();
 
                     moduleDiv.InnerHtml += htmlHelper.Partial(container.Value.ContainerRazorFile, container.Value).ToHtmlString();

@@ -65,6 +65,11 @@ namespace DotNetNuke.Web.Mvc
             return this.View(MvcUtils.GetControlViewName(module), model);
         }
 
+        protected ActionResult PartialView(ModuleInfo module, string viewName, object model)
+        {
+            return this.View(MvcUtils.GetControlViewName(module, viewName), model);
+        }
+
         private ModuleInfo InitModuleInfo()
         {
             return this.HttpContext.Request.FindModuleInfo();

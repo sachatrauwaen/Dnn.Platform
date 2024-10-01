@@ -69,18 +69,25 @@ namespace DotNetNuke.Framework.Controllers
         }
 
         [ChildActionOnly]
-        public ActionResult XEditHTML(ModuleInfo module)
+        public ActionResult MyWork(ModuleInfo module)
         {
-            var ctrl = new HtmlTextController();
-
-            // ModuleInfo module = ModuleController.Instance.GetModule(moduleId, Null.NullInteger, true);
-            int workflowID = ctrl.GetWorkflow(module.ModuleID, module.TabID, module.PortalID).Value;
-
-            HtmlTextInfo content = ctrl.GetTopHtmlText(module.ModuleID, true, workflowID);
-            var html = System.Web.HttpUtility.HtmlDecode(content.Content);
-            return this.View(new HtmlModuleModel()
+            var objHtmlTextUsers = new HtmlTextUserController();
+            var lst = objHtmlTextUsers.GetHtmlTextUser(this.UserInfo.UserID).Cast<HtmlTextUserInfo>();
+            MvcClientResourceManager.RegisterStyleSheet(this.ControllerContext, "~/DesktopModules/HTML/edit.css");
+            MvcClientResourceManager.RegisterStyleSheet(this.ControllerContext, "~/Portals/_default/Skins/_default/WebControlSkin/Default/GridView.default.css");
+            return this.View(module, new MyWorkModel()
             {
-                Html = html,
+                LocalResourceFile = Path.Combine(Path.GetDirectoryName(module.ModuleControl.ControlSrc), Localization.LocalResourceDirectory + "/" + Path.GetFileNameWithoutExtension(module.ModuleControl.ControlSrc)),
+                ModuleId = module.ModuleID,
+                TabId = module.TabID,
+                RedirectUrl = this.navigationManager.NavigateURL(),
+                HtmlTextUsers = lst.Select(u => new HtmlTextUserModel()
+                {
+                    Url = this.navigationManager.NavigateURL(u.TabID),
+                    ModuleID = u.ModuleID,
+                    ModuleTitle = u.ModuleTitle,
+                    StateName = u.StateName,
+                }).ToList(),
             });
         }
 
@@ -110,8 +117,8 @@ namespace DotNetNuke.Framework.Controllers
             // model.LocalResourceFile = "/DesktopModules/Html/" + Localization.LocalResourceDirectory + "/EditHTML";
             model.LocalResourceFile = Path.Combine(Path.GetDirectoryName(module.ModuleControl.ControlSrc), Localization.LocalResourceDirectory + "/" + Path.GetFileNameWithoutExtension(module.ModuleControl.ControlSrc));
             model.ShowEditView = true;
-            model.ModuleID = module.ModuleID;
-            model.TabID = module.TabID;
+            model.ModuleId = module.ModuleID;
+            model.TabId = module.TabID;
             int workflowID = this.htmlTextController.GetWorkflow(module.ModuleID, module.TabID, module.PortalID).Value;
 
             try
@@ -158,7 +165,7 @@ namespace DotNetNuke.Framework.Controllers
             }
 
             MvcClientResourceManager.RegisterScript(this.ControllerContext, "~/Providers/HtmlEditorProviders/DNNConnect.CKE/js/ckeditor/4.18.0/ckeditor.js");
-
+            MvcClientResourceManager.RegisterStyleSheet(this.ControllerContext, "~/Portals/_default/Skins/_default/WebControlSkin/Default/GridView.default.css");
             return this.View(module, model);
         }
 
@@ -168,8 +175,8 @@ namespace DotNetNuke.Framework.Controllers
         {
             try
             {
-                int workflowID = this.htmlTextController.GetWorkflow(model.ModuleID, model.TabID, this.PortalSettings.PortalId).Value;
-                var htmlContent = this.GetLatestHTMLContent(workflowID, model.ModuleID);
+                int workflowID = this.htmlTextController.GetWorkflow(model.ModuleId, model.TabId, this.PortalSettings.PortalId).Value;
+                var htmlContent = this.GetLatestHTMLContent(workflowID, model.ModuleId);
 
                 htmlContent.Content = model.EditorContent;
 
@@ -210,6 +217,82 @@ namespace DotNetNuke.Framework.Controllers
                 }
 
                 return new EmptyResult();
+            }
+            catch (Exception exc)
+            {
+                // Gérer l'exception
+                // return this.View("Error", new ErrorViewModel { Message = exc.Message });
+                throw new Exception(exc.Message, exc);
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ShowHistory(EditHtmlViewModel model)
+        {
+            model.ShowHistoryView = true;
+            model.LocalResourceFile = "DesktopModules\\HTML\\App_LocalResources/EditHTML";
+
+            // model.LocalResourceFile = Path.Combine(Path.GetDirectoryName(this.ActiveModule.ModuleControl.ControlSrc), Localization.LocalResourceDirectory + "/" + Path.GetFileNameWithoutExtension(this.ActiveModule.ModuleControl.ControlSrc));
+            try
+            {
+                int workflowID = this.htmlTextController.GetWorkflow(model.ModuleId, model.TabId, this.PortalSettings.PortalId).Value;
+                var htmlContent = this.GetLatestHTMLContent(workflowID, model.ModuleId);
+
+                var maxVersions = this.htmlTextController.GetMaximumVersionHistory(this.PortalSettings.PortalId);
+                model.MaxVersions = maxVersions;
+
+                // var htmlLogging = this.htmlTextLogController.GetHtmlTextLog(htmlContent.ItemID);
+                var versions = this.htmlTextController.GetAllHtmlText(model.ModuleId);
+                model.VersionItems = versions.Cast<HtmlTextInfo>().ToList();
+
+                return this.PartialView(this.ActiveModule, "_History", model);
+            }
+            catch (Exception exc)
+            {
+                // Gérer l'exception
+                // return this.View("Error", new ErrorViewModel { Message = exc.Message });
+                throw new Exception(exc.Message, exc);
+            }
+        }
+
+        public ActionResult ShowEdit(EditHtmlViewModel model)
+        {
+            model.ShowHistoryView = true;
+            model.LocalResourceFile = "DesktopModules\\HTML\\App_LocalResources/EditHTML";
+            try
+            {
+                int workflowID = this.htmlTextController.GetWorkflow(model.ModuleId, model.TabId, this.PortalSettings.PortalId).Value;
+                var htmlContent = this.GetLatestHTMLContent(workflowID, model.ModuleId);
+
+                model.ShowPublishOption = model.WorkflowType != WorkflowType.DirectPublish;
+                model.ShowCurrentVersion = model.WorkflowType != WorkflowType.DirectPublish;
+
+                var workflowStates = this.workflowStateController.GetWorkflowStates(workflowID);
+                var maxVersions = this.htmlTextController.GetMaximumVersionHistory(this.PortalSettings.PortalId);
+
+                var htmlContentItemID = -1;
+
+                if (htmlContent != null)
+                {
+                    htmlContentItemID = htmlContent.ItemID;
+                    var html = System.Web.HttpUtility.HtmlDecode(htmlContent.Content);
+                    model.EditorContent = html;
+                }
+
+                model.MaxVersions = maxVersions;
+
+                model.WorkflowType = workflowStates.Count == 1 ? WorkflowType.DirectPublish : WorkflowType.ContentStaging;
+                if (htmlContentItemID != -1)
+                {
+                    this.PopulateModelWithContent(model, htmlContent);
+                }
+                else
+                {
+                    this.PopulateModelWithInitialContent(model, workflowStates[0] as WorkflowStateInfo);
+                }
+
+                return this.PartialView(this.ActiveModule, "_Edit", model);
             }
             catch (Exception exc)
             {

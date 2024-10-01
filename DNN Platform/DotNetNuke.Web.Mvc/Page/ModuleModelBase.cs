@@ -5,9 +5,9 @@ namespace DotNetNuke.Web.Mvc.Page
 {
     public class ModuleModelBase
     {
-        public int ModuleID { get; set; }
+        public int ModuleId { get; set; }
 
-        public int TabID { get; set; }
+        public int TabId { get; set; }
 
         public string LocalResourceFile { get; set; }
     }

@@ -17,7 +17,12 @@ namespace DotNetNuke.Mvc
     {
         public static string GetControlViewName(ModuleInfo module)
         {
-            return "~/" + Path.GetDirectoryName(module.ModuleControl.ControlSrc) + "/Views/" + Path.GetFileNameWithoutExtension(module.ModuleControl.ControlSrc) + ".cshtml";
+            return GetControlViewName(module, Path.GetFileNameWithoutExtension(module.ModuleControl.ControlSrc));
+        }
+
+        public static string GetControlViewName(ModuleInfo module, string viewName)
+        {
+            return "~/" + Path.GetDirectoryName(module.ModuleControl.ControlSrc) + "/Views/" + viewName + ".cshtml";
         }
     }
 }

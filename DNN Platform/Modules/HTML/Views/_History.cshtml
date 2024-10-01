@@ -1,0 +1,61 @@
+@using DotNetNuke.Modules.Html.Models
+@using DotNetNuke.Web.Mvc.Page
+@using DotNetNuke.Services.Localization
+@model EditHtmlViewModel
+
+
+@if (Model.ShowHistoryView)
+{
+    <fieldset>
+        <div class="ehvContent">
+            <div class="dnnFormItem">
+                <div class="dnnLabel" style="position: relative;">
+                    <label>@Localization.GetString("plMaxVersions", Model.LocalResourceFile)</label>
+                </div>
+                <span>@Model.MaxVersions</span>
+            </div>
+            <table class="dnn-grid">
+                <thead>
+                    <tr>
+                        <th>
+                            Version
+                        </th>
+                        <th>
+                            Date
+                        </th>
+                        <th>
+                            User
+                        </th>
+                        <th>
+                            State
+                        </th>
+                        <th>
+                            Actions
+                        </th>
+                    </tr>
+                </thead>
+                @foreach (var item in Model.VersionItems)
+                {
+                    <tr>
+                        <td>
+                            @item.Version
+                        </td>
+                        <td>
+                            @item.LastModifiedOnDate
+                        </td>
+                        <td>
+                            @item.DisplayName
+                        </td>
+                        <td>
+                            @item.StateName
+                        </td>
+                        <td>
+                            
+                        </td>
+
+                    </tr>
+                }
+            </table>
+        </div>
+    </fieldset>
+}

@@ -143,6 +143,7 @@
     <Compile Include="Components\HtmlTextLogInfo.cs" />
     <Compile Include="Components\HtmlTextUserController.cs" />
     <Compile Include="Components\HtmlTextUserInfo.cs" />
+    <Compile Include="Mvc\HtmlTextUserModel.cs" />
     <Compile Include="Mvc\ModuleControlBase.cs" />
     <Compile Include="Components\WorkflowStateController.cs" />
     <Compile Include="Components\WorkflowStateInfo.cs" />
@@ -163,6 +164,7 @@
     <Compile Include="HtmlModule.ascx.designer.cs">
       <DependentUpon>HtmlModule.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Mvc\MyWorkModel.cs" />
     <Compile Include="MyWork.ascx.cs">
       <DependentUpon>MyWork.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -230,6 +232,9 @@
     <Content Include="Views\EditHTML.cshtml" />
     <Content Include="Views\HtmlModule.cshtml" />
     <Content Include="Views\web.config" />
+    <Content Include="Views\_Edit.cshtml" />
+    <Content Include="Views\_History.cshtml" />
+    <Content Include="Views\MyWork.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\DotNetNuke.Internal.SourceGenerators\DotNetNuke.Internal.SourceGenerators.csproj" ReferenceOutputAssembly="false" OutputItemType="Analyzer">

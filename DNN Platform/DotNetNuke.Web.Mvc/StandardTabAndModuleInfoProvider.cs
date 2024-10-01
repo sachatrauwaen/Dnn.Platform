@@ -100,7 +100,7 @@ namespace DotNetNuke.Web.Mvc
 
             if (requestBase.Form[key] != null)
             {
-                value = requestBase.Headers[key];
+                value = requestBase.Form[key];
             }
 
             if (string.IsNullOrEmpty(value) && requestBase.Url != null)

@@ -60,5 +60,7 @@ namespace DotNetNuke.Modules.Html.Models
         public bool ShowHistoryView { get; set; }
 
         public bool ShowMasterContentButton { get; set; }
+
+        public List<HtmlTextInfo> VersionItems { get; set; }
     }
 }
