@@ -55,11 +55,6 @@
                         <span class="brand">
                             @* <dnn:LOGO runat="server" ID="dnnLOGO" /> *@
                             @Html.Logo()
-                            @*
-                                <a id="dnn_dnnLOGO_hypLogo" title="My Website" aria-label="My Website" href="http://dnndev.local/">
-                                    <img id="dnn_dnnLOGO_imgLogo" src="/Portals/0/Images/logo.png?ver=iQ_5jD494yqztgqRg6ESQA%3d%3d" alt="My Website">
-                                    </a>
-                            *@
                         </span>
                     </div>
                 </div>
@@ -76,7 +71,7 @@
                     @*
                         <dnn:MENU ID="MENU" MenuStyle="Menus/MainMenu" runat="server" NodeSelector="*"></dnn:MENU>
                     *@
-                    @Html.DDRMenu("MENU", "Menus/MainMenu")
+                    @Html.DDRMenu(clientID: "MENU", menuStyle: "Menus/MainMenu")
                 </div>
             </div>
         </div>
@@ -140,19 +135,14 @@
                             @*<dnn:COPYRIGHT ID="dnnCopyright" runat="server" CssClass="" />*@
                             @Html.Copyright(cssClass: "")
                         </div>
-                        @*
-                            <div class="terms-priv">
-                                <dnn:LINKTOMOBILE ID="dnnLinkToMobile" runat="server" />
-                                <dnn:TERMS ID="dnnTerms" runat="server" />
-                                |
-                                <dnn:PRIVACY ID="dnnPrivacy" runat="server" />
-                            </div>
-                        *@
                         <div class="terms-priv">
+                            @*<dnn:LINKTOMOBILE ID="dnnLinkToMobile" runat="server" />*@
                             @Html.LinkToMobileSite()
+                            @*<dnn:TERMS ID="dnnTerms" runat="server" />*@
                             @Html.Terms()
                             |
                             @Html.Privacy()
+                            @*<dnn:PRIVACY ID="dnnPrivacy" runat="server" />*@
                         </div>
                     </div>
                 </div>
