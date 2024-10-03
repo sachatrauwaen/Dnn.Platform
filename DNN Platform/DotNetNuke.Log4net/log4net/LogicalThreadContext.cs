@@ -28,17 +28,6 @@ namespace log4net
     /// <summary>The log4net Logical Thread Context.</summary>
     /// <remarks>
     /// <para>
-    /// The <c>LogicalThreadContext</c> provides a location for <see cref="System.Runtime.Remoting.Messaging.CallContext"/> specific debugging 
-    /// information to be stored.
-    /// The <c>LogicalThreadContext</c> properties override any <see cref="ThreadContext"/> or <see cref="GlobalContext"/>
-    /// properties with the same name.
-    /// </para>
-    /// <para>
-    /// For .NET Standard 1.3 this class uses
-    /// System.Threading.AsyncLocal rather than <see
-    /// cref="System.Runtime.Remoting.Messaging.CallContext"/>.
-    /// </para>
-    /// <para>
     /// The Logical Thread Context has a properties map and a stack.
     /// The properties and stack can 
     /// be included in the output of log messages. The <see cref="log4net.Layout.PatternLayout"/>
@@ -49,16 +38,6 @@ namespace log4net
     /// This is an instrument for distinguishing interleaved log
     /// output from different sources. Log output is typically interleaved
     /// when a server handles multiple clients near-simultaneously.
-    /// </para>
-    /// <para>
-    /// The Logical Thread Context is managed on a per <see cref="System.Runtime.Remoting.Messaging.CallContext"/> basis.
-    /// </para>
-    /// <para>
-    /// The <see cref="System.Runtime.Remoting.Messaging.CallContext"/> requires a link time 
-    /// <see cref="System.Security.Permissions.SecurityPermission"/> for the
-    /// <see cref="System.Security.Permissions.SecurityPermissionFlag.Infrastructure"/>.
-    /// If the calling code does not have this permission then this context will be disabled.
-    /// It will not store any property values set on it.
     /// </para>
     /// </remarks>
     /// <example>Example of using the thread context properties to store a username.

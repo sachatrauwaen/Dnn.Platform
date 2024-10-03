@@ -28,16 +28,12 @@
 //
 // You can specify all the values or you can default the Revision and Build Numbers
 // by using the '*' as shown below:
-[assembly: System.Reflection.AssemblyVersion("3.0.2.0")]
 
 #if !NETCF
 #if !SSCLI
-[assembly: System.Reflection.AssemblyFileVersion("3.0.2.0")]
 #endif
 #endif
 
 //
 // Shared assembly settings
-[assembly: System.Reflection.AssemblyCompany("The Apache Software Foundation")]
-[assembly: System.Reflection.AssemblyCopyright("Copyright 2004-2018 The Apache Software Foundation.")]
 [assembly: System.Reflection.AssemblyTrademark("Apache and Apache log4net are trademarks of The Apache Software Foundation")]

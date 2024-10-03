@@ -38,22 +38,6 @@ namespace log4net.Util
     /// Class implements a collection of properties that is specific to each thread.
     /// The class is not synchronized as each thread has its own <see cref="PropertiesDictionary"/>.
     /// </para>
-    /// <para>
-    /// This class stores its properties in a slot on the <see cref="CallContext"/> named
-    /// <c>log4net.Util.LogicalThreadContextProperties</c>.
-    /// </para>
-    /// <para>
-    /// For .NET Standard 1.3 this class uses
-    /// System.Threading.AsyncLocal rather than <see
-    /// cref="System.Runtime.Remoting.Messaging.CallContext"/>.
-    /// </para>
-    /// <para>
-    /// The <see cref="CallContext"/> requires a link time 
-    /// <see cref="System.Security.Permissions.SecurityPermission"/> for the
-    /// <see cref="System.Security.Permissions.SecurityPermissionFlag.Infrastructure"/>.
-    /// If the calling code does not have this permission then this context will be disabled.
-    /// It will not store any property values set on it.
-    /// </para>
     /// </remarks>
     /// <author>Nicko Cadell</author>
     public sealed class LogicalThreadContextProperties : ContextPropertiesBase
@@ -187,11 +171,6 @@ namespace log4net.Util
 
         /// <summary>Gets the call context get data.</summary>
         /// <returns>The peroperties dictionary stored in the call context</returns>
-        /// <remarks>
-        /// The <see cref="CallContext"/> method <see cref="CallContext.GetData"/> has a
-        /// security link demand, therfore we must put the method call in a seperate method
-        /// that we can wrap in an exception handler.
-        /// </remarks>
 #if NET_4_0 || MONO_4_0 || NETSTANDARD
         [SecuritySafeCritical]
 #endif
@@ -208,11 +187,6 @@ namespace log4net.Util
 
         /// <summary>Sets the call context data.</summary>
         /// <param name="properties">The properties.</param>
-        /// <remarks>
-        /// The <see cref="CallContext"/> method <see cref="CallContext.SetData"/> has a
-        /// security link demand, therfore we must put the method call in a seperate method
-        /// that we can wrap in an exception handler.
-        /// </remarks>
 #if NET_4_0 || MONO_4_0 || NETSTANDARD
         [SecuritySafeCritical]
 #endif
