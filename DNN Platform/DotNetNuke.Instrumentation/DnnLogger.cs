@@ -7,8 +7,8 @@ namespace DotNetNuke.Instrumentation
     using System.Diagnostics;
     using System.Globalization;
     using System.Reflection;
-    using System.Web.Compilation;
-    using System.Web.UI;
+    // using System.Web.Compilation;
+    // using System.Web.UI;
 
     using log4net;
     using log4net.Core;
@@ -22,7 +22,7 @@ namespace DotNetNuke.Instrumentation
         private static Level levelLogInfo = new Level(10001, "LogInfo");
         private static Level levelLogError = new Level(10002, "LogError");
 
-        private readonly Type dnnExceptionType = BuildManager.GetType("DotNetNuke.Services.Exceptions.Exceptions", false);
+        private readonly Type dnnExceptionType = Type.GetType("DotNetNuke.Services.Exceptions.Exceptions", false);
         private readonly Type stackBoundary = typeof(DnnLogger);
 
         private DnnLogger(ILogger logger)
@@ -35,7 +35,7 @@ namespace DotNetNuke.Instrumentation
                 int frameDepth = 0;
                 Type methodType = stack[frameDepth].GetMethod().ReflectedType;
 #pragma warning disable 612, 618
-                while (methodType == this.dnnExceptionType || methodType == typeof(DnnLogger) || methodType == typeof(DnnLog) || methodType == typeof(Control))
+                while (methodType == this.dnnExceptionType || methodType == typeof(DnnLogger) || methodType == typeof(DnnLog) /* || methodType == typeof(Control)*/ )
 #pragma warning restore 612, 618
                 {
                     frameDepth++;
