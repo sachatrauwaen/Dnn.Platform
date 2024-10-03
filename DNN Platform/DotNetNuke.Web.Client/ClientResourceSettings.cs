@@ -83,7 +83,7 @@ namespace DotNetNuke.Web.Client
         }
 
         [DnnDeprecated(9, 10, 3, "Use overload taking portalId")]
-        public partial bool IsOverridingDefaultSettingsEnabled()
+        public bool IsOverridingDefaultSettingsEnabled()
         {
             int? portalId = GetPortalIdThroughReflection();
             return this.IsOverridingDefaultSettingsEnabled(portalId);
@@ -100,7 +100,7 @@ namespace DotNetNuke.Web.Client
         }
 
         [DnnDeprecated(9, 10, 3, "Use overload taking portalId")]
-        public partial int? GetVersion()
+        public int? GetVersion()
         {
             int? portalId = GetPortalIdThroughReflection();
             return this.GetVersion(portalId);

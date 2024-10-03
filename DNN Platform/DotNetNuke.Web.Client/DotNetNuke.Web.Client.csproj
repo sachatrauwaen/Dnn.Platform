@@ -1,102 +1,21 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\..\packages\Microsoft.SourceLink.GitHub.8.0.0\build\Microsoft.SourceLink.GitHub.props" Condition="Exists('..\..\packages\Microsoft.SourceLink.GitHub.8.0.0\build\Microsoft.SourceLink.GitHub.props')" />
-  <Import Project="..\..\packages\Microsoft.SourceLink.Common.8.0.0\build\Microsoft.SourceLink.Common.props" Condition="Exists('..\..\packages\Microsoft.SourceLink.Common.8.0.0\build\Microsoft.SourceLink.Common.props')" />
-  <Import Project="..\..\packages\Microsoft.Build.Tasks.Git.8.0.0\build\Microsoft.Build.Tasks.Git.props" Condition="Exists('..\..\packages\Microsoft.Build.Tasks.Git.8.0.0\build\Microsoft.Build.Tasks.Git.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Deterministic>true</Deterministic>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
-  </PropertyGroup>
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{03E3AFA5-DDC9-48FB-A839-AD4282CE237E}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DotNetNuke.Web.Client</RootNamespace>
-    <AssemblyName>DotNetNuke.Web.Client</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\DotNetNuke.Web.Client.XML</DocumentationFile>
-    <NoWarn>1591</NoWarn>
-    <LangVersion>latest</LangVersion>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <WarningsNotAsErrors>SA1600,SA1601,SA1614</WarningsNotAsErrors>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\DotNetNuke.Web.Client.XML</DocumentationFile>
-    <NoWarn>1591</NoWarn>
-    <LangVersion>latest</LangVersion>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <WarningsNotAsErrors>SA1600,SA1601,SA1614</WarningsNotAsErrors>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ClientDependency.Core, Version=1.9.10.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Dnn.ClientDependency.1.9.10\lib\net45\ClientDependency.Core.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\dnnClientDependency\src\ClientDependency.Core\bin\Debug\net8.0\ClientDependency.Core.dll</HintPath>
     </Reference>
     <Reference Include="ClientDependency.Core.Mvc, Version=1.9.10.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Refs\ClientDependency.Core.Mvc.dll</HintPath>
+      <HintPath>..\..\..\dnnClientDependency\src\ClientDependency.Mvc\bin\Debug\net8.0\ClientDependency.Core.Mvc.dll</HintPath>
     </Reference>
-    <Reference Include="DotNetNuke.Instrumentation">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\DotNetNuke.Instrumentation\bin\DotNetNuke.Instrumentation.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.configuration" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Web" />
-    <Reference Include="System.Web.Abstractions" />
-    <Reference Include="System.Web.Extensions" />
-    <Reference Include="System.Web.Mvc">
-      <HintPath>..\..\Packages\Microsoft.AspNet.Mvc.5.2.9\lib\net45\System.Web.Mvc.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\SolutionInfo.cs">
       <Link>SolutionInfo.cs</Link>
     </Compile>
-    <Compile Include="MvcClientResourceManager.cs" />
-    <Compile Include="Controls\ClientResourceExclude.cs" />
-    <Compile Include="Controls\DnnJsExclude.cs" />
-    <Compile Include="Controls\DnnCssExclude.cs" />
-    <Compile Include="Controls\DnnJsIncludeFallback.cs" />
-    <Compile Include="FileOrder.cs" />
-    <Compile Include="Controls\ClientResourceInclude.cs" />
-    <Compile Include="Controls\ClientResourceLoader.cs" />
-    <Compile Include="ClientResourceManager.cs" />
-    <Compile Include="Controls\ClientResourcePath.cs" />
-    <Compile Include="Controls\ClientResourcePathCollection.cs" />
-    <Compile Include="Controls\DnnCssInclude.cs" />
-    <Compile Include="Controls\DnnHtmlInclude.cs" />
-    <Compile Include="Controls\DnnJsInclude.cs" />
-    <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="ClientResourceSettings.cs" />
-    <Compile Include="Providers\DnnBodyProvider.cs" />
-    <Compile Include="Providers\DnnCompositeFileProcessingProvider.cs" />
-    <Compile Include="Providers\DnnFileRegistrationProvider.cs" />
-    <Compile Include="Providers\DnnFormBottomProvider.cs" />
-    <Compile Include="Providers\DnnPageHeaderProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
@@ -105,45 +24,40 @@
     <AdditionalFiles Include="..\..\stylecop.json">
       <Link>stylecop.json</Link>
     </AdditionalFiles>
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\..\packages\StyleCop.Analyzers.1.1.118\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
     <Analyzer Include="..\..\packages\StyleCop.Analyzers.1.1.118\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\DotNetNuke.Internal.SourceGenerators\DotNetNuke.Internal.SourceGenerators.csproj" ReferenceOutputAssembly="false" OutputItemType="Analyzer">
-      <Project>{5FE5D021-9C8D-47A6-BD34-F328BA3E709C}</Project>
-      <Name>DotNetNuke.Internal.SourceGenerators</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DotNetNuke.Abstractions\DotNetNuke.Abstractions.csproj">
-      <Project>{6928a9b1-f88a-4581-a132-d3eb38669bb0}</Project>
-      <Name>DotNetNuke.Abstractions</Name>
-    </ProjectReference>
+    <ProjectReference Include="..\..\DotNetNuke.Internal.SourceGenerators\DotNetNuke.Internal.SourceGenerators.csproj" />
+    <ProjectReference Include="..\DotNetNuke.Abstractions\DotNetNuke.Abstractions.csproj" />
+    <ProjectReference Include="..\DotNetNuke.Instrumentation\DotNetNuke.Instrumentation.csproj" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Build.Tasks.Git" Version="8.0.0" />
+    <PackageReference Include="Microsoft.SourceLink.Common" Version="8.0.0" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" />
+    <PackageReference Include="Microsoft.AspNetCore.SystemWebAdapters" Version="1.4.0" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.0" />
+    <PackageReference Include="WebForms" Version="0.4.1-ci0004" />
+    <PackageReference Include="WebForms.Extensions" Version="0.4.1-ci0004" />
+  </ItemGroup>
   <PropertyGroup>
     <RootDirectory>$(MSBuildProjectDirectory)\..\..</RootDirectory>
   </PropertyGroup>
-  <Import Project="..\..\DNN_Platform.build" />
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <OutputPath>bin\</OutputPath>
+    <AssemblyTitle>DotNetNuke.Web.Client</AssemblyTitle>
+    <Description>Open Source Web Application Framework</Description>
+  </PropertyGroup>
   <Target Name="AfterBuild" DependsOnTargets="DebugProject">
   </Target>
   <Target Name="DebugProject">
     <Copy SourceFiles="$(MSBuildProjectDirectory)\bin\DotNetNuke.Web.Client.dll" DestinationFolder="$(WebsitePath)\bin\" />
     <Copy SourceFiles="$(MSBuildProjectDirectory)\bin\DotNetNuke.Web.Client.pdb" DestinationFolder="$(WebsitePath)\bin\" />
   </Target>
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\..\packages\Microsoft.Build.Tasks.Git.8.0.0\build\Microsoft.Build.Tasks.Git.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.Build.Tasks.Git.8.0.0\build\Microsoft.Build.Tasks.Git.props'))" />
-    <Error Condition="!Exists('..\..\packages\Microsoft.Build.Tasks.Git.8.0.0\build\Microsoft.Build.Tasks.Git.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.Build.Tasks.Git.8.0.0\build\Microsoft.Build.Tasks.Git.targets'))" />
-    <Error Condition="!Exists('..\..\packages\Microsoft.SourceLink.Common.8.0.0\build\Microsoft.SourceLink.Common.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.SourceLink.Common.8.0.0\build\Microsoft.SourceLink.Common.props'))" />
-    <Error Condition="!Exists('..\..\packages\Microsoft.SourceLink.Common.8.0.0\build\Microsoft.SourceLink.Common.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.SourceLink.Common.8.0.0\build\Microsoft.SourceLink.Common.targets'))" />
-    <Error Condition="!Exists('..\..\packages\Microsoft.SourceLink.GitHub.8.0.0\build\Microsoft.SourceLink.GitHub.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.SourceLink.GitHub.8.0.0\build\Microsoft.SourceLink.GitHub.props'))" />
-    <Error Condition="!Exists('..\..\packages\Microsoft.SourceLink.GitHub.8.0.0\build\Microsoft.SourceLink.GitHub.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.SourceLink.GitHub.8.0.0\build\Microsoft.SourceLink.GitHub.targets'))" />
-  </Target>
-  <Import Project="..\..\packages\Microsoft.Build.Tasks.Git.8.0.0\build\Microsoft.Build.Tasks.Git.targets" Condition="Exists('..\..\packages\Microsoft.Build.Tasks.Git.8.0.0\build\Microsoft.Build.Tasks.Git.targets')" />
-  <Import Project="..\..\packages\Microsoft.SourceLink.Common.8.0.0\build\Microsoft.SourceLink.Common.targets" Condition="Exists('..\..\packages\Microsoft.SourceLink.Common.8.0.0\build\Microsoft.SourceLink.Common.targets')" />
-  <Import Project="..\..\packages\Microsoft.SourceLink.GitHub.8.0.0\build\Microsoft.SourceLink.GitHub.targets" Condition="Exists('..\..\packages\Microsoft.SourceLink.GitHub.8.0.0\build\Microsoft.SourceLink.GitHub.targets')" />
 </Project>
