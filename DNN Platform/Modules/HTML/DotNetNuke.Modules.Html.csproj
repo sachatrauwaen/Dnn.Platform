@@ -228,6 +228,7 @@
     <None Include="Providers\DataProviders\SqlDataProvider\06.01.00.SqlDataProvider" />
     <None Include="Providers\DataProviders\SqlDataProvider\Uninstall.SqlDataProvider" />
     <None Include="Providers\DataProviders\SqlDataProvider\Upgrade.SqlDataProvider" />
+    <Content Include="edit.js" />
     <Content Include="web.config" />
     <Content Include="Views\EditHTML.cshtml" />
     <Content Include="Views\HtmlModule.cshtml" />

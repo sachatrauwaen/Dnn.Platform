@@ -166,6 +166,7 @@ namespace DotNetNuke.Framework.Controllers
 
             MvcClientResourceManager.RegisterScript(this.ControllerContext, "~/Providers/HtmlEditorProviders/DNNConnect.CKE/js/ckeditor/4.18.0/ckeditor.js");
             MvcClientResourceManager.RegisterStyleSheet(this.ControllerContext, "~/Portals/_default/Skins/_default/WebControlSkin/Default/GridView.default.css");
+            MvcClientResourceManager.RegisterScript(this.ControllerContext, "~/DesktopModules/HTML/edit.js");
             return this.View(module, model);
         }
 
@@ -300,6 +301,27 @@ namespace DotNetNuke.Framework.Controllers
                 // return this.View("Error", new ErrorViewModel { Message = exc.Message });
                 throw new Exception(exc.Message, exc);
             }
+        }
+
+        public ActionResult HistoryRemove(EditHtmlViewModel model)
+        {
+            // int workflowID = this.htmlTextController.GetWorkflow(model.ModuleId, model.TabId, this.PortalSettings.PortalId).Value;
+            // var htmlContent = this.GetLatestHTMLContent(workflowID, model.ModuleId);
+            this.htmlTextController.DeleteHtmlText(model.ModuleId, model.ItemID);
+
+            return this.ShowEdit(model);
+        }
+
+        public ActionResult HistoryRollback(EditHtmlViewModel model)
+        {
+            int workflowID = this.htmlTextController.GetWorkflow(model.ModuleId, model.TabId, this.PortalSettings.PortalId).Value;
+            var htmlContent = this.htmlTextController.GetHtmlText(model.ModuleId, model.ItemID);
+            htmlContent.ItemID = -1;
+            htmlContent.ModuleID = model.ModuleId;
+            htmlContent.WorkflowID = workflowID;
+            htmlContent.StateID = this.workflowStateController.GetFirstWorkflowStateID(workflowID);
+            this.htmlTextController.UpdateHtmlText(htmlContent, this.htmlTextController.GetMaximumVersionHistory(this.PortalId));
+            return this.ShowEdit(model);
         }
 
         private HtmlTextInfo GetLatestHTMLContent(int workflowID, int moduleId)

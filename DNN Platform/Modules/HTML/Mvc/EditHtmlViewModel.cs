@@ -62,5 +62,7 @@ namespace DotNetNuke.Modules.Html.Models
         public bool ShowMasterContentButton { get; set; }
 
         public List<HtmlTextInfo> VersionItems { get; set; }
+
+        public int ItemID { get; set; }
     }
 }

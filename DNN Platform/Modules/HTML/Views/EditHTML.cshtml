@@ -5,8 +5,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js" integrity="sha384-qlmct0AOBiA2VPZkMY3+2WqkHtIQ9lSdAsAn5RUJD/3vA5MKDgSGcdmIv4ycVxyn" crossorigin="anonymous"></script>
 
-
-<div class="dnnForm dnnEditHtml dnnClear" id="dnnEditHtml">
+<div class="dnnForm dnnEditHtml dnnClear" id="dnnEditHtml" data-returnurl="@Model.RedirectUrl">
     @using (Html.BeginForm("Save", "DNN_HTML"))
     {
         @Html.AntiForgeryToken()
@@ -72,13 +71,13 @@
                     <a href="@Model.RedirectUrl" class="dnnSecondaryAction">@Localization.GetString("cmdCancel", Model.LocalResourceFile)</a>
                 </li>
                 <li>
-                    <button type="button" class="dnnSecondaryAction" id="cmdEdit" @*@(Model.ShowEditView ? "disabled" : "" )*@>@Localization.GetString("cmdEdit", Model.LocalResourceFile)</button>
+                    <button type="button" data-action="@Url.Action("ShowEdit")" class="dnnSecondaryAction" id="cmdEdit" @*@(Model.ShowEditView ? "disabled" : "" )*@>@Localization.GetString("cmdEdit", Model.LocalResourceFile)</button>
                 </li>
                 <li>
                     <button type="button" disabled class="dnnSecondaryAction" id="cmdPreview">@Localization.GetString("cmdPreview", Model.LocalResourceFile)</button>
                 </li>
                 <li>
-                    <button type="button" class="dnnSecondaryAction" id="cmdHistory">@Localization.GetString("cmdHistory", Model.LocalResourceFile)</button>
+                    <button type="button" data-action="@Url.Action("ShowHistory")" class="dnnSecondaryAction" id="cmdHistory">@Localization.GetString("cmdHistory", Model.LocalResourceFile)</button>
                 </li>
                 <li>
                     <span class="separator"></span>
@@ -102,42 +101,7 @@
     }
 </div>
 
-<script>
-    $(function () {
-        $('#dnnEditHtml form').ajaxForm({
-            success: function () {
-                window.location = "@Model.RedirectUrl";
-            },
-            beforeSerialize: function () {
-                for (var instanceName in CKEDITOR.instances)
-                    CKEDITOR.instances[instanceName].updateElement();
-            }
-        });
 
-        $('#cmdHistory').click(function () {
-            // submit the form
-            $('#dnnEditHtml form').ajaxSubmit({
-                url: '@Url.Action("ShowHistory")',
-                target: '.ehccContent',
-            });
-            // return false to prevent normal browser submit and page navigation
-            return false;
-
-        });
-
-        $('#cmdEdit').click(function () {
-            // submit the form
-            $('#dnnEditHtml form').ajaxSubmit({
-                url: '@Url.Action("ShowEdit")',
-                target: '.ehccContent',
-            });
-            // return false to prevent normal browser submit and page navigation
-            return false;
-
-        });
-
-    });
-</script>
 
 @section Scripts {
     <script>
