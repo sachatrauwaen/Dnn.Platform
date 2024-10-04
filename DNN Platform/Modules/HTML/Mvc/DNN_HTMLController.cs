@@ -320,7 +320,7 @@ namespace DotNetNuke.Framework.Controllers
             htmlContent.ModuleID = model.ModuleId;
             htmlContent.WorkflowID = workflowID;
             htmlContent.StateID = this.workflowStateController.GetFirstWorkflowStateID(workflowID);
-            this.htmlTextController.UpdateHtmlText(htmlContent, this.htmlTextController.GetMaximumVersionHistory(this.PortalId));
+            this.htmlTextController.UpdateHtmlText(htmlContent, this.htmlTextController.GetMaximumVersionHistory(this.PortalSettings.PortalId));
             return this.ShowEdit(model);
         }
 
