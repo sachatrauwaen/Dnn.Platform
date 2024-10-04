@@ -34,6 +34,10 @@
     {
         <meta id="MetaRobots" name="robots" Visible="@Model.MetaRobots" />
     }
+    @if (!string.IsNullOrEmpty(Model.FavIconLink))
+    {
+        @Html.Raw(Model.FavIconLink)
+    }
     @RenderSection("metas", required: false)
     <title>[MVC] @Model.Title</title>
 

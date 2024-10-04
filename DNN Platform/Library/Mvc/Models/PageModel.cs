@@ -45,5 +45,7 @@ namespace DotNetNuke.Framework.Models
         public Dictionary<string, string> StartupScripts { get; internal set; }
 
         public bool IsEditMode { get; internal set; }
+
+        public string FavIconLink { get; internal set; }
     }
 }

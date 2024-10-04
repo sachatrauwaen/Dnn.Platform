@@ -74,8 +74,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ClientDependency.Core, Version=1.9.10.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\dnnClientDependency\src\ClientDependency.Mvc\bin\Debug-MVC5\ClientDependency.Core.dll</HintPath>
+      <HintPath>..\..\packages\Dnn.ClientDependency.1.9.10\lib\net45\ClientDependency.Core.dll</HintPath>
     </Reference>
     <Reference Include="ClientDependency.Core.Mvc, Version=1.9.10.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -1266,20 +1265,11 @@
     <Content Include="Install\Config\09.13.04.config" />
     <Content Include="Providers\DataProviders\SqlDataProvider\09.13.04.SqlDataProvider" />
     <Content Include="Views\web.config" />
-    <Content Include="Views\Default\Index.cshtml" />
     <Content Include="Views\Default\Layout.cshtml" />
-    <Content Include="Views\Default\Page.cshtml" />
-    <Content Include="Views\Default\Terms.cshtml" />
-    <Content Include="Views\HTML\XEditHTML.cshtml" />
-    <Content Include="Views\HTML\HtmlModule.cshtml" />
     <Content Include="Views\ModuleActions\Index.cshtml" />
     <Content Include="Views\PersonaBarContainer\Index.cshtml" />
-    <Content Include="Views\Shared\Portals\_default\Containers\Xcillion\NoTitle.cshtml" />
-    <Content Include="Views\Shared\Portals\_default\Skins\Xcillion\Inner.cshtml" />
     <Content Include="Views\Privacy\Index.cshtml" />
     <Content Include="Views\Terms\Index.cshtml" />
-    <Content Include="Views\ModuleSettingsMvc\Index.cshtml" />
-    <Content Include="Views\HTML\EditHTML.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
@@ -3420,6 +3410,7 @@
   <ItemGroup>
     <Folder Include="Install\Provider\" />
     <Folder Include="Install\Temp\" />
+    <Folder Include="Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">

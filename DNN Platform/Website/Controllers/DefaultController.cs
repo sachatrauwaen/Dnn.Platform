@@ -32,6 +32,7 @@ namespace DotNetNuke.Framework.Controllers
     using DotNetNuke.Services.Installer.Blocker;
     using DotNetNuke.Services.Localization;
     using DotNetNuke.Services.Personalization;
+    using DotNetNuke.UI.Internals;
     using DotNetNuke.UI.Modules;
     using DotNetNuke.UI.Skins;
     using DotNetNuke.UI.Utilities;
@@ -48,12 +49,6 @@ namespace DotNetNuke.Framework.Controllers
         private static readonly Regex HeaderTextRegex = new Regex(
             "<meta([^>])+name=('|\")robots('|\")",
             RegexOptions.IgnoreCase | RegexOptions.Multiline | RegexOptions.Compiled);
-
-        [Authorize]
-        public ActionResult Index()
-        {
-            return this.View();
-        }
 
         public ActionResult Page(int tabid, string language)
         {
@@ -216,9 +211,10 @@ namespace DotNetNuke.Framework.Controllers
             */
 
             MvcClientResourceManager.RegisterStyleSheet(this.ControllerContext, string.Concat(this.PortalSettings.HomeDirectory, "portal.css"), FileOrder.Css.PortalCss);
-            /*
+
             // add Favicon
-            this.ManageFavicon();
+            this.ManageFavicon(page);
+            /*
             // ClientCallback Logic
             ClientAPI.HandleClientAPICallbackEvent(this);
 
@@ -241,6 +237,18 @@ namespace DotNetNuke.Framework.Controllers
         protected bool NonProductionVersion()
         {
             return DotNetNukeContext.Current.Application.Status != ReleaseMode.Stable;
+        }
+
+        private void ManageFavicon(PageModel page)
+        {
+            string headerLink = FavIcon.GetHeaderLink(this.PortalSettings.PortalId);
+            page.FavIconLink = headerLink;
+            /*
+            if (!string.IsNullOrEmpty(headerLink))
+            {
+                this.Page.Header.Controls.Add(new Literal { Text = headerLink });
+            }
+            */
         }
 
         private void InitializePage(PageModel page)
