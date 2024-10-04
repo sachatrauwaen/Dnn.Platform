@@ -40,72 +40,12 @@
     }
     @RenderSection("metas", required: false)
     <title>[MVC] @Model.Title</title>
-
     @Html.RenderCssHere(new BasicPath("SkinPath", SkinPath), new BasicPath("SharedScripts", "~/Resources/Shared/Scripts/"))
-
-
-    @*<link href="/Portals/_default/admin.css?cdv=47" type="text/css" rel="stylesheet"/>
-        <link href="/resources/shared/stylesheets/dnn.dragDrop.css?cdv=47" type="text/css" rel="stylesheet"/>
-        <link href="/admin/menus/ModuleActions/ModuleActions.css?cdv=47" type="text/css" rel="stylesheet"/>
-
-        <link href="/Resources/Shared/stylesheets/dnnicons/css/dnnicon.min.css?cdv=47" type="text/css" rel="stylesheet"/>
-        <link href="/Resources/Search/SearchSkinObjectPreview.css?cdv=47" type="text/css" rel="stylesheet"/>
-        <link href="/Resources/Shared/components/DropDownList/dnn.DropDownList.css?cdv=47" type="text/css" rel="stylesheet"/>
-        <link href="/Resources/Shared/scripts/jquery/dnn.jScrollBar.css?cdv=47" type="text/css" rel="stylesheet"/>
-
-        <link href="/DesktopModules/admin/Dnn.EditBar/Resources/ContentEditorManager/Styles/ContentEditor.css?cdv=47" type="text/css" rel="stylesheet"/>
-
-        <link href="/DesktopModules/admin/Dnn.EditBar/css/editBarContainer.css?cdv=47" type="text/css" rel="stylesheet"/>*@
-
-
     @RenderSection("stylesheets", required: false)
-
-    <script src="/ScriptResource.axd?d=dyDTs7gNF_mytV8ZHTrSz0270yTaDThYGPlmWaUUewS2C4978dXCk7MDJqzG-VhASpmd7KCM6OkICWS-CDoDO1YJieg8SPRC2MHDDcsaLyh5NfLKHO9JPIbbtIXaG6M409nz3g2&amp;t=3ed5a90" type="text/javascript"></script>
-    <script src="/ScriptResource.axd?d=ct1HG-wRSULsRM9A7_XH-eDvytVnIkDh4UM45BOIoIU_b78Ng7SDIwxXiDiZRiN6dG4Vu90XO6jYCu-WayGD4MnNYbenBr2XnuaUaXb8NplHfVOmTgyyDRDSxhx17_BlBfESLdL9uYoJb9Wo0&amp;t=3ed5a90" type="text/javascript"></script>
-
     @Html.RenderJsHere(new BasicPath("SkinPath", SkinPath), new BasicPath("SharedScripts", "~/Resources/Shared/Scripts/"))
-
-    @*<script src="/Resources/libraries/HoverIntent/01_10_01/jquery.hoverIntent.min.js?cdv=47" type="text/javascript"></script>*@
-
-    @*
-        <script src="/Resources/libraries/Knockout/03_05_01/knockout.js?cdv=47" type="text/javascript"></script>
-    *@
-
-    @*<script src="/js/dnn.xmlhttp.js?cdv=47" type="text/javascript"></script>
-        <script src="/js/dnn.xmlhttp.jsxmlhttprequest.js?cdv=47" type="text/javascript"></script>
-        <script src="/js/dnn.controls.js?cdv=47" type="text/javascript"></script>
-        <script src="/js/dnn.controls.dnnlabeledit.js?cdv=47" type="text/javascript"></script>
-        <script src="/js/dnncore.js?cdv=47" type="text/javascript"></script>
-        <script src="/admin/menus/ModuleActions/ModuleActions.js?cdv=47" type="text/javascript"></script>
-        <script src="/Resources/Shared/scripts/dnn.extensions.js?cdv=47" type="text/javascript"></script>
-        <script src="/Resources/Shared/scripts/dnn.jquery.extensions.js?cdv=47" type="text/javascript"></script>
-        <script src="/Resources/Shared/scripts/dnn.DataStructures.js?cdv=47" type="text/javascript"></script>
-        <script src="/Resources/Shared/scripts/jquery/jquery.mousewheel.js?cdv=47" type="text/javascript"></script>
-        <script src="/Resources/Shared/scripts/jquery/dnn.jScrollBar.js?cdv=47" type="text/javascript"></script>
-        <script src="/Resources/Shared/scripts/TreeView/dnn.TreeView.js?cdv=47" type="text/javascript"></script>
-        <script src="/Resources/Shared/scripts/TreeView/dnn.DynamicTreeView.js?cdv=47" type="text/javascript"></script>
-        <script src="/Resources/Shared/Components/DropDownList/dnn.DropDownList.js?cdv=47" type="text/javascript"></script>*@
-
-    @*
-        <script src="/DesktopModules/admin/Dnn.EditBar/Resources/ContentEditorManager/Js/ModuleManager.js?cdv=47" type="text/javascript"></script>
-        <script src="/DesktopModules/admin/Dnn.EditBar/Resources/ContentEditorManager/Js/ModuleDialog.js?cdv=47" type="text/javascript"></script>
-        <script src="/DesktopModules/admin/Dnn.EditBar/Resources/ContentEditorManager/Js/ExistingModuleDialog.js?cdv=47" type="text/javascript"></script>
-        <script src="/DesktopModules/admin/Dnn.EditBar/Resources/ContentEditorManager/Js/ModuleService.js?cdv=47" type="text/javascript"></script>
-        <script src="/DesktopModules/admin/Dnn.EditBar/Resources/ContentEditorManager/Js/ContentEditor.js?cdv=47" type="text/javascript"></script>
-
-        <script src="/DesktopModules/admin/Dnn.EditBar/scripts/editBarContainer.js?cdv=47" type="text/javascript"></script>
-
-    *@
-    @*<script src="/Resources/Search/SearchSkinObjectPreview.js?cdv=47" type="text/javascript"></script>
-        <script src="/resources/shared/scripts/dnn.dragDrop.js?cdv=47" type="text/javascript"></script>
-        <script src="/js/dnn.dom.positioning.js?cdv=47" type="text/javascript"></script>*@
-
-
-
     @RenderSection("scripts", required: false)
 </head>
 <body class="@(Model.Skin.BodyCssClass)">
-
     <form id="Form">
         <div class="aspNetHidden">
             <input name="ScrollTop" type="hidden" id="ScrollTop" />
@@ -117,9 +57,7 @@
     {
         @Html.Action("Index", Model.Skin.ControlPanelRazor, Model);
     }
-
     @RenderBody()
-
     <script>
         var dnn = dnn || {};
         dnn.panes = [];
@@ -134,6 +72,5 @@
 		@Html.Raw(s.Value);
 	}
     </script>
-
 </body>
 </html>

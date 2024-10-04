@@ -177,6 +177,8 @@ namespace DotNetNuke.Framework.JavaScriptLibraries
                         break;
                     }
 
+                    MvcClientResourceManager.RegisterScript(page, ClientAPI.ScriptPath + "MicrosoftAjax.js", 10);
+                    MvcClientResourceManager.RegisterScript(page, ClientAPI.ScriptPath + "mvc.js", 11);
                     MvcClientResourceManager.RegisterScript(page, ClientAPI.ScriptPath + "dnn.js", 12);
                     HttpContextSource.Current.Items.Add(LegacyPrefix + "dnn.js", true);
 

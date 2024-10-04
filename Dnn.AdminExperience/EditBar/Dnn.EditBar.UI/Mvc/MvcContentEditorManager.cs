@@ -109,8 +109,10 @@ namespace Dnn.EditBar.UI.Mvc
                 {
                     var manager = new MvcContentEditorManager();
                     manager.Context = controller.ControllerContext;
-                    manager.OnInit();
-                    manager.OnPreRender();
+                    if (manager.OnInit())
+                    {
+                        manager.OnPreRender();
+                    }
                 }
             }
         }
@@ -146,7 +148,7 @@ namespace Dnn.EditBar.UI.Mvc
         }
         */
 
-        protected void OnInit()
+        protected bool OnInit()
         {
             /*
             if (GetCurrent(this.Page) != null)
@@ -168,7 +170,7 @@ namespace Dnn.EditBar.UI.Mvc
                     || Controllers.EditBarController.Instance.GetMenuItems().Count == 0)
             {
                 // this.Parent.Controls.Remove(this);
-                return;
+                return false;
             }
 
             this.RegisterClientResources();
@@ -184,6 +186,7 @@ namespace Dnn.EditBar.UI.Mvc
             this.CheckCallbackData();
 
             // this.EnsureChildControls();
+            return true;
         }
 
         protected void OnPreRender()
