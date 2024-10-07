@@ -17,14 +17,32 @@ namespace DotNetNuke.Web.Mvc.Skins
 
     public static partial class SkinHelpers
     {
-        public static IHtmlString Terms(this HtmlHelper<DotNetNuke.Framework.Models.PageModel> helper, string cssClass = "SkinObject")
+        public static IHtmlString Terms(this HtmlHelper<DotNetNuke.Framework.Models.PageModel> helper, string text = "", string cssClass = "SkinObject", string rel = "nofollow")
         {
             var navigationManager = Globals.DependencyProvider.GetRequiredService<INavigationManager>();
             var portalSettings = PortalSettings.Current;
             var link = new TagBuilder("a");
 
-            link.Attributes.Add("href", portalSettings.TermsTabId == Null.NullInteger ? navigationManager.NavigateURL(portalSettings.ActiveTab.TabID, "Terms") : navigationManager.NavigateURL(portalSettings.TermsTabId));
-            link.SetInnerText(Localization.GetString("Terms.Text", GetSkinsResourceFile("Terms.ascx")));
+            // Add Css Class
+            link.Attributes.Add("class", cssClass);
+
+            // Add Text
+            if (string.IsNullOrWhiteSpace(text))
+            {
+                text = Localization.GetString("Terms.Text", GetSkinsResourceFile("Terms.ascx"));
+            }
+
+            link.SetInnerText(text);
+
+            // Add Link
+            var href = portalSettings.TermsTabId == Null.NullInteger ? navigationManager.NavigateURL(portalSettings.ActiveTab.TabID, "Terms") : navigationManager.NavigateURL(portalSettings.TermsTabId);
+            link.Attributes.Add("href", href);
+
+            // Add Rel
+            if (!string.IsNullOrWhiteSpace(rel))
+            {
+                link.Attributes.Add("rel", rel);
+            }
 
             return new MvcHtmlString(link.ToString());
         }
