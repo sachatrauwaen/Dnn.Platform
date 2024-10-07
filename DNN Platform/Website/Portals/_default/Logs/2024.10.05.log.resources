@@ -1,0 +1,19 @@
+2024-10-05 21:59:53.769+02:00 [LAPTOP-KHO4CTFG][D:4][T:6][ERROR] DotNetNuke.Services.Localization.LocalizationProvider - System.NullReferenceException: La référence d'objet n'est pas définie à une instance d'un objet.
+   à DotNetNuke.Common.Globals.get_Status() dans C:\sacha\dnn\DnnPlatform\DNN Platform\Library\Common\Globals.cs:ligne 420
+   à DotNetNuke.Services.Localization.LocalizationProvider.TryGetStringInternal(String key, String userLanguage, String resourceFile, PortalSettings portalSettings, String& resourceValue) dans C:\sacha\dnn\DnnPlatform\DNN Platform\Library\Services\Localization\LocalizationProvider.cs:ligne 525
+2024-10-05 21:59:53.945+02:00 [LAPTOP-KHO4CTFG][D:4][T:6][ERROR] DotNetNuke.Services.Localization.LocalizationProvider - System.NullReferenceException: La référence d'objet n'est pas définie à une instance d'un objet.
+   à DotNetNuke.Common.Globals.get_Status() dans C:\sacha\dnn\DnnPlatform\DNN Platform\Library\Common\Globals.cs:ligne 420
+   à DotNetNuke.Services.Localization.LocalizationProvider.TryGetStringInternal(String key, String userLanguage, String resourceFile, PortalSettings portalSettings, String& resourceValue) dans C:\sacha\dnn\DnnPlatform\DNN Platform\Library\Services\Localization\LocalizationProvider.cs:ligne 525
+2024-10-05 22:16:10.279+02:00 [LAPTOP-KHO4CTFG][D:4][T:14][ERROR] DotNetNuke.Services.Localization.LocalizationProvider - System.NullReferenceException: La référence d'objet n'est pas définie à une instance d'un objet.
+   à DotNetNuke.Common.Globals.get_Status() dans C:\sacha\dnn\DnnPlatform\DNN Platform\Library\Common\Globals.cs:ligne 420
+   à DotNetNuke.Services.Localization.LocalizationProvider.TryGetStringInternal(String key, String userLanguage, String resourceFile, PortalSettings portalSettings, String& resourceValue) dans C:\sacha\dnn\DnnPlatform\DNN Platform\Library\Services\Localization\LocalizationProvider.cs:ligne 525
+2024-10-05 22:16:10.281+02:00 [LAPTOP-KHO4CTFG][D:4][T:14][ERROR] DotNetNuke.Services.Localization.LocalizationProvider - System.NullReferenceException: La référence d'objet n'est pas définie à une instance d'un objet.
+   à DotNetNuke.Common.Globals.get_Status() dans C:\sacha\dnn\DnnPlatform\DNN Platform\Library\Common\Globals.cs:ligne 420
+   à DotNetNuke.Services.Localization.LocalizationProvider.TryGetStringInternal(String key, String userLanguage, String resourceFile, PortalSettings portalSettings, String& resourceValue) dans C:\sacha\dnn\DnnPlatform\DNN Platform\Library\Services\Localization\LocalizationProvider.cs:ligne 525
+2024-10-05 22:16:10.649+02:00 [LAPTOP-KHO4CTFG][D:4][T:14][ERROR] DotNetNuke.Services.Exceptions.Exceptions - System.NullReferenceException: La référence d'objet n'est pas définie à une instance d'un objet.
+   à DotNetNuke.Web.UI.Utilities.ApplySkin(Control targetControl, String fallBackEmbeddedSkinName, String controlName, String webControlSkinSubFolderName) dans C:\sacha\dnn\DnnPlatform\DNN Platform\DotNetNuke.Web\UI\Utilities.cs:ligne 116
+2024-10-05 22:16:10.694+02:00 [LAPTOP-KHO4CTFG][D:4][T:14][ERROR] DotNetNuke.Services.Exceptions.BasePortalException - System.ArgumentNullException: La valeur ne peut pas être null.
+Nom du paramètre : provider
+   à Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService[T](IServiceProvider provider)
+   à DotNetNuke.Application.DotNetNukeContext.get_Current() dans C:\sacha\dnn\DnnPlatform\DNN Platform\Library\Application\DotNetNukeContext.cs:ligne 64
+   à DotNetNuke.Services.Exceptions.BasePortalException.InitializePrivateVariables() dans C:\sacha\dnn\DnnPlatform\DNN Platform\Library\Services\Exceptions\BasePortalException.cs:ligne 146

@@ -91,23 +91,6 @@ namespace DotNetNuke.Framework.Controllers
             });
         }
 
-        [HttpPost]
-        public ActionResult SaveHTML(ModuleInfo module)
-        {
-            var input = this.Request.Form["Html"];
-            var ctrl = new HtmlTextController();
-
-            // ModuleInfo module = ModuleController.Instance.GetModule(moduleId, Null.NullInteger, true);
-            int workflowID = ctrl.GetWorkflow(module.ModuleID, module.TabID, module.PortalID).Value;
-
-            HtmlTextInfo content = ctrl.GetTopHtmlText(module.ModuleID, true, workflowID);
-            var html = System.Web.HttpUtility.HtmlDecode(content.Content);
-            return this.View(new HtmlModuleModel()
-            {
-                Html = html + "/" + input,
-            });
-        }
-
         [HttpGet]
         [ChildActionOnly]
         public ActionResult EditHTML(ModuleInfo module)
@@ -119,6 +102,7 @@ namespace DotNetNuke.Framework.Controllers
             model.ShowEditView = true;
             model.ModuleId = module.ModuleID;
             model.TabId = module.TabID;
+            model.PortalId = this.PortalSettings.PortalId;
             int workflowID = this.htmlTextController.GetWorkflow(module.ModuleID, module.TabID, module.PortalID).Value;
 
             try
@@ -164,7 +148,7 @@ namespace DotNetNuke.Framework.Controllers
                 throw new Exception("EditHTML", exc);
             }
 
-            MvcClientResourceManager.RegisterScript(this.ControllerContext, "~/Providers/HtmlEditorProviders/DNNConnect.CKE/js/ckeditor/4.18.0/ckeditor.js");
+            // MvcClientResourceManager.RegisterScript(this.ControllerContext, "~/Providers/HtmlEditorProviders/DNNConnect.CKE/js/ckeditor/4.18.0/ckeditor.js");
             MvcClientResourceManager.RegisterStyleSheet(this.ControllerContext, "~/Portals/_default/Skins/_default/WebControlSkin/Default/GridView.default.css");
             MvcClientResourceManager.RegisterScript(this.ControllerContext, "~/DesktopModules/HTML/edit.js");
             return this.View(module, model);

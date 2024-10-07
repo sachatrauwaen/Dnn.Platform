@@ -1,8 +1,8 @@
 @using DotNetNuke.Modules.Html.Models
 @using DotNetNuke.Web.Mvc.Page
 @using DotNetNuke.Services.Localization
+@using DotNetNuke.Web.Mvc.Containers
 @model EditHtmlViewModel
-
 
 <fieldset>
     <div class="dnnFormItem">
@@ -14,8 +14,8 @@
                 </div>
             </div>
         }
-
-        @Html.TextAreaFor(x => x.EditorContent, new { @class = "dnnTextEditor", rows = "10", cols = "100" })
+        @* Html.TextAreaFor(x => x.EditorContent, new { @class = "dnnTextEditor", rows = "10", cols = "100" })*@
+        @Html.TextEditorFor(x => x.EditorContent)
     </div>
     <script>
         

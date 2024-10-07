@@ -116,6 +116,9 @@
     <Reference Include="System.Web.Mvc">
       <HintPath>..\..\..\Packages\Microsoft.AspNet.Mvc.5.2.9\lib\net45\System.Web.Mvc.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web.WebPages">
+      <HintPath>..\..\..\Packages\Microsoft.AspNet.WebPages.3.2.9\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
@@ -128,7 +131,6 @@
     <Compile Include="Components\DataProvider.cs" />
     <Compile Include="Components\EditHTMLModel.cs" />
     <Compile Include="Mvc\EditHtmlViewModel.cs" />
-    <Compile Include="Mvc\ErrorViewModel.cs" />
     <Compile Include="Mvc\DNN_HTMLController.cs" />
     <Compile Include="Components\HtmlModuleBase.cs">
       <SubType>ASPXCodeBehind</SubType>

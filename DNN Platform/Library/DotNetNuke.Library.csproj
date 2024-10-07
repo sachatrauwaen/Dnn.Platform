@@ -284,6 +284,7 @@
     <Compile Include="Mvc\Models\PaneModel.cs" />
     <Compile Include="Mvc\Models\SkinModel.cs" />
     <Compile Include="Mvc\Models\PageModel.cs" />
+    <Compile Include="Mvc\Modules\ModuleHelpers.TextEditor.cs" />
     <Compile Include="Mvc\MvcClientAPI.cs" />
     <Compile Include="Mvc\MvcUtils.cs" />
     <Compile Include="Mvc\Skins\SkinHelpers.BreadCrumb.cs" />

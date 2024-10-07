@@ -11,6 +11,8 @@ namespace DotNetNuke.Mvc
     using System.Threading.Tasks;
     using System.Web;
 
+    using Newtonsoft.Json.Linq;
+
     public class MvcClientAPI
     {
         public static Dictionary<string, string> GetClientVariableList()
@@ -48,6 +50,11 @@ namespace DotNetNuke.Mvc
         }
 
         public static void RegisterStartupScript(string key, string value)
+        {
+            GetClientStartupScriptList().Add(key, value);
+        }
+
+        public static void RegisterScript(string key, string value)
         {
             GetClientStartupScriptList().Add(key, value);
         }
