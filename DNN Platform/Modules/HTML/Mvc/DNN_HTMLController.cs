@@ -148,7 +148,7 @@ namespace DotNetNuke.Framework.Controllers
                 throw new Exception("EditHTML", exc);
             }
 
-            // MvcClientResourceManager.RegisterScript(this.ControllerContext, "~/Providers/HtmlEditorProviders/DNNConnect.CKE/js/ckeditor/4.18.0/ckeditor.js");
+            MvcClientResourceManager.RegisterScript(this.ControllerContext, "~/Resources/Shared/scripts/jquery/jquery.form.min.js");
             MvcClientResourceManager.RegisterStyleSheet(this.ControllerContext, "~/Portals/_default/Skins/_default/WebControlSkin/Default/GridView.default.css");
             MvcClientResourceManager.RegisterScript(this.ControllerContext, "~/DesktopModules/HTML/edit.js");
             return this.View(module, model);

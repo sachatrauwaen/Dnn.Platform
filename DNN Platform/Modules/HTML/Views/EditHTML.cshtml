@@ -3,8 +3,6 @@
 @using DotNetNuke.Services.Localization
 @model EditHtmlViewModel
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js" integrity="sha384-qlmct0AOBiA2VPZkMY3+2WqkHtIQ9lSdAsAn5RUJD/3vA5MKDgSGcdmIv4ycVxyn" crossorigin="anonymous"></script>
-
 <div class="dnnForm dnnEditHtml dnnClear" id="dnnEditHtml" data-returnurl="@Model.RedirectUrl" data-portalid="@Model.PortalId" data-tabid="@Model.TabId" data-moduleid="@Model.ModuleId">
     @using (Html.BeginForm("Save", "DNN_HTML"))
     {

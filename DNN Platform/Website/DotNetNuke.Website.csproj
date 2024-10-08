@@ -104,6 +104,7 @@
       <HintPath>..\Components\PetaPoco\bin\PetaPoco.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -554,6 +555,7 @@
       <DependentUpon>ViewProfile.ascx</DependentUpon>
     </Compile>
     <Compile Include="Controllers\ModuleActionsController.cs" />
+    <Compile Include="Controllers\ModuleSettingsController.cs" />
     <Compile Include="Controllers\PrivacyController.cs" />
     <Compile Include="Controllers\TermsController.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
@@ -587,6 +589,7 @@
     </Compile>
     <Content Include="admin\Menus\ModuleActions\dnnQuickSettings.js" />
     <Content Include="admin\Menus\ModuleActions\ModuleActions.less" />
+    <Content Include="admin\Modules\module.js" />
     <Content Include="Install\InstallWizard.aspx" />
     <Content Include="js\mvc.js" />
     <Content Include="Licenses\Castle Core %28Apache%29.txt.resources" />
@@ -796,6 +799,8 @@
     <Compile Include="KeepAlive.aspx.designer.cs">
       <DependentUpon>KeepAlive.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Models\ModuleSettingsModel.cs" />
+    <Compile Include="Models\TabModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="admin\Skins\DnnJsInclude.xml">
       <SubType>Designer</SubType>
@@ -1271,6 +1276,7 @@
     <Content Include="Views\PersonaBarContainer\Index.cshtml" />
     <Content Include="Views\Privacy\Index.cshtml" />
     <Content Include="Views\Terms\Index.cshtml" />
+    <Content Include="Views\ModuleSettings\Index.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

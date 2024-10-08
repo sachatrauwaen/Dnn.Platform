@@ -182,6 +182,15 @@ namespace DotNetNuke.Website.Controllers
                 }
             }
 
+            if (this.Actions.Count > 1)
+            {
+                var moduleSettingsAction = this.Actions[0].Actions.GetActionByCommandName(ModuleActionType.ModuleSettings);
+                if (moduleSettingsAction != null)
+                {
+                    moduleSettingsAction.Url = moduleSettingsAction.Url + "&mvc=yes";
+                }
+            }
+
             this.ActionRoot.Actions.AddRange(this.Actions);
 
             var moduleSpecificActions = new ModuleAction(this.ModuleContext.GetNextActionID(), Localization.GetString("ModuleSpecificActions.Action", Localization.GlobalResourceFile), string.Empty, string.Empty, string.Empty);

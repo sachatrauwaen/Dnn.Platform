@@ -4,6 +4,7 @@
 @{
 
     var SkinPath = Path.GetDirectoryName(Model.Skin.SkinSrc);
+    DotNetNuke.Framework.JavaScriptLibraries.MvcJavaScript.Register(this.ViewContext);
 }
 <!DOCTYPE html>
 <html lang="@Model.Language">

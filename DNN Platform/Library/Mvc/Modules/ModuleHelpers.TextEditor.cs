@@ -27,7 +27,7 @@ namespace DotNetNuke.Web.Mvc.Containers
     using DotNetNuke.Services.FileSystem;
     using DotNetNuke.Web.Client.ClientResourceManagement;
 
-    public static class ModuleHelpers
+    public static partial class ModuleHelpers
     {
         public static IHtmlString TextEditorFor<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression)
         {

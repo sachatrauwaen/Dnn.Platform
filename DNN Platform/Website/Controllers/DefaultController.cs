@@ -78,7 +78,8 @@ namespace DotNetNuke.Framework.Controllers
                 Language = language,
             };
             model.Skin = this.OnInit(model);
-            DotNetNuke.Framework.JavaScriptLibraries.MvcJavaScript.Register(this.ControllerContext);
+
+            // DotNetNuke.Framework.JavaScriptLibraries.MvcJavaScript.Register(this.ControllerContext);
             model.ClientVariables = MvcClientAPI.GetClientVariableList();
             model.StartupScripts = MvcClientAPI.GetClientStartupScriptList();
 

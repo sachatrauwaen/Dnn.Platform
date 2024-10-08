@@ -73,7 +73,14 @@ namespace DotNetNuke.Web.Mvc.Skins
         {
             get
             {
-                return string.IsNullOrEmpty(this.FolderName) ? "Index" : this.FileNameWithoutExtension;
+                if (this.moduleConfiguration.ModuleControl.ControlKey == "Module")
+                {
+                    return "Index";
+                }
+                else
+                {
+                    return string.IsNullOrEmpty(this.ModuleName) ? "Index" : this.FileNameWithoutExtension;
+                }
             }
         }
 
@@ -81,7 +88,14 @@ namespace DotNetNuke.Web.Mvc.Skins
         {
             get
             {
-                return string.IsNullOrEmpty(this.FolderName) ? this.FileNameWithoutExtension : this.FolderName;
+                if (this.moduleConfiguration.ModuleControl.ControlKey == "Module")
+                {
+                    return "ModuleSettings";
+                }
+                else
+                {
+                    return string.IsNullOrEmpty(this.ModuleName) ? this.FileNameWithoutExtension : this.ModuleName;
+                }
             }
         }
 
@@ -127,7 +141,7 @@ namespace DotNetNuke.Web.Mvc.Skins
             }
         }
 
-        private string FolderName
+        private string ModuleName
         {
             get
             {
