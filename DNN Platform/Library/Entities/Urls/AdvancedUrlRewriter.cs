@@ -57,6 +57,22 @@ namespace DotNetNuke.Entities.Urls
                 parentTraceId);
         }
 
+        internal static bool IsMvc(UrlAction result, NameValueCollection queryStringCol)
+        {
+            var mvcCtls = new[] { "Module", "Terms", "Privacy" };
+            bool mvcCtl = false;
+            foreach (var item in mvcCtls)
+            {
+                mvcCtl = mvcCtl || result.RewritePath.Contains("&ctl=" + item);
+            }
+
+            bool mvc = result.RawUrl.EndsWith("mvc") && queryStringCol["mvc"] != "no";
+            mvc = mvc || (mvcCtl && queryStringCol["mvc"] != "no");
+
+            mvc = mvc || queryStringCol["mvc"] == "yes";
+            return mvc;
+        }
+
         internal static void RewriteAsChildAliasRoot(
             HttpContext context,
             UrlAction result,
@@ -2272,7 +2288,7 @@ namespace DotNetNuke.Entities.Urls
                         }
                         else
                         {
-                            if ((result.RawUrl.EndsWith("mvc") && queryStringCol["mvc"] != "no" && !result.RewritePath.Contains("&ctl=")) || queryStringCol["mvc"] == "yes")
+                            if (IsMvc(result, queryStringCol))
                             {
                                 RewriterUtils.RewriteUrl(context, "~/" + result.RewritePath.Replace(Globals.glbDefaultPage, "mvc/Default/Page/" + result.TabId + "/" + result.CultureCode));
                             }

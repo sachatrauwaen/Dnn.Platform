@@ -555,6 +555,7 @@
       <DependentUpon>ViewProfile.ascx</DependentUpon>
     </Compile>
     <Compile Include="Controllers\ModuleActionsController.cs" />
+    <Compile Include="Controllers\ModuleActionsDeleteModel.cs" />
     <Compile Include="Controllers\ModuleSettingsController.cs" />
     <Compile Include="Controllers\PrivacyController.cs" />
     <Compile Include="Controllers\TermsController.cs" />

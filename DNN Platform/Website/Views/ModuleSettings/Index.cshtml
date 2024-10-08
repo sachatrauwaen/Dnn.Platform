@@ -95,11 +95,11 @@
                     </div>
                     <div class="dnnFormItem">
                         @Html.DnnLabelFor(model => model.StartDate, LocalResourceFile)
-                        @Html.EditorFor(model => model.StartDate)
+                        @Html.TextBoxFor(model => model.StartDate, new { type = "datetime-local" })
                     </div>
                     <div class="dnnFormItem">
                         @Html.DnnLabelFor(model => model.EndDate, LocalResourceFile)
-                        @Html.EditorFor(model => model.EndDate)
+                        @Html.TextBoxFor(model => model.EndDate, new { type = "datetime-local" })
                     </div>
                     <div class="dnnFormItem">
                         @Html.DnnLabelFor(model => model.Moniker, LocalResourceFile)
@@ -143,7 +143,17 @@
                     </div>
                     <div class="dnnFormItem">
                         @Html.DnnLabelFor(model => model.Alignment, LocalResourceFile)
-                        @Html.EditorFor(model => model.Alignment)
+                         @Html.DropDownListFor(model => model.Alignment, new SelectList(
+                                                      new List<Object>{
+                                                           new { value = "left" , text = "Left"  },
+                                                           new { value = "center" , text = "Center" },
+                                                           new { value = "right" , text = "Right"},
+                                                           new { value = "" , text = "Not_Specified"}
+                                                        },
+                                                      "value",
+                                                      "text",
+                                                       Model.Alignment
+                                               ), new { @class = "dnnFixedSizeComboBox" })
                     </div>
                     <div class="dnnFormItem">
                         @Html.DnnLabelFor(model => model.Color, LocalResourceFile)
@@ -270,10 +280,10 @@
                 <button type="submit" class="dnnPrimaryAction" id="cmdUpdate">@Localization.GetString("cmdUpdate", LocalResourceFile)</button>
             </li>
             <li>
-                @Html.ActionLink(Localization.GetString("cmdDelete", LocalResourceFile), "Delete", "ModuleSettings", new { moduleId = Model.ModuleId }, new { @class = "dnnSecondaryAction", onclick = "return confirm('" + Localization.GetString("DeleteItem.Text", Localization.SharedResourceFile) + "');" })
+                <button type="button" data-action="@Url.Action("Delete")" class="dnnSecondaryAction" id="cmdDelete">@Localization.GetString("cmdDelete", LocalResourceFile)</button>
             </li>
             <li>
-                @Html.ActionLink(Localization.GetString("cmdCancel", LocalResourceFile), "Index", "Home", null, new { @class = "dnnSecondaryAction" })
+                <a href="@Model.ReturnUrl" class="dnnSecondaryAction">@Localization.GetString("cmdCancel", LocalResourceFile)</a>
             </li>
         </ul>
     }

@@ -132,6 +132,35 @@
                         }
                     });
                     resizeThrottle = null;
+
+                    menu.find("#moduleActions-" + moduleId + "-Delete a").attr('href', '#');
+                    menu.find("#moduleActions-" + moduleId + "-Delete a").off("click");
+
+                    menu.find("#moduleActions-" + moduleId + "-Delete a").dnnConfirm({
+                        text: '@Localization.GetSafeJSString(Localization.GetString("DeleteItem.Text", Localization.SharedResourceFile))',
+                        yesText: '@Localization.GetSafeJSString(Localization.GetString("Yes.Text", Localization.SharedResourceFile))',
+                        noText: '@Localization.GetSafeJSString(Localization.GetString("No.Text", Localization.SharedResourceFile))',
+                        title: '@Localization.GetSafeJSString(Localization.GetString("Confirm.Text", Localization.SharedResourceFile))',
+                        callbackTrue: function () {
+
+                            var token = '@Html.AntiForgeryToken()';
+                            token = $(token).val();
+
+                            $.post('@Url.Action("Delete")', {
+                                moduleId: moduleId,
+                                tabId: @Model.ModuleContext.TabID,
+                                __RequestVerificationToken: token,
+                            }).done(function (data) {
+                                window.location.reload();
+                            })
+                        }
+                    });
+
+                    //menu.find("#moduleActions-" + moduleId + "-Delete a").click(function() {
+                    //    alert("del")
+                    //    return false;
+                    //});
+
                 },
                 100
             );
@@ -144,7 +173,7 @@
                 $(window).resize();
             });
             $(window).resize();
-        });        
+        });
 
     }(jQuery));
 </script>

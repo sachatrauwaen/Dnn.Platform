@@ -81,7 +81,7 @@ namespace DotNetNuke.Website.Controllers
         {
             if (!this.ModelState.IsValid)
             {
-                return this.View(model);
+                return this.View("Index", model);
             }
 
             var module = this.moduleController.GetModule(model.ModuleId, model.TabId, false);
@@ -129,6 +129,25 @@ namespace DotNetNuke.Website.Controllers
             this.moduleController.UpdateTabModuleSetting(module.TabModuleID, "AllowIndex", model.AllowIndex.ToString());
             this.moduleController.UpdateTabModuleSetting(module.TabModuleID, "Moniker", model.Moniker);
             this.moduleController.UpdateTabModuleSetting(module.TabModuleID, "hideadminborder", model.HideAdminBorder.ToString());
+
+            return new EmptyResult();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Delete(ModuleSettingsModel model)
+        {
+            var module = this.moduleController.GetModule(model.ModuleId, model.TabId, false);
+            if (module == null)
+            {
+                return this.HttpNotFound();
+            }
+
+            this.module = module;
+
+            this.CheckPermissions();
+
+            ModuleController.Instance.DeleteTabModule(model.TabId, model.ModuleId, true);
 
             return new EmptyResult();
         }
