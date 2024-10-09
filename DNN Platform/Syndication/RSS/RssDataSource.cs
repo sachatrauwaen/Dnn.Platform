@@ -3,11 +3,13 @@
 // See the LICENSE file in the project root for more information
 namespace DotNetNuke.Services.Syndication
 {
+    using System;
     using System.ComponentModel;
     using System.Web.UI;
 
     /// <summary>RSS data source control implementation, including the designer.</summary>
     [DefaultProperty("Url")]
+    [CLSCompliant(false)]
     public class RssDataSource : DataSourceControl
     {
         private GenericRssChannel channel;

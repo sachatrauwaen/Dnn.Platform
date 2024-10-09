@@ -7,9 +7,11 @@ namespace DotNetNuke.Services.Syndication
     using System.Collections.Generic;
     using System.IO;
     using System.Net;
+    using System.Net.Http;
     using System.Web;
     using System.Xml;
 
+    using Dnn.Migration;
     using DotNetNuke.Instrumentation;
 
     /// <summary>Helper class that provides memory and disk caching of the downloaded feeds.</summary>
@@ -106,7 +108,11 @@ namespace DotNetNuke.Services.Syndication
             }
 
             // download the feed
-            byte[] feed = new WebClient().DownloadData(url);
+            byte[] feed;
+            using (var client = new HttpClient())
+            {
+                feed = AsyncHelper.RunSync(() => client.GetByteArrayAsync(url));
+            }
 
             // parse it as XML
             var doc = new XmlDocument { XmlResolver = null };

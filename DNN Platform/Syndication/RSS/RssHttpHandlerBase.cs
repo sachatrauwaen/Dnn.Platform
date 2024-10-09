@@ -21,6 +21,7 @@ namespace DotNetNuke.Services.Syndication
     /// <typeparam name="TRssChannelType">The channel type.</typeparam>
     /// <typeparam name="TRssItemType">The item type.</typeparam>
     /// <typeparam name="TRssImageType">The image type.</typeparam>
+    [CLSCompliant(false)]
     public abstract class RssHttpHandlerBase<TRssChannelType, TRssItemType, TRssImageType> : IHttpHandler
         where TRssChannelType : RssChannelBase<TRssItemType, TRssImageType>, new()
         where TRssItemType : RssElementBase, new()

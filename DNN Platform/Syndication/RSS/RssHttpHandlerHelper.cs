@@ -40,9 +40,11 @@ namespace DotNetNuke.Services.Syndication
                 userName = "." + userName; // not to confuse the encrypted string with real auth ticket for real user
                 DateTime ticketDate = DateTime.Now.AddDays(-100); // already expired
 
-                var t = new FormsAuthenticationTicket(2, userName, ticketDate, ticketDate.AddDays(2), false, channelName, "/");
+                // var t = new FormsAuthenticationTicket(2, userName, ticketDate, ticketDate.AddDays(2), false, channelName, "/");
 
-                link += "?t=" + FormsAuthentication.Encrypt(t);
+                // TODO ASP.NET appartenance doit être remplacée par ASP.NET Identité principale. Pour plus d’informations, consultez https://docs.microsoft.com/aspnet/core/migration/proper-to-2x/membership-to-core-identity.
+                // link += "?t=" + FormsAuthentication.Encrypt(t);
+                throw new NotImplementedException();
             }
 
             return link;
@@ -66,9 +68,11 @@ namespace DotNetNuke.Services.Syndication
             else
             {
                 // encrypted user name and channel name
-                FormsAuthenticationTicket t = FormsAuthentication.Decrypt(ticket);
-                userName = t.Name.Substring(1); // remove extra prepended '.'
-                channelName = t.UserData;
+                // TODO ASP.NET appartenance doit être remplacée par ASP.NET Identité principale. Pour plus d’informations, consultez https://docs.microsoft.com/aspnet/core/migration/proper-to-2x/membership-to-core-identity.
+                // FormsAuthenticationTicket t = FormsAuthentication.Decrypt(ticket);
+                // userName = t.Name.Substring(1); // remove extra prepended '.'
+                // channelName = t.UserData;
+                throw new NotImplementedException();
             }
         }
     }

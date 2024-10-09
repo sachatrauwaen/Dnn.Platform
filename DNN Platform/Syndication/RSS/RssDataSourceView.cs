@@ -3,10 +3,12 @@
 // See the LICENSE file in the project root for more information
 namespace DotNetNuke.Services.Syndication
 {
+    using System;
     using System.Collections;
     using System.Web.UI;
 
     /// <summary>An RSS <see cref="DataSourceView"/>.</summary>
+    [CLSCompliant(false)]
     public class RssDataSourceView : DataSourceView
     {
         private readonly RssDataSource owner;

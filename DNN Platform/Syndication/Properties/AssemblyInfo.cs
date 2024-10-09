@@ -4,8 +4,5 @@
 using System;
 using System.Reflection;
 
-[assembly: AssemblyTitle("DotNetNuke.Syndication")]
-[assembly: AssemblyDescription("")]
-
 [assembly: AssemblyDelaySign(false)]
 [assembly: CLSCompliant(true)]

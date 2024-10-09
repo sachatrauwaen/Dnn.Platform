@@ -8,6 +8,7 @@ namespace DotNetNuke.Services.Syndication
     using System.Web.UI.WebControls;
 
     /// <summary>RssHyperLink control - works with <see cref="RssHttpHandlerBase{TRssChannelType,TRssItemType,TRssImageType}"/>.</summary>
+    [CLSCompliant(false)]
     public class RssHyperLink : HyperLink
     {
         /// <summary>Initializes a new instance of the <see cref="RssHyperLink"/> class.</summary>
