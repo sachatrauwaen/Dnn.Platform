@@ -13,6 +13,7 @@ namespace DotNetNuke.UI.WebControls
     /// <summary>A drop down list of countries.</summary>
     /// <seealso cref="DropDownList"/>
     [ToolboxData("<{0}:CountryListBox runat=server></{0}:CountryListBox>")]
+    [CLSCompliant(false)]
     public class CountryListBox : DropDownList
     {
         private bool cacheGeoIPData = true;
