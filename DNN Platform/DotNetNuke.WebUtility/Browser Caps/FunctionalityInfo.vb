@@ -1,10 +1,11 @@
-' Copyright (c) .NET Foundation. All rights reserved.
+﻿' Copyright (c) .NET Foundation. All rights reserved.
 ' Licensed under the MIT License. See LICENSE file in the project root for full license information.
 
 Imports System.Xml.Serialization
 
 Namespace DotNetNuke.UI.Utilities
 
+    <CLSCompliant(False)>
     Public Class FunctionalityInfo
 
         Private _desc As String
@@ -12,7 +13,7 @@ Namespace DotNetNuke.UI.Utilities
         Private _excludes As BrowserCollection
         Private _supports As BrowserCollection
 
-        <XmlAttribute("nm")> _
+        <XmlAttribute("nm")>
         Public Property Functionality() As ClientAPI.ClientFunctionality
             Get
                 Return _functionality
@@ -22,7 +23,7 @@ Namespace DotNetNuke.UI.Utilities
             End Set
         End Property
 
-        <XmlAttribute("desc")> _
+        <XmlAttribute("desc")>
         Public Property Desc() As String
             Get
                 Return _desc
@@ -32,7 +33,7 @@ Namespace DotNetNuke.UI.Utilities
             End Set
         End Property
 
-        <XmlElement("excludes")> _
+        <XmlElement("excludes")>
         Public Property Excludes() As BrowserCollection
             Get
                 Return _excludes
@@ -42,7 +43,7 @@ Namespace DotNetNuke.UI.Utilities
             End Set
         End Property
 
-        <XmlElement("supports")> _
+        <XmlElement("supports")>
         Public Property Supports() As BrowserCollection
             Get
                 Return _supports

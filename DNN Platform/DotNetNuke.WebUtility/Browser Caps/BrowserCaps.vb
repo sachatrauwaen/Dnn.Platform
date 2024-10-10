@@ -1,4 +1,4 @@
-' Copyright (c) .NET Foundation. All rights reserved.
+﻿' Copyright (c) .NET Foundation. All rights reserved.
 ' Licensed under the MIT License. See LICENSE file in the project root for full license information.
 
 Imports System
@@ -9,7 +9,8 @@ Imports System.Xml.XPath
 
 Namespace DotNetNuke.UI.Utilities
 
-    <Serializable(), XmlRoot("capabilities")> _
+    <Serializable(), XmlRoot("capabilities")>
+    <CLSCompliant(False)>
     Public Class BrowserCaps
 
 #Region "Private Members"
@@ -22,7 +23,7 @@ Namespace DotNetNuke.UI.Utilities
 
 #Region "Public Properties"
 
-        <XmlElement("functionality")> _
+        <XmlElement("functionality")>
         Public Property Functionality() As FunctionalityCollection
             Get
                 Return m_objFunctionality
@@ -111,7 +112,7 @@ Namespace DotNetNuke.UI.Utilities
                         Next
                     End If
                 Catch ex As Exception
-                    Throw ex
+                    Throw
                 Finally
                     If Not objReader Is Nothing Then
                         objReader.Close()

@@ -1,4 +1,4 @@
-' Copyright (c) .NET Foundation. All rights reserved.
+﻿' Copyright (c) .NET Foundation. All rights reserved.
 ' Licensed under the MIT License. See LICENSE file in the project root for full license information.
 
 Imports System
@@ -6,6 +6,7 @@ Imports System.Collections
 
 Namespace DotNetNuke.UI.Utilities
 
+    <CLSCompliant(False)>
     Public Class FunctionalityCollection
 
         Inherits CollectionBase

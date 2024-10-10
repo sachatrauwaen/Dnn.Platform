@@ -11,6 +11,7 @@ Imports System.Collections.Generic
 Imports System.Text.RegularExpressions
 Imports DotNetNuke.Web.Client
 Imports DotNetNuke.Web.Client.ClientResourceManagement
+Imports System.Net
 
 Namespace DotNetNuke.UI.Utilities
 
@@ -27,6 +28,7 @@ Namespace DotNetNuke.UI.Utilities
     ''' 	[Jon Henning]	8/3/2004	Created
     ''' </history>
     ''' -----------------------------------------------------------------------------
+    <CLSCompliant(False)>
     Public Class ClientAPI
 
 #Region "Public Constants"
@@ -566,7 +568,7 @@ Namespace DotNetNuke.UI.Utilities
                             strClientID = arrIDs(1)
                         End If
 
-                        Dim strParam As String = objPage.Server.UrlDecode(objPage.Request(SCRIPT_CALLBACKPARAM))
+                        Dim strParam As String = WebUtility.UrlDecode(objPage.Request(SCRIPT_CALLBACKPARAM))
                         Dim objControl As Control
                         Dim objInterface As IClientAPICallbackEventHandler
                         Dim objResponse As ClientAPICallBackResponse = New ClientAPICallBackResponse(objPage, ClientAPICallBackResponse.CallBackTypeCode.Simple)
@@ -679,25 +681,25 @@ Namespace DotNetNuke.UI.Utilities
                 Case ClientNamespaceReferences.dnn_dom
                     RegisterClientReference(objPage, ClientNamespaceReferences.dnn)
                 Case ClientNamespaceReferences.dnn_dom_positioning
-                        RegisterClientReference(objPage, ClientNamespaceReferences.dnn)
+                    RegisterClientReference(objPage, ClientNamespaceReferences.dnn)
                     ClientResourceManager.RegisterScript(objPage, ScriptPath & "dnn.dom.positioning.js")
 
                 Case ClientNamespaceReferences.dnn_xml
-                        RegisterClientReference(objPage, ClientNamespaceReferences.dnn)
+                    RegisterClientReference(objPage, ClientNamespaceReferences.dnn)
                     ClientResourceManager.RegisterScript(objPage, ScriptPath & "dnn.xml.js", FileOrder.Js.DnnXml)
 
-                            If BrowserSupportsFunctionality(ClientFunctionality.XMLJS) Then
+                    If BrowserSupportsFunctionality(ClientFunctionality.XMLJS) Then
                         ClientResourceManager.RegisterScript(objPage, ScriptPath & "dnn.xml.jsparser.js", FileOrder.Js.DnnXmlJsParser)
-                        End If
+                    End If
                 Case ClientNamespaceReferences.dnn_xmlhttp
-                        RegisterClientReference(objPage, ClientNamespaceReferences.dnn)
+                    RegisterClientReference(objPage, ClientNamespaceReferences.dnn)
                     ClientResourceManager.RegisterScript(objPage, ScriptPath & "dnn.xmlhttp.js", FileOrder.Js.DnnXmlHttp)
 
-                            If BrowserSupportsFunctionality(ClientFunctionality.XMLHTTPJS) Then
+                    If BrowserSupportsFunctionality(ClientFunctionality.XMLHTTPJS) Then
                         ClientResourceManager.RegisterScript(objPage, ScriptPath & "dnn.xmlhttp.jsxmlhttprequest.js", FileOrder.Js.DnnXmlHttpJsXmlHttpRequest)
-                        End If
+                    End If
                 Case ClientNamespaceReferences.dnn_motion
-                        RegisterClientReference(objPage, ClientNamespaceReferences.dnn_dom_positioning)
+                    RegisterClientReference(objPage, ClientNamespaceReferences.dnn_dom_positioning)
                     ClientResourceManager.RegisterScript(objPage, ScriptPath & "dnn.motion.js")
 
             End Select

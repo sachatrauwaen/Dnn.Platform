@@ -6,6 +6,7 @@ Imports System.Web.UI
 
 Namespace DotNetNuke.UI.Utilities
 
+    <CLSCompliant(False)>
     Public Class ClientAPICallBackResponse
         Public Enum CallBackResponseStatusCode
             OK = 200

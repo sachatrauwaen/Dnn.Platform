@@ -8,6 +8,7 @@ Imports System.Web.UI
 
 Namespace DotNetNuke.UI.Utilities
 
+    <CLSCompliant(False)>
     Public Class MSAJAX
 
 #Region "Member Variables"
@@ -68,27 +69,29 @@ Namespace DotNetNuke.UI.Utilities
 
         Public Shared ReadOnly Property IsInstalled() As Boolean
             Get
-                If m_Installed = -1 Then
-                    'Dim capiPath As String = System.IO.Path.GetDirectoryName(GetType(ClientAPI.ClientFunctionality).Assembly.CodeBase)
-                    'Dim msajaxPath As String = System.IO.Path.GetDirectoryName(ScriptManagerType.Assembly.CodeBase)
-                    If ScriptManagerType.Assembly.GlobalAssemblyCache = False Then
-                        'If capiPath = msajaxPath Then
-                        'if msajax loaded from same path as clientapi, then we need to be in full trust
+                Throw New NotImplementedException
 
-                        Try
-                            'demand a high level permission
-                            Dim perm As AspNetHostingPermission = New AspNetHostingPermission(AspNetHostingPermissionLevel.High)
-                            perm.Demand()
-                            m_Installed = 1
-                        Catch ex As Exception
-                            m_Installed = 0
-                        End Try
-                    Else
-                        m_Installed = 1
-                    End If
+                'If m_Installed = -1 Then
+                '    'Dim capiPath As String = System.IO.Path.GetDirectoryName(GetType(ClientAPI.ClientFunctionality).Assembly.CodeBase)
+                '    'Dim msajaxPath As String = System.IO.Path.GetDirectoryName(ScriptManagerType.Assembly.CodeBase)
+                '    If ScriptManagerType.Assembly.GlobalAssemblyCache = False Then
+                '        'If capiPath = msajaxPath Then
+                '        'if msajax loaded from same path as clientapi, then we need to be in full trust
 
-                End If
-                Return m_Installed = 1
+                '        Try
+                '            'demand a high level permission
+                '            Dim perm As AspNetHostingPermission = New AspNetHostingPermission(AspNetHostingPermissionLevel.High)
+                '            perm.Demand()
+                '            m_Installed = 1
+                '        Catch ex As Exception
+                '            m_Installed = 0
+                '        End Try
+                '    Else
+                '        m_Installed = 1
+                '    End If
+
+                'End If
+                'Return m_Installed = 1
                 'Return Not ScriptManagerType() Is Nothing
             End Get
         End Property

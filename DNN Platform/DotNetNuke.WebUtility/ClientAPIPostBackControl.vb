@@ -1,4 +1,4 @@
-' Copyright (c) .NET Foundation. All rights reserved.
+﻿' Copyright (c) .NET Foundation. All rights reserved.
 ' Licensed under the MIT License. See LICENSE file in the project root for full license information.
 
 Imports System.Web.UI
@@ -21,6 +21,7 @@ Namespace DotNetNuke.UI.Utilities
     ''' 	[Jon Henning]	9/15/2004	Created
     ''' </history>
     ''' -----------------------------------------------------------------------------
+    <CLSCompliant(False)>
     Public Class ClientAPIPostBackControl : Inherits Control : Implements IPostBackEventHandler
         Delegate Sub PostBackEvent(ByVal Args As ClientAPIPostBackEventArgs)
         Private m_oEventHandlers As Hashtable = New Hashtable

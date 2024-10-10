@@ -61,7 +61,7 @@ Namespace DotNetNuke.UI.Utilities
             If objType Is Nothing Then
                 Try
                     ' use reflection to get the type of the class
-                    objType = BuildManager.GetType(TypeName, True, True)
+                    objType = Type.GetType(TypeName, True, True)
 
                     If UseCache Then
                         ' insert the type into the cache
@@ -71,7 +71,7 @@ Namespace DotNetNuke.UI.Utilities
                     ' could not load the type
                     If Not IgnoreErrors Then
                         'LogException(exc)
-                        Throw exc
+                        Throw
                     End If
                 End Try
             End If
