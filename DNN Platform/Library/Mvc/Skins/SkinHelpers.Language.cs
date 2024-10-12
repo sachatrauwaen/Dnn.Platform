@@ -55,21 +55,28 @@ namespace DotNetNuke.Web.Mvc.Skins
                 }
             }
 
+            int cultureCount = 0;
+
             var selectCulture = new TagBuilder("select");
             selectCulture.Attributes.Add("id", "selectCulture");
             selectCulture.Attributes.Add("name", "selectCulture");
             selectCulture.AddCssClass("NormalTextBox");
+
             if (!string.IsNullOrEmpty(cssClass))
             {
                 selectCulture.AddCssClass(cssClass);
             }
 
+            // TimoBreumelhof: This is not ideal but it works for now.. should really be a UL IMO
             foreach (var cultureItem in cultureListItems)
             {
+                cultureCount++;
                 if (locales.ContainsKey(cultureItem.Value))
                 {
                     var option = new TagBuilder("option");
                     option.Attributes.Add("value", cultureItem.Value);
+                    option.Attributes.Add("data-link", ParseTemplate("[URL]", cultureItem.Value, localTokenReplace, currentCulture));
+                    option.Attributes.Add("onclick", "var url = this.dataset.link; window.location.href= url");
                     option.SetInnerText(cultureItem.Text);
                     if (cultureItem.Value == currentCulture)
                     {
@@ -90,12 +97,12 @@ namespace DotNetNuke.Web.Mvc.Skins
                 commonFooterTemplate = Localization.GetString("CommonFooterTemplate.Default", localResourceFile, templateCulture);
             }
 
-            var languageContainer = new TagBuilder("div");
-            languageContainer.AddCssClass("languageContainer");
-            languageContainer.InnerHtml += commonHeaderTemplate;
+            string languageContainer = string.Empty;
+            languageContainer += commonHeaderTemplate;
+
             if (showMenu)
             {
-                languageContainer.InnerHtml += selectCulture.ToString();
+                languageContainer += selectCulture.ToString();
             }
 
             if (showLinks)
@@ -110,6 +117,11 @@ namespace DotNetNuke.Web.Mvc.Skins
                     alternateTemplate = Localization.GetString("AlternateTemplate.Default", localResourceFile, templateCulture);
                 }
 
+                if (string.IsNullOrEmpty(selectedItemTemplate))
+                {
+                    selectedItemTemplate = Localization.GetString("SelectedItemTemplate.Default", localResourceFile, templateCulture);
+                }
+
                 if (string.IsNullOrEmpty(headerTemplate))
                 {
                     headerTemplate = Localization.GetString("HeaderTemplate.Default", localResourceFile, templateCulture);
@@ -120,45 +132,48 @@ namespace DotNetNuke.Web.Mvc.Skins
                     footerTemplate = Localization.GetString("FooterTemplate.Default", localResourceFile, templateCulture);
                 }
 
-                if (string.IsNullOrEmpty(selectedItemTemplate))
-                {
-                    selectedItemTemplate = Localization.GetString("SelectedItemTemplate.Default", localResourceFile, templateCulture);
-                }
+                languageContainer += headerTemplate;
 
-                languageContainer.InnerHtml += headerTemplate;
-                var rptLanguages = new TagBuilder("ul");
-                rptLanguages.AddCssClass("languageList");
+                string listItems = string.Empty;
+
                 bool alt = false;
                 foreach (var locale in locales.Values)
                 {
-                    var listItem = new TagBuilder("li");
+                    string listItem = string.Empty;
                     if (locale.Code == currentCulture && !string.IsNullOrEmpty(selectedItemTemplate))
                     {
-                        listItem.InnerHtml = ParseTemplate(selectedItemTemplate, locale.Code, localTokenReplace, currentCulture);
+                        listItem += ParseTemplate(selectedItemTemplate, locale.Code, localTokenReplace, currentCulture);
                     }
                     else
                     {
                         if (alt)
                         {
-                            listItem.InnerHtml = ParseTemplate(alternateTemplate, locale.Code, localTokenReplace, currentCulture);
+                            listItem += ParseTemplate(alternateTemplate, locale.Code, localTokenReplace, currentCulture);
                         }
                         else
                         {
-                            listItem.InnerHtml = ParseTemplate(itemTemplate, locale.Code, localTokenReplace, currentCulture);
+                            listItem += ParseTemplate(itemTemplate, locale.Code, localTokenReplace, currentCulture);
                         }
 
                         alt = !alt;
                     }
 
-                    rptLanguages.InnerHtml += listItem.ToString();
+                    listItems += listItem;
                 }
 
-                languageContainer.InnerHtml += rptLanguages.ToString();
-                languageContainer.InnerHtml += footerTemplate;
+                languageContainer += listItems;
+
+                languageContainer += footerTemplate;
             }
 
-            languageContainer.InnerHtml += commonFooterTemplate;
-            return new MvcHtmlString(languageContainer.ToString());
+            languageContainer += commonFooterTemplate;
+
+            if (cultureCount <= 1)
+            {
+                languageContainer = string.Empty;
+            }
+
+            return new MvcHtmlString(languageContainer);
         }
 
         private static string ParseTemplate(string template, string locale, LanguageTokenReplace localTokenReplace, string currentCulture)
