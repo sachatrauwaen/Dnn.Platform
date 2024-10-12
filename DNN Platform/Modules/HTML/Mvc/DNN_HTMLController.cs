@@ -16,7 +16,10 @@ namespace DotNetNuke.Framework.Controllers
     using DotNetNuke.Common;
     using DotNetNuke.Entities.Content.Workflow.Entities;
     using DotNetNuke.Entities.Modules;
+    using DotNetNuke.Entities.Modules.Settings;
+    using DotNetNuke.Framework.JavaScriptLibraries;
     using DotNetNuke.Modules.Html;
+    using DotNetNuke.Modules.Html.Components;
     using DotNetNuke.Modules.Html.Models;
     using DotNetNuke.Mvc;
     using DotNetNuke.Services.Exceptions;
@@ -24,19 +27,23 @@ namespace DotNetNuke.Framework.Controllers
     using DotNetNuke.Web.Client.ClientResourceManagement;
     using DotNetNuke.Web.Mvc;
     using DotNetNuke.Web.Mvc.Page;
+    using DotNetNuke.Website.Controllers;
+    using DotNetNuke.Website.Models;
     using Microsoft.Extensions.DependencyInjection;
 
-    public class DNN_HTMLController : ModuleControllerBase
+    public class DNN_HTMLController : ModuleSettingsController
     {
         private readonly INavigationManager navigationManager;
         private readonly HtmlTextController htmlTextController;
         private readonly HtmlTextLogController htmlTextLogController = new HtmlTextLogController();
         private readonly WorkflowStateController workflowStateController = new WorkflowStateController();
+        private readonly HtmlModuleSettingsRepository settingsRepository;
 
         public DNN_HTMLController()
         {
             this.navigationManager = Globals.DependencyProvider.GetRequiredService<INavigationManager>();
             this.htmlTextController = new HtmlTextController(this.navigationManager);
+            this.settingsRepository = new HtmlModuleSettingsRepository();
         }
 
         public enum WorkflowType
@@ -306,6 +313,110 @@ namespace DotNetNuke.Framework.Controllers
             htmlContent.StateID = this.workflowStateController.GetFirstWorkflowStateID(workflowID);
             this.htmlTextController.UpdateHtmlText(htmlContent, this.htmlTextController.GetMaximumVersionHistory(this.PortalSettings.PortalId));
             return this.ShowEdit(model);
+        }
+
+        [HttpGet]
+        [ChildActionOnly]
+        public ActionResult LoadSettings(int moduleId)
+        {
+            var moduleSettings = this.settingsRepository.GetSettings(this.ActiveModule);
+            var workflow = this.htmlTextController.GetWorkflow(this.ActiveModule.ModuleID, this.ActiveModule.TabID, this.ActiveModule.PortalID);
+
+            var model = new HtmlModuleSettingsModel
+            {
+                // Assigner les valeurs des paramètres au modèle directement depuis le repository
+                ReplaceTokens = moduleSettings.ReplaceTokens,
+                UseDecorate = moduleSettings.UseDecorate,
+                SearchDescLength = moduleSettings.SearchDescLength,
+                Workflows = this.GetWorkflows(), // Récupérer les workflows disponibles
+                ApplyTo = workflow.Key,
+                SelectedWorkflow = workflow.Value.ToString(),
+            };
+
+            return this.PartialView(this.ActiveModule, "LoadSettings", model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult UpdateSettings(HtmlModuleSettingsModel model)
+        {
+            // if (ModelState.IsValid)
+            {
+                try
+                {
+                    // Récupérer les paramètres existants
+                    var moduleSettings = this.settingsRepository.GetSettings(this.ActiveModule);
+
+                    // Mettre à jour les paramètres dans le repository
+                    moduleSettings.ReplaceTokens = model.ReplaceTokens;
+                    moduleSettings.UseDecorate = model.UseDecorate;
+                    moduleSettings.SearchDescLength = model.SearchDescLength;
+
+                    // Sauvegarder les paramètres mis à jour
+                    this.settingsRepository.SaveSettings(this.ActiveModule, moduleSettings);
+
+                    // Gérer le CacheTime
+                    this.UpdateCacheTime(model.ReplaceTokens);
+
+                    // Mettre à jour les workflows selon la sélection
+                    this.UpdateWorkflow(model.SelectedWorkflow, model.ApplyTo, model.Replace);
+                }
+                catch (Exception exc)
+                {
+                    // Gérer les exceptions
+                    // Exceptions.ProcessModuleLoadException(this, exc);
+                    throw new Exception("sModuleLoadException", exc);
+                }
+
+                return this.UpdateDefaultSettings(model);
+            }
+        }
+
+        private List<WorkflowStateInfo> GetWorkflows()
+        {
+            // Récupérer les workflows disponibles
+            var workflowStateController = new WorkflowStateController();
+            var workflows = workflowStateController.GetWorkflows(this.ActiveModule.PortalID);
+            return workflows.Cast<WorkflowStateInfo>().Where(w => !w.IsDeleted).ToList(); // Filtrer les workflows non supprimés
+        }
+
+        private void UpdateWorkflow(string selectedWorkflow, string applyTo, bool replace)
+        {
+            var htmlTextController = new HtmlTextController(this.navigationManager);
+            var workflow = this.htmlTextController.GetWorkflow(this.ActiveModule.ModuleID, this.ActiveModule.TabID, this.ActiveModule.PortalID);
+
+            // Mettre à jour le workflow selon la sélection
+            switch (applyTo)
+            {
+                case "Module":
+                    htmlTextController.UpdateWorkflow(this.ActiveModule.ModuleID, applyTo, int.Parse(selectedWorkflow), replace);
+                    break;
+                case "Page":
+                    htmlTextController.UpdateWorkflow(this.ActiveModule.TabID, applyTo, int.Parse(selectedWorkflow), replace);
+                    break;
+                case "Site":
+                    htmlTextController.UpdateWorkflow(this.ActiveModule.PortalID, applyTo, int.Parse(selectedWorkflow), replace);
+                    break;
+            }
+        }
+
+        private void UpdateCacheTime(bool replaceTokens)
+        {
+            // Récupérer le module actuel
+            var module = ModuleController.Instance.GetModule(this.ActiveModule.ModuleID, this.ActiveModule.TabID, false);
+            if (replaceTokens)
+            {
+                // Désactiver le cache si ReplaceTokens est activé
+                module.CacheTime = 0;
+            }
+            else
+            {
+                // Réinitialiser le CacheTime à sa valeur par défaut si nécessaire
+                module.CacheTime = 60; // ou toute autre valeur par défaut
+            }
+
+            // Mettre à jour le module avec le nouveau CacheTime
+            ModuleController.Instance.UpdateModule(module);
         }
 
         private HtmlTextInfo GetLatestHTMLContent(int workflowID, int moduleId)

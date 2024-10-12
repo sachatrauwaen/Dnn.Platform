@@ -105,6 +105,7 @@
       <HintPath>..\..\..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.2.1.1\lib\netstandard2.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web" />
@@ -145,6 +146,7 @@
     <Compile Include="Components\HtmlTextLogInfo.cs" />
     <Compile Include="Components\HtmlTextUserController.cs" />
     <Compile Include="Components\HtmlTextUserInfo.cs" />
+    <Compile Include="Mvc\HtmlModuleSettingsModel.cs" />
     <Compile Include="Mvc\HtmlTextUserModel.cs" />
     <Compile Include="Mvc\ModuleControlBase.cs" />
     <Compile Include="Components\WorkflowStateController.cs" />
@@ -238,6 +240,7 @@
     <Content Include="Views\_Edit.cshtml" />
     <Content Include="Views\_History.cshtml" />
     <Content Include="Views\MyWork.cshtml" />
+    <Content Include="Views\LoadSettings.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\DotNetNuke.Internal.SourceGenerators\DotNetNuke.Internal.SourceGenerators.csproj" ReferenceOutputAssembly="false" OutputItemType="Analyzer">
@@ -287,6 +290,7 @@
     <Content Include="App_LocalResources\Workflow.ascx.resx" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Controllers\" />
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>

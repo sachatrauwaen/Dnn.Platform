@@ -6,6 +6,7 @@ namespace DotNetNuke.Website.Controllers
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Web.Mvc;
 
@@ -19,9 +20,10 @@ namespace DotNetNuke.Website.Controllers
     using DotNetNuke.Services.Localization;
     using DotNetNuke.UI.Skins;
     using DotNetNuke.Web.Client.ClientResourceManagement;
+    using DotNetNuke.Web.Mvc;
     using DotNetNuke.Website.Models;
 
-    public class ModuleSettingsController : Controller
+    public class ModuleSettingsController : ModuleControllerBase
     {
         private readonly ModuleController moduleController;
         private int moduleId = -1;
@@ -30,14 +32,6 @@ namespace DotNetNuke.Website.Controllers
         public ModuleSettingsController()
         {
             this.moduleController = new ModuleController();
-        }
-
-        public PortalSettings PortalSettings
-        {
-            get
-            {
-                return PortalController.Instance.GetCurrentPortalSettings();
-            }
         }
 
         public int TabId
@@ -61,12 +55,21 @@ namespace DotNetNuke.Website.Controllers
         }
 
         [HttpGet]
-        public ActionResult Index(int moduleId)
+        public ActionResult LoadDefaultSettings(int moduleId)
         {
             this.Initialize();
             var model = new ModuleSettingsModel();
             model.TabId = this.TabId;
             model.ReturnUrl = this.Request.QueryString["ReturnURL"];
+
+            ModuleControlInfo moduleControlInfo = ModuleControlController.GetModuleControlByControlKey("Settings", this.Module.ModuleDefID);
+            if (moduleControlInfo != null)
+            {
+                model.ModuleControllerName = this.Module.DesktopModule.ModuleName;
+                model.ModuleActionName = "LoadSettings";
+                model.ModuleLocalResourceFile = Path.Combine(Path.GetDirectoryName(moduleControlInfo.ControlSrc), Localization.LocalResourceDirectory + "/" + Path.GetFileNameWithoutExtension(moduleControlInfo.ControlSrc));
+            }
+
             this.BindData(this.Module, model);
             MvcJavaScript.RequestRegistration(CommonJs.DnnPlugins);
             MvcClientResourceManager.RegisterScript(this.ControllerContext, "~/Resources/Shared/scripts/jquery/jquery.form.min.js");
@@ -77,7 +80,7 @@ namespace DotNetNuke.Website.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Update(ModuleSettingsModel model)
+        public ActionResult UpdateDefaultSettings(ModuleSettingsModel model)
         {
             if (!this.ModelState.IsValid)
             {

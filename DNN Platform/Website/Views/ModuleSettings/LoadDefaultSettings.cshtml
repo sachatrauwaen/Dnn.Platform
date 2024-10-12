@@ -8,6 +8,13 @@
 
 @{
     var LocalResourceFile = "~/admin/Modules/" + Localization.LocalResourceDirectory + "/ModuleSettings.ascx";
+    var controllerName = "ModuleSettings";
+    var actionName = "UpdateDefaultSettings";
+    if (!string.IsNullOrEmpty(Model.ModuleControllerName))
+    {
+        controllerName = Model.ModuleControllerName;
+        actionName = "UpdateSettings";
+    }
 }
 
 <div class="dnnForm dnnModuleSettings dnnClear" id="dnnModuleSettings" data-returnurl="@Model.ReturnUrl">
@@ -15,12 +22,15 @@
         <li><a href="#msModuleSettings">@Localization.GetString("ModuleSettings", LocalResourceFile)</a></li>
         <li><a href="#msPermissions">@Localization.GetString("Permissions", LocalResourceFile)</a></li>
         <li><a href="#msPageSettings">@Localization.GetString("PageSettings", LocalResourceFile)</a></li>
-        <li id="specificSettingsTab">
-            <a href="#msSpecificSettings" id="hlSpecificSettings">@Localization.GetString("SpecificSettings", LocalResourceFile)</a>
-        </li>
+        @if (!string.IsNullOrEmpty(Model.ModuleActionName))
+        {
+            <li id="specificSettingsTab">
+                <a href="#msSpecificSettings" id="hlSpecificSettings">@Localization.GetString("ControlTitle_settings", Model.ModuleLocalResourceFile)</a>
+            </li>
+        }
     </ul>
 
-    @using (Html.BeginForm("Update", "ModuleSettings", new { ModuleId = Model.ModuleId }))
+    @using (Html.BeginForm(actionName, controllerName, new { ModuleId = Model.ModuleId }))
     {
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(true, "", new { @class = "dnnFormMessage dnnFormError" })
@@ -143,17 +153,17 @@
                     </div>
                     <div class="dnnFormItem">
                         @Html.DnnLabelFor(model => model.Alignment, LocalResourceFile)
-                         @Html.DropDownListFor(model => model.Alignment, new SelectList(
-                                                      new List<Object>{
-                                                           new { value = "left" , text = "Left"  },
-                                                           new { value = "center" , text = "Center" },
-                                                           new { value = "right" , text = "Right"},
-                                                           new { value = "" , text = "Not_Specified"}
-                                                        },
-                                                      "value",
-                                                      "text",
-                                                       Model.Alignment
-                                               ), new { @class = "dnnFixedSizeComboBox" })
+                        @Html.DropDownListFor(model => model.Alignment, new SelectList(
+                                                     new List<Object>{
+                                                          new { value = "left" , text = "Left"  },
+                                                          new { value = "center" , text = "Center" },
+                                                          new { value = "right" , text = "Right"},
+                                                          new { value = "" , text = "Not_Specified"}
+                                                       },
+                                                     "value",
+                                                     "text",
+                                                      Model.Alignment
+                                              ), new { @class = "dnnFixedSizeComboBox" })
                     </div>
                     <div class="dnnFormItem">
                         @Html.DnnLabelFor(model => model.Color, LocalResourceFile)
@@ -225,40 +235,13 @@
                         @Html.EditorFor(model => model.CacheTime, new { @class = "msCacheDuration" })
                     </div>
                 </fieldset>
-            </div>
-        </div>
 
-        <div class="msSpecificSettings dnnClear" id="msSpecificSettings">
-            <div class="mspsContent dnnClear">
-                <fieldset id="fsSpecific">
-                    <div class="dnnFormItem">
-                        @Html.DnnLabelFor(model => model.DisplayTitle, LocalResourceFile)
-                        @Html.EditorFor(model => model.DisplayTitle)
-                    </div>
-                    <div class="dnnFormItem">
-                        @Html.DnnLabelFor(model => model.DisplayPrint, LocalResourceFile)
-                        @Html.EditorFor(model => model.DisplayPrint)
-                    </div>
-                    <div class="dnnFormItem">
-                        @Html.DnnLabelFor(model => model.DisplaySyndicate, LocalResourceFile)
-                        @Html.EditorFor(model => model.DisplaySyndicate)
-                    </div>
-                    <div class="dnnFormItem">
-                        @Html.DnnLabelFor(model => model.IsWebSlice, LocalResourceFile)
-                        @Html.EditorFor(model => model.IsWebSlice)
-                    </div>
-                    <div class="dnnFormItem" id="webSliceTitle">
-                        @Html.DnnLabelFor(model => model.WebSliceTitle, LocalResourceFile)
-                        @Html.EditorFor(model => model.WebSliceTitle)
-                    </div>
-                    <div class="dnnFormItem" id="webSliceExpiry">
-                        @Html.DnnLabelFor(model => model.WebSliceExpiryDate, LocalResourceFile)
-                        @Html.EditorFor(model => model.WebSliceExpiryDate)
-                    </div>
-                    <div class="dnnFormItem" id="webSliceTTL">
-                        @Html.DnnLabelFor(model => model.WebSliceTTL, LocalResourceFile)
-                        @Html.EditorFor(model => model.WebSliceTTL)
-                    </div>
+                <h2 id="dnnPanel-ModuleOtherSettings" class="dnnFormSectionHead">
+                    <a href="" class="dnnSectionExpanded">
+                        <%=LocalizeString("OtherSettings")%>
+                    </a>
+                </h2>
+                <fieldset>
                     <div class="dnnFormItem">
                         @Html.DnnLabelFor(model => model.IsDefaultModule, LocalResourceFile)
                         @Html.EditorFor(model => model.IsDefaultModule)
@@ -275,6 +258,16 @@
             </div>
         </div>
 
+        if (!string.IsNullOrEmpty(Model.ModuleActionName))
+        {
+            <div class="msSpecificSettings dnnClear" id="msSpecificSettings">
+                <div class="mspsContent dnnClear">
+                    <fieldset id="fsSpecific">
+                        @Html.Action(Model.ModuleActionName, Model.ModuleControllerName, Model.ModuleId)
+                    </fieldset>
+                </div>
+            </div>
+        }
         <ul class="dnnActions dnnClear">
             <li>
                 <button type="submit" class="dnnPrimaryAction" id="cmdUpdate">@Localization.GetString("cmdUpdate", LocalResourceFile)</button>

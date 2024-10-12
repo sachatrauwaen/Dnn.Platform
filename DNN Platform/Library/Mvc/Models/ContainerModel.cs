@@ -75,7 +75,7 @@ namespace DotNetNuke.Web.Mvc.Skins
             {
                 if (this.moduleConfiguration.ModuleControl.ControlKey == "Module")
                 {
-                    return "Index";
+                    return "LoadDefaultSettings";
                 }
                 else
                 {

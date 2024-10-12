@@ -11,6 +11,7 @@ namespace DotNetNuke.Website.Models
     using DotNetNuke.Entities.Modules;
     using DotNetNuke.Entities.Tabs;
     using DotNetNuke.Security.Permissions;
+    using DotNetNuke.Services.Mobile;
 
     public class ModuleSettingsModel
     {
@@ -144,5 +145,11 @@ namespace DotNetNuke.Website.Models
         public IEnumerable<TabInfo> InstalledOnTabs { get; set; }
 
         public string ReturnUrl { get; internal set; }
+
+        public string ModuleControllerName { get; set; }
+
+        public string ModuleActionName { get; set; }
+
+        public string ModuleLocalResourceFile { get; internal set; }
     }
 }

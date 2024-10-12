@@ -66,6 +66,7 @@
       <HintPath>..\..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net.Http" />
@@ -153,6 +154,9 @@
     <Compile Include="Page\ModuleControllerBase.cs" />
     <Compile Include="Page\ModuleHelpers.cs" />
     <Compile Include="Page\ModuleModelBase.cs" />
+    <Compile Include="Page\ModuleSettingsController.cs" />
+    <Compile Include="Page\ModuleSettingsModel.cs" />
+    <Compile Include="Page\TabModel.cs" />
     <Compile Include="Routing\HttpRequestExtensions.cs" />
     <Compile Include="ITabAndModuleInfoProvider.cs" />
     <Compile Include="Routing\ConstraintValidation.cs" />

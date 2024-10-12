@@ -556,7 +556,6 @@
     </Compile>
     <Compile Include="Controllers\ModuleActionsController.cs" />
     <Compile Include="Controllers\ModuleActionsDeleteModel.cs" />
-    <Compile Include="Controllers\ModuleSettingsController.cs" />
     <Compile Include="Controllers\PrivacyController.cs" />
     <Compile Include="Controllers\TermsController.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
@@ -800,8 +799,6 @@
     <Compile Include="KeepAlive.aspx.designer.cs">
       <DependentUpon>KeepAlive.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Models\ModuleSettingsModel.cs" />
-    <Compile Include="Models\TabModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="admin\Skins\DnnJsInclude.xml">
       <SubType>Designer</SubType>
@@ -1277,7 +1274,7 @@
     <Content Include="Views\PersonaBarContainer\Index.cshtml" />
     <Content Include="Views\Privacy\Index.cshtml" />
     <Content Include="Views\Terms\Index.cshtml" />
-    <Content Include="Views\ModuleSettings\Index.cshtml" />
+    <Content Include="Views\ModuleSettings\LoadDefaultSettings.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
@@ -3418,6 +3415,7 @@
   <ItemGroup>
     <Folder Include="Install\Provider\" />
     <Folder Include="Install\Temp\" />
+    <Folder Include="Models\" />
     <Folder Include="Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
