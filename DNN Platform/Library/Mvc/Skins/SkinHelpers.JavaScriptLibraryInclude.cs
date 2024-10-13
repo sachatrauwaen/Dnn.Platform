@@ -5,12 +5,16 @@
 namespace DotNetNuke.Web.Mvc.Skins
 {
     using System;
-    using System.Web;
-    using System.Web.Mvc;
+    using System.IO;
+
+    using Dnn.Migration;
+    using Microsoft.AspNetCore.Html;
+    using Microsoft.AspNetCore.Mvc.Rendering;
+    using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
     public static partial class SkinHelpers
     {
-        public static IHtmlString JavaScriptLibraryInclude(this HtmlHelper<DotNetNuke.Framework.Models.PageModel> helper, string name, string version = "", string specificVersion = "")
+        public static IHtmlContent JavaScriptLibraryInclude(this HtmlHelper<DotNetNuke.Framework.Models.PageModel> helper, string name, string version = "", string specificVersion = "")
         {
             var script = new TagBuilder("script");
             script.Attributes.Add("src", name);
@@ -26,7 +30,7 @@ namespace DotNetNuke.Web.Mvc.Skins
                 script.Attributes.Add("data-specific-version", specificVersion);
             }
 
-            return new MvcHtmlString(script.ToString());
+            return new HtmlString(script.ToString());
         }
     }
 }

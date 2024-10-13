@@ -14,6 +14,7 @@ namespace DotNetNuke.UI.WebControls
     using DotNetNuke.Services.Localization;
 
     /// <summary>Language Selector control.</summary>
+    [CLSCompliant(false)]
     public class LanguageSelector : Control, INamingContainer
     {
         private Panel pnlControl;

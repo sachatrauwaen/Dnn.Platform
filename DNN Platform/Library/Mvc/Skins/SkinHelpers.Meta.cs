@@ -5,12 +5,16 @@
 namespace DotNetNuke.Web.Mvc.Skins
 {
     using System;
-    using System.Web;
-    using System.Web.Mvc;
+    using System.IO;
+
+    using Dnn.Migration;
+    using Microsoft.AspNetCore.Html;
+    using Microsoft.AspNetCore.Mvc.Rendering;
+    using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
     public static partial class SkinHelpers
     {
-        public static IHtmlString Meta(this HtmlHelper<DotNetNuke.Framework.Models.PageModel> helper, string name = "", string content = "", string httpEquiv = "", bool insertFirst = false)
+        public static IHtmlContent Meta(this HtmlHelper<DotNetNuke.Framework.Models.PageModel> helper, string name = "", string content = "", string httpEquiv = "", bool insertFirst = false)
         {
             var metaTag = new TagBuilder("meta");
 
@@ -29,7 +33,7 @@ namespace DotNetNuke.Web.Mvc.Skins
                 metaTag.Attributes.Add("http-equiv", httpEquiv);
             }
 
-            return new MvcHtmlString(metaTag.ToString());
+            return metaTag.RenderSelfClosingTag();
         }
     }
 }

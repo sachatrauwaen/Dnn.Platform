@@ -5,6 +5,7 @@ namespace DotNetNuke.Services.Log.EventLog
 {
     using System;
 
+    using DotNetNuke.Abstractions.Logging;
     using DotNetNuke.Abstractions.Portals;
     using DotNetNuke.Entities.Portals;
     using DotNetNuke.Internal.SourceGenerators;
@@ -17,7 +18,7 @@ namespace DotNetNuke.Services.Log.EventLog
     public partial interface IEventLogController : ILogController
     {
 #pragma warning disable SA1600 // Elements should be documented, not documenting since the whole class is deprecated.
-        void AddLog(string propertyName, string propertyValue, EventLogController.EventLogType logType);
+        void AddLog(string propertyName, string propertyValue, EventLogType logType);
 
         [Obsolete("Deprecated in DotNetNuke 9.7.0. It has been replaced by the overload taking IPortalSettings. Scheduled for removal in v11.0.0.")]
         void AddLog(string propertyName, string propertyValue, PortalSettings portalSettings, int userID, EventLogController.EventLogType logType);
@@ -29,7 +30,7 @@ namespace DotNetNuke.Services.Log.EventLog
 
         void AddLog(string propertyName, string propertyValue, IPortalSettings portalSettings, int userID, string logType);
 
-        void AddLog(PortalSettings portalSettings, int userID, EventLogController.EventLogType logType);
+        void AddLog(PortalSettings portalSettings, int userID, EventLogType logType);
 
         [Obsolete("Deprecated in DotNetNuke 9.7.0. It has been replaced by the overload taking IPortalSettings. Scheduled for removal in v11.0.0.")]
         void AddLog(LogProperties properties, PortalSettings portalSettings, int userID, string logTypeKey, bool bypassBuffering);

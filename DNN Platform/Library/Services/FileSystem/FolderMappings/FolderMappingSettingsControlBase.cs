@@ -4,10 +4,12 @@
 
 namespace DotNetNuke.Services.FileSystem
 {
+    using System;
     using System.Collections;
 
     using DotNetNuke.Entities.Modules;
 
+    [CLSCompliant(false)]
     public abstract class FolderMappingSettingsControlBase : PortalModuleBase
     {
         /// <summary>Use this method to load the provider's concrete settings.</summary>

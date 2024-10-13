@@ -9,6 +9,7 @@ namespace DotNetNuke.Services.Authentication.OAuth
 
     using DotNetNuke.UI.WebControls;
 
+    [CLSCompliant(false)]
     public class OAuthSettingsBase : AuthenticationSettingsBase
     {
         [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1306:FieldNamesMustBeginWithLowerCaseLetter", Justification = "Breaking Change")]

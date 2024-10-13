@@ -13,6 +13,7 @@ namespace DotNetNuke.UI.WebControls
     using DotNetNuke.Entities.Tabs;
 
     /// <summary>Base class for Dnn specific WebControls.</summary>
+    [CLSCompliant(false)]
     public abstract class WebControlBase : WebControl
     {
         private string styleSheetUrl = string.Empty;

@@ -11,6 +11,7 @@ namespace DotNetNuke.Entities.Content
     using System.Web.Script.Serialization;
     using System.Xml.Serialization;
 
+    using Dnn.Migration;
     using DotNetNuke.Common.Utilities;
     using DotNetNuke.Entities.Content.Common;
     using DotNetNuke.Entities.Content.Taxonomy;

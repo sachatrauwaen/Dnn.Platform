@@ -3,10 +3,13 @@
 // See the LICENSE file in the project root for more information
 namespace DotNetNuke.UI.Containers
 {
+    using System;
+
     using DotNetNuke.Entities.Modules.Actions;
     using DotNetNuke.UI.Modules;
 
     /// <summary>IActionControl provides a common Interface for Action Controls.</summary>
+    [CLSCompliant(false)]
     public interface IActionControl
     {
         /// <summary>The eventhandler for the action.</summary>

@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information
 namespace DotNetNuke.UI.WebControls
 {
+    using System;
     using System.Web;
     using System.Web.UI.WebControls;
 
@@ -10,6 +11,7 @@ namespace DotNetNuke.UI.WebControls
     /// Namespace:  DotNetNuke.UI.WebControls
     /// Class:      TextColumn
     /// <summary>The TextColumn control provides a custom Text Column.</summary>
+    [CLSCompliant(false)]
     public class TextColumn : TemplateColumn
     {
         /// <summary>Gets or sets the Data Field is the field that binds to the Text Column.</summary>

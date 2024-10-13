@@ -18,6 +18,7 @@ namespace DotNetNuke.UI.UserControls
     using DotNetNuke.UI.WebControls;
 
     /// <summary>The Address UserControl is used to manage User Addresses.</summary>
+    [CLSCompliant(false)]
     public abstract class Address : UserControlBase
     {
         [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1401:FieldsMustBePrivate", Justification = "Breaking change")]

@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information
 namespace DotNetNuke.UI.Modules
 {
+    using System;
     using System.Web.UI;
     using System.Web.UI.WebControls;
 
@@ -15,6 +16,7 @@ namespace DotNetNuke.UI.Modules
     /// CachedModuleControl represents a cached "ModuleControl".  It inherits from
     /// Literal and implements the IModuleControl interface.
     /// </summary>
+    [CLSCompliant(false)]
     public class CachedModuleControl : Literal, IModuleControl
     {
         private string localResourceFile;

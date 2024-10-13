@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information
 namespace DotNetNuke.UI.Skins
 {
+    using System;
     using System.ComponentModel;
     using System.Web.UI;
 
@@ -14,6 +15,7 @@ namespace DotNetNuke.UI.Skins
     /// The SkinObject class defines a custom base class inherited by all
     /// skin and container objects within the Portal.
     /// </summary>
+    [CLSCompliant(false)]
     public class SkinObjectBase : UserControl, ISkinControl
     {
         /// <summary>Gets the portal Settings for this Skin Control.</summary>

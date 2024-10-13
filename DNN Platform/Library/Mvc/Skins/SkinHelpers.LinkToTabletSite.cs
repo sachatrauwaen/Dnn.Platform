@@ -5,23 +5,26 @@
 namespace DotNetNuke.Web.Mvc.Skins
 {
     using System;
-    using System.Web;
-    using System.Web.Mvc;
+    using System.IO;
 
+    using Dnn.Migration;
     using DotNetNuke.Entities.Portals;
     using DotNetNuke.Services.Localization;
+    using Microsoft.AspNetCore.Html;
+    using Microsoft.AspNetCore.Mvc.Rendering;
+    using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
     public static partial class SkinHelpers
     {
-        public static IHtmlString LinkToTabletSite(this HtmlHelper<DotNetNuke.Framework.Models.PageModel> helper, string cssClass = "SkinObject")
+        public static IHtmlContent LinkToTabletSite(this HtmlHelper<DotNetNuke.Framework.Models.PageModel> helper, string cssClass = "SkinObject")
         {
             var portalSettings = PortalSettings.Current;
             var link = new TagBuilder("a");
 
             link.Attributes.Add("href", portalSettings.PortalAlias.HTTPAlias);
-            link.SetInnerText(Localization.GetString("lnkPortal.Text", GetSkinsResourceFile("LinkToTabletSite.ascx")));
+            link.InnerHtml.Append(Localization.GetString("lnkPortal.Text", GetSkinsResourceFile("LinkToTabletSite.ascx")));
 
-            return new MvcHtmlString(link.ToString());
+            return new HtmlString(link.ToString());
         }
     }
 }

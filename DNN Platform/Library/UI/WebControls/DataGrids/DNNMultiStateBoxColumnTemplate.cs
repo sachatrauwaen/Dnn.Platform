@@ -13,6 +13,7 @@ namespace DotNetNuke.UI.WebControls
     /// Namespace:  DotNetNuke.UI.WebControls
     /// Class:      DNNMultiStateBoxColumnTemplate
     /// <summary>The DNNMultiStateBoxColumnTemplate provides a Template for the DNNMultiStateBoxColumn.</summary>
+    [CLSCompliant(false)]
     public class DNNMultiStateBoxColumnTemplate : ITemplate
     {
         private string mDataField = Null.NullString;

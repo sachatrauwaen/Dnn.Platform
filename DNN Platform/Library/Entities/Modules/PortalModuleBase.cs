@@ -31,6 +31,7 @@ namespace DotNetNuke.Entities.Modules
     /// The PortalModuleBase class defines portal specific properties
     /// that are used by the portal framework to correctly display portal modules.
     /// </summary>
+    [CLSCompliant(false)]
     public partial class PortalModuleBase : UserControlBase, IModuleControl
     {
         protected static readonly Regex FileInfoRegex = new Regex(
@@ -388,6 +389,7 @@ namespace DotNetNuke.Entities.Modules
             }
         }
 
+        /*
         [DnnDeprecated(7, 0, 0, "Please use ModuleController.CacheFileName(TabModuleID)", RemovalVersion = 11)]
         public partial string GetCacheFileName(int tabModuleId)
         {
@@ -411,6 +413,7 @@ namespace DotNetNuke.Entities.Modules
         {
             ModuleController.SynchronizeModule(this.ModuleId);
         }
+        */
 
         /// <inheritdoc/>
         protected override void OnInit(EventArgs e)

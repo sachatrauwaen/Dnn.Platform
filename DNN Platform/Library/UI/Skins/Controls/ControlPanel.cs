@@ -13,6 +13,7 @@ namespace DotNetNuke.UI.Skins.Controls
     using DotNetNuke.UI.ControlPanels;
     using DotNetNuke.Web.Client.ClientResourceManagement;
 
+    [CLSCompliant(false)]
     public class ControlPanel : SkinObjectBase
     {
         public bool IsDockable { get; set; }

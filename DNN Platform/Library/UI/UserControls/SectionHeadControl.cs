@@ -21,6 +21,7 @@ namespace DotNetNuke.UI.UserControls
     /// To use this control the user must provide somewhere in the asp page the
     /// implementation of the javascript required to expand/collapse the display.
     /// </remarks>
+    [CLSCompliant(false)]
     public class SectionHeadControl : UserControl
     {
         [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1401:FieldsMustBePrivate", Justification = "Breaking change")]

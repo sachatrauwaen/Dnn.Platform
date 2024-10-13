@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information
 namespace DotNetNuke.Framework
 {
+    using System;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Web.UI;
@@ -19,6 +20,7 @@ namespace DotNetNuke.Framework
     // Class    : CDefault
     // -----------------------------------------------------------------------------
     // -----------------------------------------------------------------------------
+    [CLSCompliant(false)]
     public class CDefault : PageBase
     {
         [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1401:FieldsMustBePrivate", Justification = "Breaking change")]

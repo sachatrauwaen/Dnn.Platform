@@ -19,6 +19,7 @@ namespace DotNetNuke.UI.WebControls.Internal
     /// This control is not general in any way shape of form and should NOT be used outside
     /// of the PermissionGrid.
     /// </summary>
+    [CLSCompliant(false)]
     public class PermissionTriState : HiddenField
     {
         private readonly string grantImagePath;

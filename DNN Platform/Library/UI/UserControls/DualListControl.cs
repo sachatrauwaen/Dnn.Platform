@@ -13,6 +13,7 @@ namespace DotNetNuke.UI.UserControls
     using DotNetNuke.Services.Exceptions;
     using DotNetNuke.Services.Localization;
 
+    [CLSCompliant(false)]
     public abstract class DualListControl : UserControlBase
     {
         [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1306:FieldNamesMustBeginWithLowerCaseLetter", Justification = "Breaking Change")]

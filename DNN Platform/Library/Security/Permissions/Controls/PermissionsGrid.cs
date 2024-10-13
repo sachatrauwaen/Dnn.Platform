@@ -26,6 +26,7 @@ namespace DotNetNuke.Security.Permissions.Controls
 
     using Globals = DotNetNuke.Common.Globals;
 
+    [CLSCompliant(false)]
     public abstract class PermissionsGrid : Control, INamingContainer
     {
         [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1401:FieldsMustBePrivate", Justification = "Breaking change")]

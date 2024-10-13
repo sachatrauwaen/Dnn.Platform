@@ -4,8 +4,12 @@
 
 namespace DotNetNuke.Services.GeneratedImage.FilterTransform
 {
-    using System.Drawing;
+    // using System.Drawing;
     using System.Drawing.Drawing2D;
+
+    using SixLabors.ImageSharp;
+    using SixLabors.ImageSharp.PixelFormats;
+    using SixLabors.ImageSharp.Processing;
 
     /// <summary>Brightness ImageTransform class.</summary>
     public class ImageBrightnessTransform : ImageTransform

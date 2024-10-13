@@ -39,13 +39,13 @@ namespace DotNetNuke.UI.Modules
     /// Namespace: DotNetNuke.UI.Modules
     /// Class    : ModuleHost
     /// <summary>ModuleHost hosts a Module Control (or its cached Content).</summary>
+    [CLSCompliant(false)]
     public sealed class ModuleHost : Panel
     {
         private const string DefaultCssProvider = "DnnPageHeaderProvider";
         private const string DefaultJsProvider = "DnnBodyProvider";
 
-        private static readonly ILog Logger = LoggerSource.Instance.GetLogger(typeof(ModuleHost));
-
+        // private static readonly ILog Logger = LoggerSource.Instance.GetLogger(typeof(ModuleHost));
         private static readonly Regex CdfMatchRegex = new Regex(
             @"<\!--CDF\((?<type>JAVASCRIPT|CSS|JS-LIBRARY)\|(?<path>.+?)(\|(?<provider>.+?)\|(?<priority>\d+?))?\)-->",
             RegexOptions.IgnoreCase | RegexOptions.Compiled);

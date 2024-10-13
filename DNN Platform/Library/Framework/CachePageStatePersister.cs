@@ -15,6 +15,7 @@ namespace DotNetNuke.Framework
     /// Project:    DotNetNuke
     /// Class:      CachePageStatePersister
     /// <summary>CachePageStatePersister provides a cache based page state peristence mechanism.</summary>
+    [CLSCompliant(false)]
     public class CachePageStatePersister : PageStatePersister
     {
         private const string ViewStateCacheKey = "__VIEWSTATE_CACHEKEY";

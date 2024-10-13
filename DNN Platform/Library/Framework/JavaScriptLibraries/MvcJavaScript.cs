@@ -8,7 +8,6 @@ namespace DotNetNuke.Framework.JavaScriptLibraries
     using System.Globalization;
     using System.Linq;
     using System.Web;
-    using System.Web.Mvc;
 
     // using System.Web.UI;
     using DotNetNuke.Common;
@@ -26,7 +25,7 @@ namespace DotNetNuke.Framework.JavaScriptLibraries
     using DotNetNuke.UI.Utilities;
     using DotNetNuke.Web.Client;
     using DotNetNuke.Web.Client.ClientResourceManagement;
-
+    using Microsoft.AspNetCore.Mvc;
     using Globals = DotNetNuke.Common.Globals;
 
     public class MvcJavaScript

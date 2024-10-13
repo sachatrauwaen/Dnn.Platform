@@ -484,6 +484,7 @@ namespace DotNetNuke.Services.Upgrade
             return portalId;
         }
 
+        /*
         /// <summary>Obsolete, AddPortal manages the Installation of a new DotNetNuke Portal.</summary>
         /// <returns>The ID of the new portal, or <c>-1</c> to indicate failure.</returns>
         [DnnDeprecated(9, 3, 0, "Use the overloaded method with the 'superUser' parameter instead")]
@@ -491,6 +492,7 @@ namespace DotNetNuke.Services.Upgrade
         {
             return AddPortal(node, status, indent, null);
         }
+        */
 
         /// <summary>DeleteInstallerFiles - clean up install config and installwizard files. If installwizard is ran again this will be recreated via the dotnetnuke.install.config.resources file.</summary>
         /// <remarks>uses FileSystemUtils.DeleteFile as it checks for readonly attribute status and changes it if required, as well as verifying file exists.</remarks>

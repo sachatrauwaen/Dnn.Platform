@@ -21,6 +21,7 @@ namespace DotNetNuke.UI.WebControls
     using DotNetNuke.Security.Roles;
     using DotNetNuke.Services.Localization;
 
+    [CLSCompliant(false)]
     public class RolesSelectionGrid : Control, INamingContainer
     {
         private readonly DataTable dtRoleSelections = new DataTable();

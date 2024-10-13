@@ -4,6 +4,7 @@
 
 namespace DotNetNuke.ExtensionPoints
 {
+    using System;
     using System.ComponentModel;
     using System.Web.UI;
     using System.Web.UI.WebControls;
@@ -12,6 +13,7 @@ namespace DotNetNuke.ExtensionPoints
 
     [DefaultProperty("Text")]
     [ToolboxData("<{0}:DefaultExtensionControl runat=server></{0}:DefaultExtensionControl>")]
+    [CLSCompliant(false)]
     public class DefaultExtensionControl : WebControl
     {
         [Bindable(true)]

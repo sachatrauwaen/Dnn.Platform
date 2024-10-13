@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information
 namespace DotNetNuke.Services.Authentication
 {
+    using System;
     using DotNetNuke.Common.Utilities;
     using DotNetNuke.Entities.Modules;
 
@@ -10,6 +11,7 @@ namespace DotNetNuke.Services.Authentication
     /// The AuthenticationSettingsBase class provides a base class for Authentication
     /// Settings controls.
     /// </summary>
+    [CLSCompliant(false)]
     public abstract class AuthenticationSettingsBase : PortalModuleBase
     {
         private string authenticationType = Null.NullString;

@@ -3,8 +3,11 @@
 // See the LICENSE file in the project root for more information
 namespace DotNetNuke.UI.Skins
 {
+    using System;
+
     using DotNetNuke.UI.Modules;
 
+    [CLSCompliant(false)]
     public interface ISkinControl
     {
         IModuleControl ModuleControl { get; set; }

@@ -16,6 +16,7 @@ namespace DotNetNuke.UI.WebControls
     using DotNetNuke.Services.Localization;
 
     [ToolboxData("<{0}:PagingControl runat=server></{0}:PagingControl>")]
+    [CLSCompliant(false)]
     public class PagingControl : WebControl, IPostBackEventHandler
     {
         [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1306:FieldNamesMustBeginWithLowerCaseLetter", Justification = "Breaking Change")]

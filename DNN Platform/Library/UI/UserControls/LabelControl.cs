@@ -22,6 +22,7 @@ namespace DotNetNuke.UI.UserControls
     /// To implement help, the control uses the ClientAPI interface.  In particular
     ///  the javascript function __dnn_Help_OnClick().
     /// </remarks>
+    [CLSCompliant(false)]
     public abstract class LabelControl : UserControl
     {
         [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1401:FieldsMustBePrivate", Justification = "Breaking change")]

@@ -13,6 +13,7 @@ namespace DotNetNuke.UI.WebControls
     /// The DNNDataGrid control provides an Enhanced Data Grid, that supports other
     /// column types.
     /// </summary>
+    [CLSCompliant(false)]
     public class DNNDataGrid : DataGrid
     {
         public event DNNDataGridCheckedColumnEventHandler ItemCheckedChanged;

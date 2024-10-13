@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information
 namespace DotNetNuke.Common.Utilities
 {
+    using System;
     using System.Collections;
     using System.Web.Caching;
 
@@ -15,6 +16,7 @@ namespace DotNetNuke.Common.Utilities
     /// The CacheItemArgs class provides an EventArgs implementation for the
     /// CacheItemExpiredCallback delegate.
     /// </summary>
+    [CLSCompliant(false)]
     public class CacheItemArgs
     {
         private ArrayList paramList;

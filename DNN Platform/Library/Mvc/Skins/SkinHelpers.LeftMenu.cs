@@ -5,14 +5,18 @@
 namespace DotNetNuke.Web.Mvc.Skins
 {
     using System;
-    using System.Web;
-    using System.Web.Mvc;
+    using System.IO;
+
+    using Dnn.Migration;
+    using Microsoft.AspNetCore.Html;
+    using Microsoft.AspNetCore.Mvc.Rendering;
+    using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
     public static partial class SkinHelpers
     {
-        public static IHtmlString LeftMenu(this HtmlHelper<DotNetNuke.Framework.Models.PageModel> helper)
+        public static IHtmlContent LeftMenu(this HtmlHelper<DotNetNuke.Framework.Models.PageModel> helper)
         {
-            return new MvcHtmlString(string.Empty); // LeftMenu is deprecated and should return an empty string.
+            return HtmlString.Empty; // LeftMenu is deprecated and should return an empty string.
         }
     }
 }

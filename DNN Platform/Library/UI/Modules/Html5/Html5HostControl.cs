@@ -17,6 +17,7 @@ namespace DotNetNuke.UI.Modules.Html5
     using DotNetNuke.Web.Client;
     using DotNetNuke.Web.Client.ClientResourceManagement;
 
+    [CLSCompliant(false)]
     public class Html5HostControl : ModuleControlBase, IActionable
     {
         private readonly string html5File;

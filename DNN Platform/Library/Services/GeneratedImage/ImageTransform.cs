@@ -3,9 +3,13 @@
 // See the LICENSE file in the project root for more information
 namespace DotNetNuke.Services.GeneratedImage
 {
-    using System.Drawing;
+    // using System.Drawing;
     using System.Drawing.Drawing2D;
     using System.IO;
+
+    using SixLabors.ImageSharp;
+    using SixLabors.ImageSharp.PixelFormats;
+    using SixLabors.ImageSharp.Processing;
 
     /// <summary>An abstract ImageTransform class.</summary>
     public abstract class ImageTransform
@@ -33,22 +37,14 @@ namespace DotNetNuke.Services.GeneratedImage
         public abstract Image ProcessImage(Image image);
 
         /// <summary>Creates a new image from stream. The created image is independent of the stream.</summary>
-        /// <param name="imgStream"></param>
+        /// <param name="imgStream">Le flux d'entrée contenant les données de l'image.</param>
         /// <returns>Image object.</returns>
-        public virtual Bitmap CopyImage(Stream imgStream)
+        public virtual SixLabors.ImageSharp.Image CopyImage(Stream imgStream)
         {
-            using (var srcImage = new Bitmap(imgStream))
+            using (var srcImage = SixLabors.ImageSharp.Image.Load(imgStream))
             {
-                var destImage = new Bitmap(srcImage.Width, srcImage.Height);
-                using (var graph = Graphics.FromImage(destImage))
-                {
-                    graph.CompositingMode = CompositingMode.SourceCopy;
-                    graph.CompositingQuality = this.CompositingQuality;
-                    graph.InterpolationMode = this.InterpolationMode;
-                    graph.SmoothingMode = this.SmoothingMode;
-                    graph.DrawImage(srcImage, new Rectangle(0, 0, srcImage.Width, srcImage.Height));
-                }
-
+                var destImage = new Image<Rgba32>(srcImage.Width, srcImage.Height);
+                destImage.Mutate(x => x.DrawImage(srcImage, new Point(0, 0), 1f));
                 return destImage;
             }
         }

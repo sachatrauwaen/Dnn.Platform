@@ -18,6 +18,7 @@ namespace DotNetNuke.UI.Skins
     using DotNetNuke.Services.Localization;
     using DotNetNuke.UI.WebControls;
 
+    [CLSCompliant(false)]
     public class SkinControl : UserControlBase
     {
         [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1401:FieldsMustBePrivate", Justification = "Breaking change")]

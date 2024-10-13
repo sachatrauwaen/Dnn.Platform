@@ -19,7 +19,7 @@ namespace DotNetNuke.UI.WebControls
     [ToolboxData("<{0}:IntegerEditControl runat=server></{0}:IntegerEditControl>")]
     public class IntegerEditControl : EditControl
     {
-        private static readonly ILog Logger = LoggerSource.Instance.GetLogger(typeof(IntegerEditControl));
+        // private static readonly ILog Logger = LoggerSource.Instance.GetLogger(typeof(IntegerEditControl));
 
         /// <summary>
         /// Initializes a new instance of the <see cref="IntegerEditControl"/> class.

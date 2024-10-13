@@ -6,21 +6,23 @@ namespace DotNetNuke.Web.Mvc.Skins
 {
     using System;
     using System.Linq;
-    using System.Web;
-    using System.Web.Mvc;
     using System.Xml;
     using System.Xml.Linq;
 
+    using Dnn.Migration;
     using DotNetNuke.Abstractions;
     using DotNetNuke.Common;
     using DotNetNuke.Common.Utilities;
     using DotNetNuke.Entities.Portals;
     using DotNetNuke.Services.FileSystem;
+    using Microsoft.AspNetCore.Html;
+    using Microsoft.AspNetCore.Mvc.Rendering;
+    using Microsoft.AspNetCore.Mvc.ViewFeatures;
     using Microsoft.Extensions.DependencyInjection;
 
     public static partial class SkinHelpers
     {
-        public static IHtmlString Logo(this HtmlHelper<DotNetNuke.Framework.Models.PageModel> helper, string borderWidth = "", string cssClass = "", string linkCssClass = "", bool injectSvg = false)
+        public static IHtmlContent Logo(this HtmlHelper<DotNetNuke.Framework.Models.PageModel> helper, string borderWidth = "", string cssClass = "", string linkCssClass = "", bool injectSvg = false)
         {
             var portalSettings = PortalSettings.Current;
             var navigationManager = Globals.DependencyProvider.GetRequiredService<INavigationManager>();
@@ -54,7 +56,7 @@ namespace DotNetNuke.Web.Mvc.Skins
                         string svgContent = GetSvgContent(fileInfo, portalSettings, cssClass);
                         if (!string.IsNullOrEmpty(svgContent))
                         {
-                            tbLink.InnerHtml = svgContent;
+                            tbLink.InnerHtml.AppendHtml(svgContent);
                         }
                     }
                     else
@@ -63,7 +65,7 @@ namespace DotNetNuke.Web.Mvc.Skins
                         if (!string.IsNullOrEmpty(imageUrl))
                         {
                             tbImage.Attributes.Add("src", imageUrl);
-                            tbLink.InnerHtml = tbImage.ToString();
+                            tbLink.InnerHtml.AppendHtml(tbImage);
                         }
                     }
                 }
@@ -81,7 +83,7 @@ namespace DotNetNuke.Web.Mvc.Skins
                 tbLink.Attributes.Add("href", Globals.AddHTTP(portalSettings.PortalAlias.HTTPAlias));
             }
 
-            return new MvcHtmlString(tbLink.ToString());
+            return new HtmlString(tbLink.ToString());
         }
 
         private static IFileInfo GetLogoFileInfo(PortalSettings portalSettings)

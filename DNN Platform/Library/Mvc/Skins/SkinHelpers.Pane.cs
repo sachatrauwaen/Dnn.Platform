@@ -5,10 +5,9 @@
 namespace DotNetNuke.Web.Mvc.Skins
 {
     using System;
-    using System.Web;
-    using System.Web.Mvc;
-    using System.Web.Mvc.Html;
+    using System.IO;
 
+    using Dnn.Migration;
     using DotNetNuke.Common;
     using DotNetNuke.Common.Utilities;
     using DotNetNuke.Entities.Modules;
@@ -17,10 +16,13 @@ namespace DotNetNuke.Web.Mvc.Skins
     using DotNetNuke.UI.Modules;
     using DotNetNuke.UI.Skins;
     using DotNetNuke.Web.Client.ClientResourceManagement;
+    using Microsoft.AspNetCore.Html;
+    using Microsoft.AspNetCore.Mvc.Rendering;
+    using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
     public static partial class SkinExtensions
     {
-        public static IHtmlString Pane(this HtmlHelper<DotNetNuke.Framework.Models.PageModel> htmlHelper, string paneName)
+        public static IHtmlContent Pane(this HtmlHelper<DotNetNuke.Framework.Models.PageModel> htmlHelper, string paneName)
         {
             var model = htmlHelper.ViewData.Model;
             if (model == null)
@@ -29,7 +31,7 @@ namespace DotNetNuke.Web.Mvc.Skins
             }
 
             var paneDiv = new TagBuilder("div");
-            paneDiv.GenerateId("dnn_" + paneName);
+            paneDiv.GenerateId("dnn_" + paneName, "_");
             paneDiv.AddCssClass("dnnPane");
 
             // paneDiv.AddCssClass(model.Skin.PaneCssClass);
@@ -63,10 +65,11 @@ namespace DotNetNuke.Web.Mvc.Skins
 
                     var anchor = new TagBuilder("a");
                     anchor.Attributes["name"] = container.Value.ModuleConfiguration.ModuleID.ToString();
-                    moduleDiv.InnerHtml += anchor.ToString();
+                    moduleDiv.InnerHtml.AppendHtml(anchor);
 
-                    moduleDiv.InnerHtml += htmlHelper.Partial(container.Value.ContainerRazorFile, container.Value).ToHtmlString();
-                    paneDiv.InnerHtml += moduleDiv.ToString();
+                    var containerContent = AsyncHelper.RunSync(() => htmlHelper.PartialAsync(container.Value.ContainerRazorFile, container.Value));
+                    moduleDiv.InnerHtml.AppendHtml(containerContent);
+                    paneDiv.InnerHtml.AppendHtml(moduleDiv);
                 }
             }
             else
@@ -76,11 +79,11 @@ namespace DotNetNuke.Web.Mvc.Skins
 
             if (model.IsEditMode)
             {
-                return MvcHtmlString.Create(paneDiv.ToString());
+                return paneDiv;
             }
             else
             {
-                return MvcHtmlString.Create(paneDiv.InnerHtml);
+                return paneDiv.InnerHtml;
             }
         }
     }

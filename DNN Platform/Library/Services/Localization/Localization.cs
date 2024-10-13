@@ -1469,6 +1469,7 @@ namespace DotNetNuke.Services.Localization
             }
         }
 
+        /*
         /// <summary>Sets the culture codes on the current Thread.</summary>
         /// <param name="cultureInfo">Culture Info for the current page.</param>
         /// <param name="portalSettings">The current portal settings.</param>
@@ -1481,6 +1482,7 @@ namespace DotNetNuke.Services.Localization
         {
             SetThreadCultures(cultureInfo, (IPortalSettings)portalSettings);
         }
+        */
 
         /// <summary>Sets the culture codes on the current Thread.</summary>
         /// <param name="cultureInfo">Culture Info for the current page.</param>

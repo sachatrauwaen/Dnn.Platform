@@ -3,6 +3,8 @@
 // See the LICENSE file in the project root for more information
 namespace DotNetNuke.UI.WebControls
 {
+    using System;
+
     using System.Web.UI.WebControls;
 
     using DotNetNuke.Common.Lists;
@@ -14,6 +16,7 @@ namespace DotNetNuke.UI.WebControls
     /// Namespace:  DotNetNuke.UI.WebControls
     /// Class:      EditorInfo
     /// <summary>The EditorInfo class provides a helper class for the Property Editor.</summary>
+    [CLSCompliant(false)]
     public class EditorInfo
     {
         /// <summary>Initializes a new instance of the <see cref="EditorInfo"/> class.</summary>

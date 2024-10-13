@@ -5,16 +5,19 @@
 namespace DotNetNuke.Web.Mvc.Skins
 {
     using System;
-    using System.Web;
-    using System.Web.Mvc;
+    using System.IO;
 
+    using Dnn.Migration;
     using DotNetNuke.Entities.Portals;
     using DotNetNuke.Services.Localization;
     using DotNetNuke.Services.Mobile;
+    using Microsoft.AspNetCore.Html;
+    using Microsoft.AspNetCore.Mvc.Rendering;
+    using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
     public static partial class SkinHelpers
     {
-        public static IHtmlString LinkToMobileSite(this HtmlHelper<DotNetNuke.Framework.Models.PageModel> helper, string cssClass = "SkinObject")
+        public static IHtmlContent LinkToMobileSite(this HtmlHelper<DotNetNuke.Framework.Models.PageModel> helper, string cssClass = "SkinObject")
         {
             var redirectionController = new RedirectionController();
             var redirectUrl = redirectionController.GetMobileSiteUrl();
@@ -24,12 +27,12 @@ namespace DotNetNuke.Web.Mvc.Skins
                 var link = new TagBuilder("a");
 
                 link.Attributes.Add("href", portalSettings.PortalAlias.HTTPAlias);
-                link.SetInnerText(Localization.GetString("lnkPortal.Text", GetSkinsResourceFile("LinkToMobileSite.ascx")));
-                return new MvcHtmlString(link.ToString());
+                link.InnerHtml.Append(Localization.GetString("lnkPortal.Text", GetSkinsResourceFile("LinkToMobileSite.ascx")));
+                return new HtmlString(link.ToString());
             }
             else
             {
-                return new MvcHtmlString(string.Empty);
+                return HtmlString.Empty;
             }
         }
     }

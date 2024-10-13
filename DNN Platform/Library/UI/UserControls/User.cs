@@ -13,6 +13,7 @@ namespace DotNetNuke.UI.UserControls
     using DotNetNuke.Services.Localization;
 
     /// <summary>The User UserControl is used to manage User Details.</summary>
+    [CLSCompliant(false)]
     public abstract class User : UserControlBase
     {
         [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1306:FieldNamesMustBeginWithLowerCaseLetter", Justification = "Breaking Change")]

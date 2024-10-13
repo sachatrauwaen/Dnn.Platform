@@ -14,6 +14,7 @@ namespace DotNetNuke.Security.Permissions.Controls
     using DotNetNuke.Entities.Users;
     using DotNetNuke.Security.Roles;
 
+    [CLSCompliant(false)]
     public class DesktopModulePermissionsGrid : PermissionsGrid
     {
         private DesktopModulePermissionCollection desktopModulePermissions;

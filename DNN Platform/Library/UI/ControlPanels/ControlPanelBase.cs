@@ -23,6 +23,7 @@ namespace DotNetNuke.UI.ControlPanels
     using DotNetNuke.Services.Personalization;
 
     /// <summary>The ControlPanel class defines a custom base class inherited by all ControlPanel controls.</summary>
+    [CLSCompliant(false)]
     public class ControlPanelBase : UserControl
     {
         private string localResourceFile;

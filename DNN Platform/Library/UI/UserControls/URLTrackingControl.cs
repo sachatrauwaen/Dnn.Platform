@@ -18,6 +18,7 @@ namespace DotNetNuke.UI.UserControls
 
     using Calendar = DotNetNuke.Common.Utilities.Calendar;
 
+    [CLSCompliant(false)]
     public abstract class URLTrackingControl : UserControlBase
     {
         // ReSharper disable InconsistentNaming

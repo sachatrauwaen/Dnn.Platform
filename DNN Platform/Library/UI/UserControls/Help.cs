@@ -18,6 +18,7 @@ namespace DotNetNuke.UI.UserControls
     using DotNetNuke.Services.Installer.Packages;
     using DotNetNuke.Services.Localization;
 
+    [CLSCompliant(false)]
     public abstract class Help : PortalModuleBase
     {
         [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1401:FieldsMustBePrivate", Justification = "Breaking change")]

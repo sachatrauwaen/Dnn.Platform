@@ -17,6 +17,7 @@ namespace DotNetNuke.UI.UserControls
     using DotNetNuke.Services.Exceptions;
     using DotNetNuke.Services.Localization;
 
+    [CLSCompliant(false)]
     public abstract class ModuleAuditControl : UserControl
     {
         [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1401:FieldsMustBePrivate", Justification = "Breaking change")]

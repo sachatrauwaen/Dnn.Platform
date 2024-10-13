@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information
 namespace DotNetNuke.UI.WebControls
 {
+    using System;
     using System.Web;
     using System.Web.UI.WebControls;
 
@@ -12,6 +13,7 @@ namespace DotNetNuke.UI.WebControls
     /// The ImageCommandColumn control provides an Image Command (or Hyperlink) column
     /// for a Data Grid.
     /// </summary>
+    [CLSCompliant(false)]
     public class ImageCommandColumn : TemplateColumn
     {
         private ImageCommandColumnEditMode editMode = ImageCommandColumnEditMode.Command;

@@ -5,12 +5,16 @@
 namespace DotNetNuke.Web.Mvc.Skins
 {
     using System;
-    using System.Web;
-    using System.Web.Mvc;
+    using System.IO;
+
+    using Dnn.Migration;
+    using Microsoft.AspNetCore.Html;
+    using Microsoft.AspNetCore.Mvc.Rendering;
+    using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
     public static partial class SkinHelpers
     {
-        public static IHtmlString CurrentDate(this HtmlHelper<DotNetNuke.Framework.Models.PageModel> helper, string cssClass = "SkinObject")
+        public static IHtmlContent CurrentDate(this HtmlHelper<DotNetNuke.Framework.Models.PageModel> helper, string cssClass = "SkinObject")
         {
             var lblDate = new TagBuilder("span");
 
@@ -19,9 +23,9 @@ namespace DotNetNuke.Web.Mvc.Skins
                 lblDate.AddCssClass(cssClass);
             }
 
-            lblDate.SetInnerText(DateTime.Now.ToString("D"));
+            lblDate.InnerHtml.Append(DateTime.Now.ToString("D"));
 
-            return new MvcHtmlString(lblDate.ToString());
+            return new HtmlString(lblDate.ToString());
         }
     }
 }

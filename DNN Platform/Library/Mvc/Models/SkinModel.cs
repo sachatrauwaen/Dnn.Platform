@@ -11,7 +11,6 @@ namespace DotNetNuke.Web.Mvc.Skins
     using System.Text;
     using System.Threading;
     using System.Web;
-    using System.Web.Mvc;
 
     using DotNetNuke.Common;
     using DotNetNuke.Common.Utilities;

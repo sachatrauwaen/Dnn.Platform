@@ -5,22 +5,25 @@
 namespace DotNetNuke.Web.Mvc.Skins
 {
     using System;
-    using System.Web;
-    using System.Web.Mvc;
+    using System.IO;
 
+    using Dnn.Migration;
     using DotNetNuke.Entities.Portals;
+    using Microsoft.AspNetCore.Html;
+    using Microsoft.AspNetCore.Mvc.Rendering;
+    using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
     public static partial class SkinHelpers
     {
-        public static IHtmlString Help(this HtmlHelper<DotNetNuke.Framework.Models.PageModel> helper, string cssClass = "")
+        public static IHtmlContent Help(this HtmlHelper<DotNetNuke.Framework.Models.PageModel> helper, string cssClass = "")
         {
             var portalSettings = PortalSettings.Current;
             var link = new TagBuilder("a");
             link.Attributes.Add("href", "mailto:" + portalSettings.Email + "?subject=" + portalSettings.PortalName + " Support Request");
             link.Attributes.Add("class", cssClass);
-            link.SetInnerText("Help");
+            link.InnerHtml.Append("Help");
 
-            return new MvcHtmlString(link.ToString());
+            return new HtmlString(link.ToString());
         }
     }
 }

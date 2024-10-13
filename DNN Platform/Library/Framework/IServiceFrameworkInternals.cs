@@ -4,8 +4,8 @@
 
 namespace DotNetNuke.Framework
 {
-    using System.Web.Mvc;
     using System.Web.UI;
+    using Microsoft.AspNetCore.Mvc;
 
     internal interface IServiceFrameworkInternals
     {

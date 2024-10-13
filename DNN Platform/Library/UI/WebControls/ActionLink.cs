@@ -20,6 +20,7 @@ namespace DotNetNuke.UI.WebControls
     /// <remarks>
     /// ActionBase inherits from HyperLink.
     /// </remarks>
+    [CLSCompliant(false)]
     public class ActionLink : HyperLink
     {
         /// <summary>Initializes a new instance of the <see cref="ActionLink"/> class.</summary>

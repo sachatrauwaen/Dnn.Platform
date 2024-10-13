@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information
 namespace DotNetNuke.Services.Syndication
 {
+    using System;
     using System.Web;
 
     using DotNetNuke.Common;
@@ -10,6 +11,7 @@ namespace DotNetNuke.Services.Syndication
     using DotNetNuke.Entities.Portals;
 
     /// <summary>An HTTP handler for generating an RSS feed.</summary>
+    [CLSCompliant(false)]
     public class SyndicationHandlerBase : GenericRssHttpHandlerBase
     {
         private int moduleId = Null.NullInteger;

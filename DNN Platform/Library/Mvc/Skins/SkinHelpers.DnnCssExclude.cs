@@ -4,19 +4,24 @@
 
 namespace DotNetNuke.Web.Mvc.Skins
 {
-    using System.Web;
-    using System.Web.Mvc;
+    using System;
+    using System.IO;
+
+    using Dnn.Migration;
+    using Microsoft.AspNetCore.Html;
+    using Microsoft.AspNetCore.Mvc.Rendering;
+    using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
     public static partial class SkinHelpers
     {
-        public static IHtmlString DnnCssExclude(this HtmlHelper<DotNetNuke.Framework.Models.PageModel> helper, string name)
+        public static IHtmlContent DnnCssExclude(this HtmlHelper<DotNetNuke.Framework.Models.PageModel> helper, string name)
         {
             var cssExclude = new TagBuilder("dnn:DnnCssExclude");
             cssExclude.Attributes.Add("ID", "ctlExclude");
             cssExclude.Attributes.Add("runat", "server");
             cssExclude.Attributes.Add("Name", name);
 
-            return new MvcHtmlString(cssExclude.ToString());
+            return cssExclude.RenderSelfClosingTag();
         }
     }
 }

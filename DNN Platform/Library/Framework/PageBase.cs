@@ -29,11 +29,12 @@ namespace DotNetNuke.Framework
     /// Project:    DotNetNuke
     /// Class:      PageBase
     /// <summary>PageBase provides a custom DotNetNuke base class for pages.</summary>
+    [CLSCompliant(false)]
     public abstract class PageBase : Page
     {
         private const string LinkItemPattern = "<(a|link|img|script|input|form|object).[^>]*(href|src|action)=(\\\"|'|)(.[^\\\"']*)(\\\"|'|)[^>]*>";
 
-        private static readonly ILog Logger = LoggerSource.Instance.GetLogger(typeof(PageBase));
+        // private static readonly ILog Logger = LoggerSource.Instance.GetLogger(typeof(PageBase));
         private static readonly Regex LinkItemMatchRegex = new Regex(LinkItemPattern, RegexOptions.IgnoreCase | RegexOptions.Compiled);
         private readonly ILog tracelLogger = LoggerSource.Instance.GetLogger("DNN.Trace");
         private readonly NameValueCollection htmlAttributes = new NameValueCollection();

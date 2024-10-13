@@ -10,6 +10,7 @@ namespace DotNetNuke.Services.Cache
     /// <remarks>
     /// The CacheDependency class monitors the dependency relationships so that when any of them changes, the cached item will be automatically removed.
     /// </remarks>
+    [CLSCompliant(false)]
     public class DNNCacheDependency : IDisposable
     {
         private readonly DateTime utcStart = DateTime.MaxValue;

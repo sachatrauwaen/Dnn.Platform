@@ -28,6 +28,7 @@ namespace DotNetNuke.UI.WebControls
 
     /// <summary>The CaptchaControl control provides a Captcha Challenge control.</summary>
     [ToolboxData("<{0}:CaptchaControl Runat=\"server\" CaptchaHeight=\"100px\" CaptchaWidth=\"300px\" />")]
+    [CLSCompliant(false)]
     public class CaptchaControl : WebControl, INamingContainer, IPostBackDataHandler
     {
         internal const string KEY = "captcha";
@@ -35,7 +36,8 @@ namespace DotNetNuke.UI.WebControls
         private const int LENGTHDEFAULT = 6;
         private const string RENDERURLDEFAULT = "ImageChallenge.captcha.aspx";
         private const string CHARSDEFAULT = "abcdefghijklmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-        private static readonly ILog Logger = LoggerSource.Instance.GetLogger(typeof(CaptchaControl));
+
+        // private static readonly ILog Logger = LoggerSource.Instance.GetLogger(typeof(CaptchaControl));
         private static readonly string[] FontFamilies = { "Arial", "Comic Sans MS", "Courier New", "Georgia", "Lucida Console", "MS Sans Serif", "Tahoma", "Times New Roman", "Trebuchet MS", "Verdana" };
 
         private static readonly Random Rand = new Random();

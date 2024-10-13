@@ -28,6 +28,7 @@ namespace DotNetNuke.UI.Containers
     using DotNetNuke.Web.Client.ClientResourceManagement;
 
     /// <summary>Container is the base for the Containers.</summary>
+    [CLSCompliant(false)]
     public class Container : UserControl
     {
         private readonly ILog tracelLogger = LoggerSource.Instance.GetLogger("DNN.Trace");

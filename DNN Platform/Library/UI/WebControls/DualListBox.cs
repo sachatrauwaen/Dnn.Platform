@@ -15,6 +15,7 @@ namespace DotNetNuke.UI.WebControls
     using DotNetNuke.Common.Utilities;
     using DotNetNuke.Services.Localization;
 
+    [CLSCompliant(false)]
     public class DualListBox : WebControl, IPostBackEventHandler, IPostBackDataHandler
     {
         private readonly Style availableListBoxStyle = new Style();
@@ -26,6 +27,7 @@ namespace DotNetNuke.UI.WebControls
         private List<string> removeValues;
 
         /// <summary>Initializes a new instance of the <see cref="DualListBox"/> class.</summary>
+        [CLSCompliant(false)]
         public DualListBox()
         {
             this.ShowAddButton = true;

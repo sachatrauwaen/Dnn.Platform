@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information
 namespace DotNetNuke.Modules.HTMLEditorProvider
 {
+    using System;
     using System.Collections;
     using System.Web.UI;
     using System.Web.UI.WebControls;
@@ -10,6 +11,7 @@ namespace DotNetNuke.Modules.HTMLEditorProvider
     using DotNetNuke.ComponentModel;
     using DotNetNuke.Framework;
 
+    [CLSCompliant(false)]
     public abstract class HtmlEditorProvider : UserControlBase
     {
         public abstract Control HtmlEditorControl { get; }

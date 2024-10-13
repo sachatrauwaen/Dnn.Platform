@@ -5,14 +5,17 @@
 namespace DotNetNuke.Web.Mvc.Skins
 {
     using System;
-    using System.Web;
-    using System.Web.Mvc;
+    using System.IO;
 
+    using Dnn.Migration;
     using DotNetNuke.Entities.Portals;
+    using Microsoft.AspNetCore.Html;
+    using Microsoft.AspNetCore.Mvc.Rendering;
+    using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
     public static partial class SkinHelpers
     {
-        public static IHtmlString Tags(this HtmlHelper<DotNetNuke.Framework.Models.PageModel> helper, string cssClass = "", string addImageUrl = "", string cancelImageUrl = "", string saveImageUrl = "", bool allowTagging = true, bool showCategories = true, bool showTags = true, string separator = ",&nbsp;", string objectType = "Page", string repeatDirection = "Horizontal")
+        public static IHtmlContent Tags(this HtmlHelper<DotNetNuke.Framework.Models.PageModel> helper, string cssClass = "", string addImageUrl = "", string cancelImageUrl = "", string saveImageUrl = "", bool allowTagging = true, bool showCategories = true, bool showTags = true, string separator = ",&nbsp;", string objectType = "Page", string repeatDirection = "Horizontal")
         {
             var portalSettings = PortalSettings.Current;
             var tagsControl = new TagBuilder("dnn:tags");
@@ -29,7 +32,7 @@ namespace DotNetNuke.Web.Mvc.Skins
             tagsControl.Attributes.Add("ObjectType", objectType);
             tagsControl.Attributes.Add("RepeatDirection", repeatDirection);
 
-            return new MvcHtmlString(tagsControl.ToString());
+            return new HtmlString(tagsControl.ToString());
         }
     }
 }

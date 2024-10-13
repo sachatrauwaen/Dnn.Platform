@@ -12,7 +12,7 @@ namespace DotNetNuke.Services.Connections
     using System.Linq;
     using System.Text;
     using System.Web.Script.Serialization;
-
+    /*
     public sealed class DynamicJsonConverter : JavaScriptConverter
     {
         /// <inheritdoc/>
@@ -169,4 +169,5 @@ namespace DotNetNuke.Services.Connections
             }
         }
     }
+    */
 }

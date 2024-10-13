@@ -13,6 +13,7 @@ namespace DotNetNuke.UI.WebControls
 
     /// <summary>The EditControl control provides a standard UI component for editing properties.</summary>
     [ValidationPropertyAttribute("Value")]
+    [CLSCompliant(false)]
     public abstract class EditControl : WebControl, IPostBackDataHandler
     {
         private object[] customAttributes;

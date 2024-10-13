@@ -11,7 +11,7 @@ namespace DotNetNuke.Data.PetaPoco
 
     using DotNetNuke.Common.Utilities;
     using DotNetNuke.Instrumentation;
-    using global::PetaPoco;
+    // using global::PetaPoco;
 
     public static class PetaPocoHelper
     {

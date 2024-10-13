@@ -9,7 +9,7 @@ namespace DotNetNuke.Security.Roles
     using System.Globalization;
     using System.Linq;
     using System.Xml;
-
+    using DotNetNuke.Abstractions.Logging;
     using DotNetNuke.Common;
     using DotNetNuke.Common.Utilities;
     using DotNetNuke.Data;
@@ -74,7 +74,7 @@ namespace DotNetNuke.Security.Roles
             UserController.UpdateUser(portalSettings.PortalId, user);
             if (userRole == null)
             {
-                EventLogController.Instance.AddLog("Role", role.RoleName, portalSettings, user.UserID, EventLogController.EventLogType.USER_ROLE_CREATED);
+                EventLogController.Instance.AddLog("Role", role.RoleName, portalSettings, user.UserID, EventLogType.USER_ROLE_CREATED);
 
                 // send notification
                 if (notifyUser)
@@ -84,7 +84,7 @@ namespace DotNetNuke.Security.Roles
             }
             else
             {
-                EventLogController.Instance.AddLog("Role", role.RoleName, portalSettings, user.UserID, EventLogController.EventLogType.USER_ROLE_UPDATED);
+                EventLogController.Instance.AddLog("Role", role.RoleName, portalSettings, user.UserID, EventLogType.USER_ROLE_UPDATED);
                 if (notifyUser)
                 {
                     RoleController.Instance.GetUserRole(portalSettings.PortalId, user.UserID, role.RoleID);

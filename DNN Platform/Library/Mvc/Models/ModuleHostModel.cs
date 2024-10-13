@@ -10,7 +10,6 @@ namespace DotNetNuke.UI.Modules
     using System.Text.RegularExpressions;
     using System.Threading;
     using System.Web;
-    using System.Web.Mvc;
 
     // using System.Web.UI;
     using System.Web.UI.HtmlControls;
@@ -34,6 +33,7 @@ namespace DotNetNuke.UI.Modules
     using DotNetNuke.Web.Client;
     using DotNetNuke.Web.Client.ClientResourceManagement;
     using DotNetNuke.Web.Mvc.Skins;
+    using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.DependencyInjection;
 
     using Globals = DotNetNuke.Common.Globals;
@@ -74,7 +74,7 @@ namespace DotNetNuke.UI.Modules
 
         /// <summary>Gets the attached ModuleControl.</summary>
         /// <returns>An IModuleControl.</returns>
-        public IModuleControl ModuleControl
+        public /*IModuleControl*/ object ModuleControl
         {
             get
             {

@@ -21,6 +21,7 @@ namespace DotNetNuke.UI.Containers
     /// ActionsMenu inherits from CompositeControl, and implements the IActionControl
     /// Interface. It uses the Navigation Providers to implement the Menu.
     /// </remarks>
+    [CLSCompliant(false)]
     public class ActionsMenu : Control, IActionControl
     {
         private ActionManager actionManager;

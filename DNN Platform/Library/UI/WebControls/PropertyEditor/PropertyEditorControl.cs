@@ -25,6 +25,7 @@ namespace DotNetNuke.UI.WebControls
     /// The PropertyEditorControl control provides a way to display and edit any
     /// properties of any Info class.
     /// </summary>
+    [CLSCompliant(false)]
     public class PropertyEditorControl : WebControl, INamingContainer
     {
         private bool itemChanged;

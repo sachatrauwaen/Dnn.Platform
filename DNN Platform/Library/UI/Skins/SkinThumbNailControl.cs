@@ -21,6 +21,7 @@ namespace DotNetNuke.UI.Skins
     /// SkinThumbNailControl is a user control that provides that displays the skins
     ///     as a Radio ButtonList with Thumbnail Images where available.
     /// </summary>
+    [CLSCompliant(false)]
     public abstract class SkinThumbNailControl : UserControlBase
     {
         [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1306:FieldNamesMustBeginWithLowerCaseLetter", Justification = "Breaking Change")]
@@ -35,8 +36,7 @@ namespace DotNetNuke.UI.Skins
         // ReSharper disable once InconsistentNaming
         protected RadioButtonList OptSkin;
 
-        private static readonly ILog Logger = LoggerSource.Instance.GetLogger(typeof(SkinThumbNailControl));
-
+        // private static readonly ILog Logger = LoggerSource.Instance.GetLogger(typeof(SkinThumbNailControl));
         public string Border
         {
             get

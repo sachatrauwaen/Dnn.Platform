@@ -28,6 +28,7 @@ namespace DotNetNuke.UI.Skins
     /// Namespace: DotNetNuke.UI.Skins
     /// Class    : Pane
     /// <summary>The Pane class represents a Pane within the Skin.</summary>
+    [CLSCompliant(false)]
     public class Pane
     {
         private const string CPaneOutline = "paneOutline";

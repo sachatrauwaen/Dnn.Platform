@@ -7,6 +7,7 @@ namespace DotNetNuke.UI.WebControls
     using System.Web.UI.WebControls;
 
     [AttributeUsage(AttributeTargets.Property)]
+    [CLSCompliant(false)]
     public sealed class ControlStyleAttribute : Attribute
     {
         private readonly string cssClass;

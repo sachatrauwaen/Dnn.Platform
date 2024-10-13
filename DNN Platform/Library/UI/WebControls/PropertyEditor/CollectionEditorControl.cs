@@ -14,6 +14,7 @@ namespace DotNetNuke.UI.WebControls
 
     /// <summary>The CollectionEditorControl control provides a Control to display Collection Properties.</summary>
     [ToolboxData("<{0}:CollectionEditorControl runat=server></{0}:CollectionEditorControl>")]
+    [CLSCompliant(false)]
     public class CollectionEditorControl : PropertyEditorControl
     {
         /// <summary>Gets or sets the value of the Category.</summary>

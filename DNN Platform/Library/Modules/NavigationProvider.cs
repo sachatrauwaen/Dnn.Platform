@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information
 namespace DotNetNuke.Modules.NavigationProvider
 {
+    using System;
     using System.Collections.Generic;
     using System.Web.UI;
 
@@ -10,6 +11,7 @@ namespace DotNetNuke.Modules.NavigationProvider
     using DotNetNuke.UI.Skins;
     using DotNetNuke.UI.WebControls;
 
+    [CLSCompliant(false)]
     public abstract class NavigationProvider : UserControlBase
     {
         public delegate void NodeClickEventHandler(NavigationEventArgs args);

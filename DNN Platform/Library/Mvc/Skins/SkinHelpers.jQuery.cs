@@ -5,33 +5,49 @@
 namespace DotNetNuke.Web.Mvc.Skins
 {
     using System;
-    using System.Web;
-    using System.Web.Mvc;
+    using System.IO;
+
+    using Dnn.Migration;
+    using Microsoft.AspNetCore.Html;
+    using Microsoft.AspNetCore.Mvc.Rendering;
+    using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
     public static partial class SkinHelpers
     {
-        public static IHtmlString JQuery(this HtmlHelper<DotNetNuke.Framework.Models.PageModel> helper, bool dnnjQueryPlugins = false, bool jQueryHoverIntent = false, bool jQueryUI = false)
+        public static IHtmlContent JQuery(this HtmlHelper<DotNetNuke.Framework.Models.PageModel> helper, bool dnnjQueryPlugins = false, bool jQueryHoverIntent = false, bool jQueryUI = false)
         {
+            var contentBuilder = new HtmlContentBuilder();
+
             var script = new TagBuilder("script");
             script.Attributes.Add("src", "~/Resources/Shared/Scripts/jquery/jquery.js");
             script.Attributes.Add("type", "text/javascript");
+            contentBuilder.AppendHtml(script);
 
             if (dnnjQueryPlugins)
             {
-                script.InnerHtml += "<script src=\"~/Resources/Shared/Scripts/dnn.jquery.js\" type=\"text/javascript\"></script>";
+                var dnnScript = new TagBuilder("script");
+                dnnScript.Attributes.Add("src", "~/Resources/Shared/Scripts/dnn.jquery.js");
+                dnnScript.Attributes.Add("type", "text/javascript");
+                contentBuilder.AppendHtml(dnnScript);
             }
 
             if (jQueryHoverIntent)
             {
-                script.InnerHtml += "<script src=\"~/Resources/Shared/Scripts/jquery/jquery.hoverIntent.js\" type=\"text/javascript\"></script>";
+                var hoverScript = new TagBuilder("script");
+                hoverScript.Attributes.Add("src", "~/Resources/Shared/Scripts/jquery/jquery.hoverIntent.js");
+                hoverScript.Attributes.Add("type", "text/javascript");
+                contentBuilder.AppendHtml(hoverScript);
             }
 
             if (jQueryUI)
             {
-                script.InnerHtml += "<script src=\"~/Resources/Shared/Scripts/jquery/jquery-ui.js\" type=\"text/javascript\"></script>";
+                var uiScript = new TagBuilder("script");
+                uiScript.Attributes.Add("src", "~/Resources/Shared/Scripts/jquery/jquery-ui.js");
+                uiScript.Attributes.Add("type", "text/javascript");
+                contentBuilder.AppendHtml(uiScript);
             }
 
-            return new MvcHtmlString(script.ToString());
+            return contentBuilder;
         }
     }
 }

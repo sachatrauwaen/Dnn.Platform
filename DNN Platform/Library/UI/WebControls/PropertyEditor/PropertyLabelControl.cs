@@ -20,6 +20,7 @@ namespace DotNetNuke.UI.WebControls
     /// a label for a property. It contains a Label and Help Text and can be Data Bound.
     /// </summary>
     [ToolboxData("<{0}:PropertyLabelControl runat=server></{0}:PropertyLabelControl>")]
+    [CLSCompliant(false)]
     public class PropertyLabelControl : WebControl
     {
         [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1401:FieldsMustBePrivate", Justification = "Breaking change")]

@@ -37,6 +37,7 @@ namespace DotNetNuke.Services.Cache
     /// }
     /// </code>
     /// </example>
+    [CLSCompliant(false)]
     public abstract class CachingProvider
     {
         private const string CachePrefix = "DNN_";

@@ -13,6 +13,7 @@ namespace DotNetNuke.UI.WebControls
     /// Namespace:  DotNetNuke.UI.WebControls
     /// Class:      TextColumnTemplate
     /// <summary>The TextColumnTemplate provides a Template for the TextColumn.</summary>
+    [CLSCompliant(false)]
     public class TextColumnTemplate : ITemplate
     {
         private ListItemType mItemType = ListItemType.Item;

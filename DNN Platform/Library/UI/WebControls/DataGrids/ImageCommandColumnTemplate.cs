@@ -14,6 +14,7 @@ namespace DotNetNuke.UI.WebControls
     /// Namespace:  DotNetNuke.UI.WebControls
     /// Class:      ImageCommandColumnTemplate
     /// <summary>The ImageCommandColumnTemplate provides a Template for the ImageCommandColumn.</summary>
+    [CLSCompliant(false)]
     public class ImageCommandColumnTemplate : ITemplate
     {
         private ImageCommandColumnEditMode mEditMode = ImageCommandColumnEditMode.Command;

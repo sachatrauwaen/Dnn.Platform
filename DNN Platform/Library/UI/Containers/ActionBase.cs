@@ -18,6 +18,7 @@ namespace DotNetNuke.UI.Containers
     /// <remarks>
     /// ActionBase inherits from UserControl, and implements the IActionControl Interface.
     /// </remarks>
+    [CLSCompliant(false)]
     public abstract class ActionBase : UserControl, IActionControl
     {
         /// <summary>Defines if the action supports icons.</summary>

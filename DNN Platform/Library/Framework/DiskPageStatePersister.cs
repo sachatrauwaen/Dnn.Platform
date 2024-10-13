@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information
 namespace DotNetNuke.Framework
 {
+    using System;
     using System.IO;
     using System.Text;
     using System.Web.UI;
@@ -14,6 +15,7 @@ namespace DotNetNuke.Framework
     /// Project:    DotNetNuke
     /// Class:      DiskPageStatePersister
     /// <summary>DiskPageStatePersister provides a disk (stream) based page state peristence mechanism.</summary>
+    [CLSCompliant(false)]
     public class DiskPageStatePersister : PageStatePersister
     {
         /// <summary>

@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information
 namespace DotNetNuke.UI.Modules
 {
+    using System;
     using System.IO;
     using System.Web.UI;
 
@@ -13,6 +14,7 @@ namespace DotNetNuke.UI.Modules
     /// UserControl base class.  As with all MontrolControl base classes it implements
     /// IModuleControl.
     /// </summary>
+    [CLSCompliant(false)]
     public class ModuleUserControlBase : UserControl, IModuleControl
     {
         private string localResourceFile;

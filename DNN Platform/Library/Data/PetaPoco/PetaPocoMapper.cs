@@ -8,8 +8,10 @@ namespace DotNetNuke.Data.PetaPoco
     using System.Threading;
 
     using DotNetNuke.ComponentModel.DataAnnotations;
+
     using global::PetaPoco;
 
+    [CLSCompliant(false)]
     public class PetaPocoMapper : IMapper
     {
         private static IMapper defaultMapper;

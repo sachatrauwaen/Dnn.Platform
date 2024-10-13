@@ -6,7 +6,6 @@ namespace DotNetNuke.Web.Mvc.Skins.Controllers
 {
     using System;
     using System.Text;
-    using System.Web.Mvc;
     using System.Web.Routing;
     using System.Web.UI;
 
@@ -17,6 +16,7 @@ namespace DotNetNuke.Web.Mvc.Skins.Controllers
     using DotNetNuke.Entities.Users;
     using DotNetNuke.Services.Localization;
     using DotNetNuke.UI.Modules;
+    using Microsoft.AspNetCore.Mvc;
 
     /*
     using DotNetNuke.Web.Mvc.Framework.ActionResults;
@@ -70,12 +70,13 @@ namespace DotNetNuke.Web.Mvc.Skins.Controllers
             return Localization.GetString(key, this.LocalResourceFile);
         }
 
-        /// <inheritdoc/>
+        /*
         protected override void Initialize(RequestContext requestContext)
         {
             base.Initialize(requestContext);
 
             // this.Url = new DnnUrlHelper(requestContext, this);
         }
+        */
     }
 }

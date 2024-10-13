@@ -21,6 +21,7 @@ namespace DotNetNuke.Framework
     {
         private static readonly ILog Logger = LoggerSource.Instance.GetLogger(typeof(Reflection));
 
+        /*
         /// <summary>Creates an object.</summary>
         /// <param name="objectProviderType">The type of Object to create (data/navigation).</param>
         /// <returns>The created Object.</returns>
@@ -30,6 +31,7 @@ namespace DotNetNuke.Framework
         {
             return CreateObject(objectProviderType, true);
         }
+        */
 
         /// <summary>Creates an object.</summary>
         /// <param name="serviceProvider">The DI container.</param>
@@ -40,6 +42,7 @@ namespace DotNetNuke.Framework
             return CreateObject(serviceProvider, objectProviderType, true);
         }
 
+        /*
         /// <summary>Creates an object.</summary>
         /// <param name="objectProviderType">The type of Object to create (data/navigation).</param>
         /// <param name="useCache">Caching switch.</param>
@@ -50,6 +53,7 @@ namespace DotNetNuke.Framework
         {
             return CreateObject(objectProviderType, string.Empty, string.Empty, string.Empty, useCache);
         }
+        */
 
         /// <summary>Creates an object.</summary>
         /// <param name="serviceProvider">The DI container.</param>
@@ -61,6 +65,7 @@ namespace DotNetNuke.Framework
             return CreateObject(serviceProvider, objectProviderType, string.Empty, string.Empty, string.Empty, useCache);
         }
 
+        /*
         /// <summary>Creates an object.</summary>
         /// <param name="objectProviderType">The type of Object to create (data/navigation).</param>
         /// <param name="objectNamespace">The namespace of the object to create.</param>
@@ -72,6 +77,7 @@ namespace DotNetNuke.Framework
         {
             return CreateObject(objectProviderType, string.Empty, objectNamespace, objectAssemblyName, true);
         }
+        */
 
         /// <summary>Creates an object.</summary>
         /// <param name="serviceProvider">The DI container.</param>
@@ -84,6 +90,7 @@ namespace DotNetNuke.Framework
             return CreateObject(serviceProvider, objectProviderType, string.Empty, objectNamespace, objectAssemblyName, true);
         }
 
+        /*
         /// <summary>Creates an object.</summary>
         /// <param name="objectProviderType">The type of Object to create (data/navigation).</param>
         /// <param name="objectNamespace">The namespace of the object to create.</param>
@@ -96,6 +103,7 @@ namespace DotNetNuke.Framework
         {
             return CreateObject(objectProviderType, string.Empty, objectNamespace, objectAssemblyName, useCache);
         }
+        */
 
         /// <summary>Creates an object.</summary>
         /// <param name="serviceProvider">The DI container.</param>
@@ -109,6 +117,7 @@ namespace DotNetNuke.Framework
             return CreateObject(serviceProvider, objectProviderType, string.Empty, objectNamespace, objectAssemblyName, useCache);
         }
 
+        /*
         /// <summary>Creates an object.</summary>
         /// <param name="objectProviderType">The type of Object to create (data/navigation).</param>
         /// <param name="objectProviderName">The name of the Provider.</param>
@@ -121,6 +130,7 @@ namespace DotNetNuke.Framework
         {
             return CreateObject(objectProviderType, objectProviderName, objectNamespace, objectAssemblyName, true);
         }
+        */
 
         /// <summary>Creates an object.</summary>
         /// <param name="serviceProvider">The DI container.</param>
@@ -134,6 +144,7 @@ namespace DotNetNuke.Framework
             return CreateObject(serviceProvider, objectProviderType, objectProviderName, objectNamespace, objectAssemblyName, true);
         }
 
+        /*
         /// <summary>Creates an object.</summary>
         /// <param name="objectProviderType">The type of Object to create (data/navigation).</param>
         /// <param name="objectProviderName">The name of the Provider.</param>
@@ -147,6 +158,7 @@ namespace DotNetNuke.Framework
         {
             return CreateObject(objectProviderType, objectProviderName, objectNamespace, objectAssemblyName, useCache, true);
         }
+        */
 
         /// <summary>Creates an object.</summary>
         /// <param name="serviceProvider">The DI container.</param>
@@ -161,6 +173,7 @@ namespace DotNetNuke.Framework
             return CreateObject(serviceProvider, objectProviderType, objectProviderName, objectNamespace, objectAssemblyName, useCache, true);
         }
 
+        /*
         /// <summary>Creates an object.</summary>
         /// <param name="objectProviderType">The type of Object to create (data/navigation).</param>
         /// <param name="objectProviderName">The name of the Provider.</param>
@@ -188,6 +201,7 @@ namespace DotNetNuke.Framework
                 useCache,
                 fixAssemblyName);
         }
+        */
 
         /// <summary>Creates an object.</summary>
         /// <param name="serviceProvider">The DI container.</param>
@@ -254,6 +268,7 @@ namespace DotNetNuke.Framework
             return CreateObject(serviceProvider, typeName, typeName, useCache);
         }
 
+        /*
         /// <summary>Creates an object.</summary>
         /// <param name="typeName">The fully qualified TypeName.</param>
         /// <param name="cacheKey">The Cache Key.</param>
@@ -264,6 +279,7 @@ namespace DotNetNuke.Framework
         {
             return CreateObject(typeName, cacheKey, true);
         }
+        */
 
         /// <summary>Creates an object.</summary>
         /// <param name="serviceProvider">The DI container.</param>
@@ -275,6 +291,7 @@ namespace DotNetNuke.Framework
             return CreateObject(serviceProvider, typeName, cacheKey, true);
         }
 
+        /*
         /// <summary>Creates an object.</summary>
         /// <param name="typeName">The fully qualified TypeName.</param>
         /// <param name="cacheKey">The Cache Key.</param>
@@ -286,6 +303,7 @@ namespace DotNetNuke.Framework
         {
             return CreateObject(Globals.DependencyProvider, typeName, cacheKey, useCache);
         }
+        */
 
         /// <summary>Creates an object.</summary>
         /// <param name="serviceProvider">The DI container.</param>
@@ -299,6 +317,7 @@ namespace DotNetNuke.Framework
             return CreateObject(serviceProvider, type);
         }
 
+        /*
         /// <summary>Creates an object.</summary>
         /// <typeparam name="T">The type of object to create.</typeparam>
         /// <returns>The created object.</returns>
@@ -308,6 +327,7 @@ namespace DotNetNuke.Framework
         {
             return CreateObject<T>(Globals.DependencyProvider);
         }
+        */
 
         /// <summary>Creates an object.</summary>
         /// <typeparam name="T">The type of object to create.</typeparam>
@@ -326,6 +346,7 @@ namespace DotNetNuke.Framework
             }
         }
 
+        /*
         /// <summary>Creates an object.</summary>
         /// <param name="type">The type of object to create.</param>
         /// <returns>The created object.</returns>
@@ -334,6 +355,7 @@ namespace DotNetNuke.Framework
         {
             return CreateObject(Globals.DependencyProvider, type);
         }
+        */
 
         /// <summary>Creates an object.</summary>
         /// <param name="serviceProvider">The DI container.</param>
@@ -369,7 +391,7 @@ namespace DotNetNuke.Framework
             return CreateType(typeName, string.Empty, true, ignoreErrors);
         }
 
-        /// <summary>Creates a type. Errors creating the type are logged.</summary>
+        /// <summary>Creates a type. Caches type creation for performance.</summary>
         /// <param name="typeName">The name of the type to create.</param>
         /// <param name="cacheKey">A custom cache key; otherwise <paramref name="typeName"/> is used as the key.</param>
         /// <param name="useCache">Whether to store the type in the cache or bypass the cache.</param>
@@ -406,7 +428,7 @@ namespace DotNetNuke.Framework
                 try
                 {
                     // use reflection to get the type of the class
-                    type = BuildManager.GetType(typeName, true, true);
+                    type = Type.GetType(typeName, true, true);
                     if (useCache)
                     {
                         // insert the type into the cache
@@ -492,6 +514,7 @@ namespace DotNetNuke.Framework
             }
         }
 
+        /*
         // dynamically create a default Provider from a ProviderType - this method was used by the CachingProvider to avoid a circular dependency
         [DnnDeprecated(7, 0, 0, "Please use CreateObject(string objectProviderType, bool useCache)", RemovalVersion = 11)]
         internal static partial object CreateObjectNotCached(string objectProviderType)
@@ -518,5 +541,6 @@ namespace DotNetNuke.Framework
             // dynamically create the object
             return Activator.CreateInstance(objType);
         }
+        */
     }
 }

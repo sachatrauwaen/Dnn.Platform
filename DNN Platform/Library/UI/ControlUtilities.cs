@@ -8,6 +8,7 @@ namespace DotNetNuke.UI
 
     using DotNetNuke.Framework;
 
+    [CLSCompliant(false)]
     public class ControlUtilities
     {
         public static T FindParentControl<T>(Control control)

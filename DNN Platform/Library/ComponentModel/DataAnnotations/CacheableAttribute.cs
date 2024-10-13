@@ -6,6 +6,7 @@ namespace DotNetNuke.ComponentModel.DataAnnotations
     using System;
     using System.Web.Caching;
 
+    [CLSCompliant(false)]
     public class CacheableAttribute : Attribute
     {
         /// <summary>

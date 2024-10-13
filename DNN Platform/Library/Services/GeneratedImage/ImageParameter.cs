@@ -10,6 +10,7 @@ namespace DotNetNuke.Services.GeneratedImage
     using System.Web.UI;
 
     [Bindable(true)]
+    [CLSCompliant(false)]
     public class ImageParameter : IDataBindingsAccessor
     {
         private readonly DataBindingCollection dataBindings = new DataBindingCollection();

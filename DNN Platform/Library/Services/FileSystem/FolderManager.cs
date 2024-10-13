@@ -16,7 +16,7 @@ namespace DotNetNuke.Services.FileSystem
     using System.Text.RegularExpressions;
     using System.Threading;
     using System.Web;
-
+    using DotNetNuke.Abstractions.Logging;
     using DotNetNuke.Abstractions.Security.Permissions;
     using DotNetNuke.Common;
     using DotNetNuke.Common.Utilities;
@@ -802,7 +802,7 @@ namespace DotNetNuke.Services.FileSystem
         /// <summary>Adds a log entry.</summary>
         /// <param name="folder">The folder to log about.</param>
         /// <param name="eventLogType">The type of the log entry.</param>
-        internal virtual void AddLogEntry(IFolderInfo folder, EventLogController.EventLogType eventLogType)
+        internal virtual void AddLogEntry(IFolderInfo folder, EventLogType eventLogType)
         {
             EventLogController.Instance.AddLog(folder, PortalController.Instance.GetCurrentSettings(), this.GetCurrentUserId(), string.Empty, eventLogType);
         }

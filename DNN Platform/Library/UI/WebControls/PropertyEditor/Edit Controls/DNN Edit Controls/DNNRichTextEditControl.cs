@@ -16,6 +16,7 @@ namespace DotNetNuke.UI.WebControls
     /// RichText.
     /// </summary>
     [ToolboxData("<{0}:DNNRichTextEditControl runat=server></{0}:DNNRichTextEditControl>")]
+    [CLSCompliant(false)]
     public class DNNRichTextEditControl : TextEditControl
     {
         private HtmlEditorProvider richTextEditor;

@@ -22,6 +22,7 @@ namespace DotNetNuke.UI.UserControls
     /// Project: DotNetNuke
     /// <summary>TextEditor is a user control that provides a wrapper for the HtmlEditor providers.</summary>
     [ValidationPropertyAttribute("Text")]
+    [CLSCompliant(false)]
     public class TextEditor : UserControl
     {
         // ReSharper disable InconsistentNaming

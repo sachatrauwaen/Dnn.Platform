@@ -15,6 +15,7 @@ namespace DotNetNuke.UI.Containers
     /// ActionButtonList inherits from CompositeControl, and implements the IActionControl
     /// Interface.  It uses a single ActionCommandButton for each Action.
     /// </remarks>
+    [CLSCompliant(false)]
     public class ActionButtonList : CompositeControl, IActionControl
     {
         private ActionManager actionManager;

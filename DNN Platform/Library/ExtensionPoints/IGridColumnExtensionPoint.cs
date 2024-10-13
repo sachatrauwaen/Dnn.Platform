@@ -4,8 +4,10 @@
 
 namespace DotNetNuke.ExtensionPoints
 {
+    using System;
     using System.Web.UI.WebControls;
 
+    [CLSCompliant(false)]
     public interface IGridColumnExtensionPoint : IExtensionPoint
     {
         int ColumnAt { get; }

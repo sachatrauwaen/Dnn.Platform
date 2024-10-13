@@ -14,6 +14,7 @@ namespace DotNetNuke.Services.Cache
     using DotNetNuke.Common.Utilities;
     using DotNetNuke.Instrumentation;
 
+    [CLSCompliant(false)]
     public class FBCachingProvider : CachingProvider
     {
         [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1401:FieldsMustBePrivate", Justification = "Breaking change")]

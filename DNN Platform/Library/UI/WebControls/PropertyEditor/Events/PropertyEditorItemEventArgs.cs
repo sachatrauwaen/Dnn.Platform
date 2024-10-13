@@ -12,6 +12,7 @@ namespace DotNetNuke.UI.WebControls
     /// The PropertyEditorItemEventArgs class is a cusom EventArgs class for
     /// handling Event Args.
     /// </summary>
+    [CLSCompliant(false)]
     public class PropertyEditorItemEventArgs : EventArgs
     {
         /// <summary>

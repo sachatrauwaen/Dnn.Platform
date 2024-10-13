@@ -6,6 +6,7 @@ namespace DotNetNuke.UI.Containers.EventListeners
     using System;
 
     /// <summary>ContainerEventArgs provides a custom EventARgs class for Container Events.</summary>
+    [CLSCompliant(false)]
     public class ContainerEventArgs : EventArgs
     {
         private readonly Container container;

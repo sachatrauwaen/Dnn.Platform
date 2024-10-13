@@ -43,7 +43,7 @@ namespace DotNetNuke.Web.Mvc.Skins
             }
         }
 
-        public IModuleControl ModuleControl
+        public /*IModuleControl*/ object ModuleControl
         {
             get
             {

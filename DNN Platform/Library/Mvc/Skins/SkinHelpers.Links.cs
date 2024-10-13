@@ -5,17 +5,20 @@
 namespace DotNetNuke.Web.Mvc.Skins
 {
     using System;
+    using System.IO;
     using System.Text;
-    using System.Web;
-    using System.Web.Mvc;
 
+    using Dnn.Migration;
     using DotNetNuke.Entities.Portals;
     using DotNetNuke.Entities.Tabs;
     using DotNetNuke.UI;
+    using Microsoft.AspNetCore.Html;
+    using Microsoft.AspNetCore.Mvc.Rendering;
+    using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
     public static partial class SkinHelpers
     {
-        public static IHtmlString Links(this HtmlHelper<DotNetNuke.Framework.Models.PageModel> helper, string cssClass = "SkinObject", string separator = " ", string level = "same", bool showDisabled = false, bool forceLinks = true, bool includeActiveTab = true)
+        public static IHtmlContent Links(this HtmlHelper<DotNetNuke.Framework.Models.PageModel> helper, string cssClass = "SkinObject", string separator = " ", string level = "same", bool showDisabled = false, bool forceLinks = true, bool includeActiveTab = true)
         {
             var portalSettings = PortalSettings.Current;
             var links = new StringBuilder();
@@ -58,7 +61,7 @@ namespace DotNetNuke.Web.Mvc.Skins
                 }
             }
 
-            return new MvcHtmlString(links.ToString().TrimEnd(separator.ToCharArray()));
+            return new HtmlString(links.ToString().TrimEnd(separator.ToCharArray()));
         }
     }
 }

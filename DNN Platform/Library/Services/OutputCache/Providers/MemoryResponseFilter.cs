@@ -10,6 +10,7 @@ namespace DotNetNuke.Services.OutputCache.Providers
     using System.Web.Caching;
 
     /// <summary>FileResponseFilter implements the OutputCacheRepsonseFilter to capture the response into memory.</summary>
+    [CLSCompliant(false)]
     public class MemoryResponseFilter : OutputCacheResponseFilter
     {
         // Private _content As StringBuilder

@@ -5,8 +5,6 @@
 namespace DotNetNuke.Framework
 {
     using System.Globalization;
-    using System.Web.Helpers;
-    using System.Web.Mvc;
     using System.Web.UI;
 
     using DotNetNuke.Common;
@@ -15,6 +13,7 @@ namespace DotNetNuke.Framework
     using DotNetNuke.Mvc;
     using DotNetNuke.UI.Utilities;
     using DotNetNuke.Web.Client.ClientResourceManagement;
+    using Microsoft.AspNetCore.Mvc;
 
     internal class ServicesFrameworkImpl : IServicesFramework, IServiceFrameworkInternals
     {

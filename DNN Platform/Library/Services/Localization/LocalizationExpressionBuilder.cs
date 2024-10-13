@@ -11,8 +11,9 @@ namespace DotNetNuke.Services.Localization
     using System.Web.Compilation;
     using System.Web.UI;
 
-    [ExpressionPrefix("dnnLoc")]
-    [ExpressionEditor("DotNetNuke.Services.Localization.LocalizationExpressionBuilderEditor")]
+    // [ExpressionPrefix("dnnLoc")]
+    // [ExpressionEditor("DotNetNuke.Services.Localization.LocalizationExpressionBuilderEditor")]
+    [CLSCompliant(false)]
     public class LocalizationExpressionBuilder : ExpressionBuilder
     {
         /// <inheritdoc/>

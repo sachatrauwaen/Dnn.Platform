@@ -6,7 +6,6 @@ namespace DotNetNuke.Web.Mvc.Skins
 {
     using System;
     using System.Web;
-    using System.Web.Mvc;
 
     using DotNetNuke.Entities.Portals;
     using DotNetNuke.Services.Localization;

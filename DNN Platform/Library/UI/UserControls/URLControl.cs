@@ -25,6 +25,7 @@ namespace DotNetNuke.UI.UserControls
 
     using Globals = DotNetNuke.Common.Globals;
 
+    [CLSCompliant(false)]
     public abstract class UrlControl : UserControlBase
     {
         // ReSharper disable InconsistentNaming

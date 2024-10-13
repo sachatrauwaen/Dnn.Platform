@@ -5,28 +5,31 @@
 namespace DotNetNuke.Web.Mvc.Skins
 {
     using System;
-    using System.Web;
-    using System.Web.Mvc;
+    using System.IO;
 
+    using Dnn.Migration;
     using DotNetNuke.Abstractions;
     using DotNetNuke.Common;
     using DotNetNuke.Common.Utilities;
     using DotNetNuke.Entities.Portals;
     using DotNetNuke.Services.Localization;
+    using Microsoft.AspNetCore.Html;
+    using Microsoft.AspNetCore.Mvc.Rendering;
+    using Microsoft.AspNetCore.Mvc.ViewFeatures;
     using Microsoft.Extensions.DependencyInjection;
 
     public static partial class SkinHelpers
     {
-        public static IHtmlString Terms(this HtmlHelper<DotNetNuke.Framework.Models.PageModel> helper, string cssClass = "SkinObject")
+        public static IHtmlContent Terms(this HtmlHelper<DotNetNuke.Framework.Models.PageModel> helper, string cssClass = "SkinObject")
         {
             var navigationManager = Globals.DependencyProvider.GetRequiredService<INavigationManager>();
             var portalSettings = PortalSettings.Current;
             var link = new TagBuilder("a");
 
             link.Attributes.Add("href", portalSettings.TermsTabId == Null.NullInteger ? navigationManager.NavigateURL(portalSettings.ActiveTab.TabID, "Terms") : navigationManager.NavigateURL(portalSettings.TermsTabId));
-            link.SetInnerText(Localization.GetString("Terms.Text", GetSkinsResourceFile("Terms.ascx")));
+            link.InnerHtml.Append(Localization.GetString("Terms.Text", GetSkinsResourceFile("Terms.ascx")));
 
-            return new MvcHtmlString(link.ToString());
+            return new HtmlString(link.ToString());
         }
     }
 }

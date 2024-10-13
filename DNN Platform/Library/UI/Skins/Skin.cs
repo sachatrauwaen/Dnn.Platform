@@ -48,6 +48,7 @@ namespace DotNetNuke.UI.Skins
     using Globals = DotNetNuke.Common.Globals;
 
     /// <summary>Skin is the base for the Skins.</summary>
+    [CLSCompliant(false)]
     public class Skin : UserControlBase
     {
         public const string OnInitMessage = "Skin_InitMessage";

@@ -54,6 +54,7 @@ namespace DotNetNuke.UI.WebControls
     /// The FieldEditorControl control provides a Control to display Profile Properties.
     /// </summary>
     [ToolboxData("<{0}:FieldEditorControl runat=server></{0}:FieldEditorControl>")]
+    [CLSCompliant(false)]
     public class FieldEditorControl : WebControl, INamingContainer
     {
         private readonly List<IValidator> validators = new List<IValidator>();

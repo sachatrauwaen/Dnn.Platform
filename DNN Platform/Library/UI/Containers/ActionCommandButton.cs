@@ -17,6 +17,7 @@ namespace DotNetNuke.UI.Containers
     /// <remarks>
     /// ActionBase inherits from CommandButton, and implements the IActionControl Interface.
     /// </remarks>
+    [CLSCompliant(false)]
     public class ActionCommandButton : CommandButton, IActionControl
     {
         private ActionManager actionManager;

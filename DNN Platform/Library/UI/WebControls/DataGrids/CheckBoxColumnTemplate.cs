@@ -13,6 +13,7 @@ namespace DotNetNuke.UI.WebControls
     /// Namespace:  DotNetNuke.UI.WebControls
     /// Class:      CheckBoxColumnTemplate
     /// <summary>The CheckBoxColumnTemplate provides a Template for the CheckBoxColumn.</summary>
+    [CLSCompliant(false)]
     public class CheckBoxColumnTemplate : ITemplate
     {
         private string mDataField = Null.NullString;

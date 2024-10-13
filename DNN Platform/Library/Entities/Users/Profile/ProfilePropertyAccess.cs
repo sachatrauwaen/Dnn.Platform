@@ -46,7 +46,7 @@ namespace DotNetNuke.Entities.Users
                 return CacheLevel.notCacheable;
             }
         }
-
+        /*
         /// <summary>Checks whether profile property is accessible.</summary>
         /// <param name="portalSettings">The portal settings.</param>
         /// <param name="property">The property.</param>
@@ -59,6 +59,7 @@ namespace DotNetNuke.Entities.Users
             var portalSettingsAsInterface = (IPortalSettings)portalSettings;
             return CheckAccessLevel(portalSettingsAsInterface, property, accessingUser, targetUser);
         }
+        */
 
         /// <summary>Checks whether profile property is accessible.</summary>
         /// <param name="portalSettings">The portal settings.</param>

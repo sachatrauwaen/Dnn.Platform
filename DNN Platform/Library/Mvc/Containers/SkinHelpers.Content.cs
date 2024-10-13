@@ -6,10 +6,10 @@ namespace DotNetNuke.Web.Mvc.Containers
 {
     using System;
     using System.IO;
+    using System.Threading.Tasks;
     using System.Web;
-    using System.Web.Mvc;
-    using System.Web.Mvc.Html;
 
+    using Dnn.Migration;
     using DotNetNuke.Common;
     using DotNetNuke.Common.Utilities;
     using DotNetNuke.Entities.Modules;
@@ -18,15 +18,27 @@ namespace DotNetNuke.Web.Mvc.Containers
     using DotNetNuke.UI.Modules;
     using DotNetNuke.Web.Client.ClientResourceManagement;
     using DotNetNuke.Web.Mvc.Skins;
+    using Microsoft.AspNetCore.Html;
+    using Microsoft.AspNetCore.Mvc; // Ajoutez cette directive using
+    using Microsoft.AspNetCore.Mvc.Rendering;
+    using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
     public static partial class SkinHelpers
     {
-        public static IHtmlString Content(this HtmlHelper<ContainerModel> htmlHelper)
+        public static async Task<IHtmlContent> InvokeAsync(
+                this IViewComponentHelper helper,
+                string componentName,
+                object parameters = null)
+        {
+            return await helper.InvokeAsync(componentName, parameters);
+        }
+
+        public static IHtmlContent Content(this HtmlHelper<ContainerModel> htmlHelper)
         {
             var model = htmlHelper.ViewData.Model;
             if (model == null)
             {
-                throw new InvalidOperationException("The model need to be present.");
+                throw new InvalidOperationException("The model needs to be present.");
             }
 
             var moduleContentPaneDiv = new TagBuilder("div");
@@ -35,15 +47,15 @@ namespace DotNetNuke.Web.Mvc.Containers
                 moduleContentPaneDiv.AddCssClass(model.ContentPaneCssClass);
             }
 
-            if (!ModuleHostModel.IsViewMode(model.ModuleConfiguration, model.ModuleHost.PortalSettings) && htmlHelper.ViewContext.HttpContext.Request.QueryString["dnnprintmode"] != "true")
+            if (!ModuleHostModel.IsViewMode(model.ModuleConfiguration, model.ModuleHost.PortalSettings) && htmlHelper.ViewContext.HttpContext.Request.Query["dnnprintmode"] != "true")
             {
                 MvcJavaScript.RequestRegistration(CommonJs.DnnPlugins);
                 if (model.EditMode && model.ModuleConfiguration.ModuleID > 0)
                 {
-                    moduleContentPaneDiv.InnerHtml += htmlHelper.Action("Index", "ModuleActions", model.ModuleConfiguration);
+                    moduleContentPaneDiv.InnerHtml.AppendHtml(AsyncHelper.RunSync(() => htmlHelper.Action("Index", "ModuleActions", model.ModuleConfiguration)));
                 }
 
-                // register admin.css
+                // Register admin.css
                 MvcClientResourceManager.RegisterAdminStylesheet(htmlHelper.ViewContext, Globals.HostPath + "admin.css");
             }
 
@@ -54,7 +66,7 @@ namespace DotNetNuke.Web.Mvc.Containers
 
             if (!string.IsNullOrEmpty(model.Header))
             {
-                moduleContentPaneDiv.InnerHtml += model.Header;
+                moduleContentPaneDiv.InnerHtml.AppendHtml(model.Header);
             }
 
             var moduleDiv = new TagBuilder("div");
@@ -62,7 +74,7 @@ namespace DotNetNuke.Web.Mvc.Containers
 
             try
             {
-                moduleDiv.InnerHtml += htmlHelper.Action(model.ActionName, model.ControllerName, model.ModuleConfiguration);
+                moduleDiv.InnerHtml.AppendHtml(AsyncHelper.RunSync(() => htmlHelper.ActionAsync(model.ActionName, model.ControllerName, model.ModuleConfiguration)));
             }
             catch (HttpException ex)
             {
@@ -74,7 +86,7 @@ namespace DotNetNuke.Web.Mvc.Containers
                 {
                     try
                     {
-                        moduleDiv.InnerHtml += htmlHelper.Partial(scriptFile, model.ModuleConfiguration);
+                        moduleDiv.InnerHtml.AppendHtml(AsyncHelper.RunSync(() => htmlHelper.PartialAsync(scriptFile, model.ModuleConfiguration)));
                     }
                     catch (Exception ex2)
                     {
@@ -83,23 +95,21 @@ namespace DotNetNuke.Web.Mvc.Containers
                 }
                 else
                 {
-                    // moduleDiv.InnerHtml += $"Error : {ex.Message} (Controller : {model.ControllerName}, Action : {model.ActionName}, module : {model.ModuleConfiguration.ModuleTitle}) {ex.StackTrace}";
-                    throw new Exception($"Error : {ex.Message} (Controller : {model.ControllerName}, Action : {model.ActionName}, module : {model.ModuleConfiguration.ModuleID})", ex);
+                    throw new Exception($"Error : {ex.Message} (Controller : {model.ControllerName}, Action : {model.ActionName}, module : {model.ModuleConfiguration.ModuleTitle})", ex);
                 }
             }
             catch (Exception ex)
             {
-                    // moduleDiv.InnerHtml += $"Error : {ex.Message} (Controller : {model.ControllerName}, Action : {model.ActionName}, module : {model.ModuleConfiguration.ModuleTitle}) {ex.StackTrace}";
-                    throw new Exception($"Error : {ex.Message} (Controller : {model.ControllerName}, Action : {model.ActionName}, module : {model.ModuleConfiguration.ModuleID})", ex);
+                throw new Exception($"Error : {ex.Message} (Controller : {model.ControllerName}, Action : {model.ActionName}, module : {model.ModuleConfiguration.ModuleID})", ex);
             }
 
-            moduleContentPaneDiv.InnerHtml += moduleDiv.ToString();
+            moduleContentPaneDiv.InnerHtml.AppendHtml(moduleDiv);
             if (!string.IsNullOrEmpty(model.Footer))
             {
-                moduleContentPaneDiv.InnerHtml += model.Footer;
+                moduleContentPaneDiv.InnerHtml.AppendHtml(model.Footer);
             }
 
-            return MvcHtmlString.Create(moduleContentPaneDiv.InnerHtml);
+            return moduleContentPaneDiv;
         }
     }
 }

@@ -9,6 +9,7 @@ namespace DotNetNuke.Framework
     using System.Text;
     using System.Web;
 
+    [CLSCompliant(false)]
     public abstract class BaseHttpHandler : IHttpHandler
     {
         private HttpContext context;

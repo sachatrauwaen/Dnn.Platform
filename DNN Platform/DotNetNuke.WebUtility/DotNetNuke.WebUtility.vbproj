@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <ProjectType>Local</ProjectType>
+    <ProjectType>Library</ProjectType>
     <AssemblyKeyContainerName>
     </AssemblyKeyContainerName>
     <AssemblyOriginatorKeyFile>
@@ -16,8 +16,7 @@
     </RootNamespace>
     <StartupObject>
     </StartupObject>
-    <MyType>Windows</MyType>
-    <UseWindowsForms>true</UseWindowsForms>
+
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -107,9 +106,6 @@
     <None Include="WebUtilityDeploy.targets" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="My Project\" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="Microsoft.Build.Tasks.Git" Version="8.0.0" />
     <PackageReference Include="Microsoft.SourceLink.Common" Version="8.0.0" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" />
@@ -123,7 +119,7 @@
     <RootDirectory>$(MSBuildProjectDirectory)\..\..</RootDirectory>
   </PropertyGroup>
   <PropertyGroup>
-    <TargetFramework>net8.0-windows</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <AssemblyTitle>DotNetNuke</AssemblyTitle>
     <Description>Open Source Web Application Framework</Description>

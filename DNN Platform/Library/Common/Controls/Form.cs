@@ -3,12 +3,14 @@
 // See the LICENSE file in the project root for more information
 namespace DotNetNuke.Common.Controls
 {
+    using System;
     using System.IO;
     using System.Web;
     using System.Web.UI;
     using System.Web.UI.HtmlControls;
 
     /// <summary>The Form will reset action to raw url instead of rewrite url.</summary>
+    [CLSCompliant(false)]
     public class Form : HtmlForm
     {
         /// <inheritdoc/>

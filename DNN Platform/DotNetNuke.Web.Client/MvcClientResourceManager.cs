@@ -63,6 +63,7 @@ namespace DotNetNuke.Web.Client.ClientResourceManagement
             RegisterStyleSheet(page, filePath, FileOrder.Css.AdminCss);
         }
 
+
         /// <summary>Registers the <c>default.css</c> stylesheet.</summary>
         /// <param name="page">The page on which to register the style.</param>
         /// <param name="filePath">The path to the CSS stylesheet.</param>

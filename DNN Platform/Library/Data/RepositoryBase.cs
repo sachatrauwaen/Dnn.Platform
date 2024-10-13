@@ -14,6 +14,7 @@ namespace DotNetNuke.Data
     using DotNetNuke.Common.Utilities;
     using DotNetNuke.ComponentModel.DataAnnotations;
 
+    [CLSCompliant(false)]
     public abstract class RepositoryBase<T> : IRepository<T>
         where T : class
     {

@@ -4,9 +4,11 @@
 
 namespace DotNetNuke.Common
 {
+    using System;
     using System.Web;
 
     /// <summary>A unit testable alternative to HttpContext.Current.</summary>
+    [CLSCompliant(false)]
     public class HttpContextSource
     {
         private static HttpContextBase fakeContext;

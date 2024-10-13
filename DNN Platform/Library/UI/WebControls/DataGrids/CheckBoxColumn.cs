@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information
 namespace DotNetNuke.UI.WebControls
 {
+    using System;
     using System.Web;
     using System.Web.UI.WebControls;
 
@@ -12,6 +13,7 @@ namespace DotNetNuke.UI.WebControls
     /// Namespace:  DotNetNuke.UI.WebControls
     /// Class:      CheckBoxColumn
     /// <summary>The CheckBoxColumn control provides a Check Box column for a Data Grid.</summary>
+    [CLSCompliant(false)]
     public class CheckBoxColumn : TemplateColumn
     {
         private bool mAutoPostBack = true;

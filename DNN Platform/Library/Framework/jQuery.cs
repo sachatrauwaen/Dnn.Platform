@@ -259,19 +259,21 @@ namespace DotNetNuke.Framework
             }
         }
 
-        [DnnDeprecated(7, 3, 1, "This is managed through the JavaScript Library package", RemovalVersion = 10)]
+        /* [DnnDeprecated(7, 3, 1, "This is managed through the JavaScript Library package", RemovalVersion = 10)]
         public static partial string JQueryFileMapPath(bool getMinFile)
         {
             return HttpContext.Current.Server.MapPath(JQueryFile(getMinFile));
         }
+        */
 
-        [DnnDeprecated(7, 3, 1, "This is managed through the JavaScript Library package", RemovalVersion = 10)]
+        /* [DnnDeprecated(7, 3, 1, "This is managed through the JavaScript Library package", RemovalVersion = 10)]
         public static partial string JQueryUIFileMapPath(bool getMinFile)
         {
             return HttpContext.Current.Server.MapPath(JQueryUIFile(getMinFile));
         }
+        */
 
-        [DnnDeprecated(7, 3, 1, "This is managed through the JavaScript Library package", RemovalVersion = 10)]
+        /* [DnnDeprecated(7, 3, 1, "This is managed through the JavaScript Library package", RemovalVersion = 10)]
         public static partial string JQueryFile(bool getMinFile)
         {
             string jfile = JQueryDebugFile;
@@ -282,8 +284,9 @@ namespace DotNetNuke.Framework
 
             return jfile;
         }
+        */
 
-        [DnnDeprecated(7, 3, 1, "This is managed through the JavaScript Library package", RemovalVersion = 10)]
+        /* [DnnDeprecated(7, 3, 1, "This is managed through the JavaScript Library package", RemovalVersion = 10)]
         public static partial string JQueryMigrateFile(bool getMinFile)
         {
             string jfile = JQueryMigrateDebugFile;
@@ -294,8 +297,9 @@ namespace DotNetNuke.Framework
 
             return jfile;
         }
+        */
 
-        [DnnDeprecated(7, 3, 1, "This is managed through the JavaScript Library package", RemovalVersion = 10)]
+        /* [DnnDeprecated(7, 3, 1, "This is managed through the JavaScript Library package", RemovalVersion = 10)]
         public static partial string JQueryUIFile(bool getMinFile)
         {
             string jfile = JQueryUIDebugFile;
@@ -306,8 +310,9 @@ namespace DotNetNuke.Framework
 
             return jfile;
         }
+        */
 
-        [DnnDeprecated(7, 3, 1, "This is managed through the JavaScript Library package", RemovalVersion = 10)]
+        /* [DnnDeprecated(7, 3, 1, "This is managed through the JavaScript Library package", RemovalVersion = 10)]
         public static partial string GetJQueryScriptReference()
         {
             string scriptsrc = HostedUrl;
@@ -318,8 +323,9 @@ namespace DotNetNuke.Framework
 
             return scriptsrc;
         }
+        */
 
-        [DnnDeprecated(7, 3, 1, "This is managed through the JavaScript Library package", RemovalVersion = 10)]
+        /* [DnnDeprecated(7, 3, 1, "This is managed through the JavaScript Library package", RemovalVersion = 10)]
         public static partial string GetJQueryMigrateScriptReference()
         {
             string scriptsrc = HostedMigrateUrl;
@@ -330,8 +336,9 @@ namespace DotNetNuke.Framework
 
             return scriptsrc;
         }
+        */
 
-        [DnnDeprecated(7, 3, 1, "This is managed through the JavaScript Library package", RemovalVersion = 10)]
+        /* [DnnDeprecated(7, 3, 1, "This is managed through the JavaScript Library package", RemovalVersion = 10)]
         public static partial string GetJQueryUIScriptReference()
         {
             string scriptsrc = HostedUIUrl;
@@ -342,6 +349,7 @@ namespace DotNetNuke.Framework
 
             return scriptsrc;
         }
+        */
 
         /// <summary>Active the page with keep alive, so that authentication will not expire.</summary>
         /// <param name="page">The page instance.</param>
@@ -365,64 +373,73 @@ namespace DotNetNuke.Framework
             ScriptManager.RegisterClientScriptBlock(page, page.GetType(), "PageKeepAlive", scriptBlock, true);
         }
 
-        [DnnDeprecated(7, 2, 0, "Registration occurs automatically during page load", RemovalVersion = 10)]
+        /* [DnnDeprecated(7, 2, 0, "Registration occurs automatically during page load", RemovalVersion = 10)]
         public static partial void RegisterJQuery(Page page)
         {
             JavaScript.RequestRegistration(CommonJs.jQuery);
             JavaScript.RequestRegistration(CommonJs.jQueryMigrate);
         }
+        */
 
-        [DnnDeprecated(7, 2, 0, "Registration occurs automatically during page load", RemovalVersion = 10)]
+        /* [DnnDeprecated(7, 2, 0, "Registration occurs automatically during page load", RemovalVersion = 10)]
         public static partial void RegisterJQueryUI(Page page)
         {
             RegisterJQuery(page);
             JavaScript.RequestRegistration(CommonJs.jQueryUI);
         }
+        */
 
-        [DnnDeprecated(7, 2, 0, "Registration occurs automatically during page load", RemovalVersion = 10)]
+        /* [DnnDeprecated(7, 2, 0, "Registration occurs automatically during page load", RemovalVersion = 10)]
         public static partial void RegisterDnnJQueryPlugins(Page page)
         {
             RegisterJQueryUI(page);
             RegisterHoverIntent(page);
             JavaScript.RequestRegistration(CommonJs.DnnPlugins);
         }
+        */
 
-        [DnnDeprecated(7, 2, 0, "Use JavaScript.RequestRegistration(CommonJs.HoverIntent)", RemovalVersion = 10)]
+        /* [DnnDeprecated(7, 2, 0, "Use JavaScript.RequestRegistration(CommonJs.HoverIntent)", RemovalVersion = 10)]
         public static partial void RegisterHoverIntent(Page page)
         {
             JavaScript.RequestRegistration(CommonJs.HoverIntent);
         }
+        */
 
-        [DnnDeprecated(7, 2, 0, "Use JavaScript.RequestRegistration(CommonJs.jQueryFileUpload)", RemovalVersion = 10)]
+        /* [DnnDeprecated(7, 2, 0, "Use JavaScript.RequestRegistration(CommonJs.jQueryFileUpload)", RemovalVersion = 10)]
         public static partial void RegisterFileUpload(Page page)
         {
             JavaScript.RequestRegistration(CommonJs.jQueryFileUpload);
         }
+        */
 
-        [DnnDeprecated(7, 2, 0, "Use JavaScript.RequestRegistration(CommonJs.jQuery)", RemovalVersion = 10)]
+        /* [DnnDeprecated(7, 2, 0, "Use JavaScript.RequestRegistration(CommonJs.jQuery)", RemovalVersion = 10)]
         public static partial void RequestRegistration()
         {
             JavaScript.RequestRegistration(CommonJs.jQuery);
             JavaScript.RequestRegistration(CommonJs.jQueryMigrate);
         }
+        */
 
-        [DnnDeprecated(7, 2, 0, "Use JavaScript.RequestRegistration(CommonJs.jQueryUI)", RemovalVersion = 10)]
+        /* [DnnDeprecated(7, 2, 0, "Use JavaScript.RequestRegistration(CommonJs.jQueryUI)", RemovalVersion = 10)]
         public static partial void RequestUIRegistration()
         {
             JavaScript.RequestRegistration(CommonJs.jQueryUI);
         }
+        */
 
-        [DnnDeprecated(7, 2, 0, "Use JavaScript.RequestRegistration(CommonJs.DnnPlugins)", RemovalVersion = 10)]
+        /* [DnnDeprecated(7, 2, 0, "Use JavaScript.RequestRegistration(CommonJs.DnnPlugins)", RemovalVersion = 10)]
         public static partial void RequestDnnPluginsRegistration()
         {
             JavaScript.RequestRegistration(CommonJs.DnnPlugins);
         }
+        */
 
-        [DnnDeprecated(7, 2, 0, "Use JavaScript.RequestRegistration(CommonJs.HoverIntent)", RemovalVersion = 10)]
+        /* [DnnDeprecated(7, 2, 0, "Use JavaScript.RequestRegistration(CommonJs.HoverIntent)", RemovalVersion = 10)]
         public static partial void RequestHoverIntentRegistration()
         {
             JavaScript.RequestRegistration(CommonJs.HoverIntent);
         }
+        */
 
         private static bool GetSettingAsBoolean(string key, bool defaultValue)
         {

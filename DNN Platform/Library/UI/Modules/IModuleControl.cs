@@ -3,9 +3,11 @@
 // See the LICENSE file in the project root for more information
 namespace DotNetNuke.UI.Modules
 {
+    using System;
     using System.Web.UI;
 
     /// <summary>IModuleControl provides a common Interface for Module Controls.</summary>
+    [CLSCompliant(false)]
     public interface IModuleControl
     {
         /// <summary>Gets the control.</summary>

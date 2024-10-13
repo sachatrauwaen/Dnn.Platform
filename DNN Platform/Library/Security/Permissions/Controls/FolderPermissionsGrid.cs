@@ -19,6 +19,7 @@ namespace DotNetNuke.Security.Permissions.Controls
     using DotNetNuke.Entities.Users;
     using DotNetNuke.Security.Roles;
 
+    [CLSCompliant(false)]
     public class FolderPermissionsGrid : PermissionsGrid
     {
         [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1306:FieldNamesMustBeginWithLowerCaseLetter", Justification = "Breaking Change")]

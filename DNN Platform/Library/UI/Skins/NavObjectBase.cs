@@ -12,6 +12,7 @@ namespace DotNetNuke.UI.Skins
     using DotNetNuke.Modules.NavigationProvider;
     using DotNetNuke.UI.WebControls;
 
+    [CLSCompliant(false)]
     public class NavObjectBase : SkinObjectBase
     {
         private readonly List<CustomAttribute> objCustomAttributes = new List<CustomAttribute>();

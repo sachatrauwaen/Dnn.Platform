@@ -7,13 +7,15 @@ namespace DotNetNuke.Web.Mvc.Skins
     using System;
     using System.IO;
     using System.Web;
-    using System.Web.Mvc;
-    using System.Web.Mvc.Html;
-    using System.Web.WebPages.Html;
+
+    using Dnn.Migration;
+    using Microsoft.AspNetCore.Html;
+    using Microsoft.AspNetCore.Mvc.Rendering;
+    using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
     public static partial class SkinHelpers
     {
-        public static IHtmlString SkinPartial(this HtmlHelper<DotNetNuke.Framework.Models.PageModel> helper, string name = "")
+        public static IHtmlContent SkinPartial(this HtmlHelper<DotNetNuke.Framework.Models.PageModel> helper, string name = "")
         {
             var model = helper.ViewData.Model;
             if (model == null)
@@ -22,7 +24,7 @@ namespace DotNetNuke.Web.Mvc.Skins
             }
 
             var skinPath = Path.GetDirectoryName(model.Skin.SkinSrc);
-            return helper.Partial("~" + skinPath + "/Views/" + name + ".cshtml");
+            return AsyncHelper.RunSync(() => helper.PartialAsync("~" + skinPath + "/Views/" + name + ".cshtml"));
         }
     }
 }

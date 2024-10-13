@@ -11,6 +11,7 @@ namespace DotNetNuke.Services.GeneratedImage
     using System.Web.UI;
     using System.Web.UI.WebControls;
 
+    [CLSCompliant(false)]
     public class GeneratedImage : Image
     {
         private const string TimestampField = "__timestamp";

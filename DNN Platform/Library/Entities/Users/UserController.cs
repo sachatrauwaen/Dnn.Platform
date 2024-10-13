@@ -319,6 +319,7 @@ namespace DotNetNuke.Entities.Users
             MembershipProvider.Instance().ChangeUsername(userId, newUsername);
         }
 
+        /*
         /// <summary>Checks if the user has known default username and password.</summary>
         /// <param name="username">The user username.</param>
         /// <param name="password">The user password.</param>
@@ -340,6 +341,7 @@ namespace DotNetNuke.Entities.Users
                 loginStatus = UserLoginStatus.LOGIN_INSECUREHOSTPASSWORD;
             }
         }
+        */
 
         /// <summary>Copys a user to a different portal.</summary>
         /// <param name="user">The user to copy.</param>

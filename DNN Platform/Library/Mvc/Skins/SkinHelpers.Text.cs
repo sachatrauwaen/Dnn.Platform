@@ -6,23 +6,25 @@ namespace DotNetNuke.Web.Mvc.Skins
 {
     using System;
     using System.IO;
-    using System.Web;
-    using System.Web.Mvc;
 
+    using Dnn.Migration;
     using DotNetNuke.Entities.Portals;
     using DotNetNuke.Services.Localization;
     using DotNetNuke.Services.Tokens;
+    using Microsoft.AspNetCore.Html;
+    using Microsoft.AspNetCore.Mvc.Rendering;
+    using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
     public static partial class SkinHelpers
     {
-        public static IHtmlString Text(this HtmlHelper<DotNetNuke.Framework.Models.PageModel> helper, string showText = "", string cssClass = "", string resourceKey = "", bool replaceTokens = false)
+        public static IHtmlContent Text(this HtmlHelper<DotNetNuke.Framework.Models.PageModel> helper, string showText = "", string cssClass = "", string resourceKey = "", bool replaceTokens = false)
         {
             var portalSettings = PortalSettings.Current;
             var text = showText;
 
             if (!string.IsNullOrEmpty(resourceKey))
             {
-                var file = Path.GetFileName(helper.ViewContext.HttpContext.Server.MapPath(portalSettings.ActiveTab.SkinSrc));
+                var file = Path.GetFileName(helper.ViewContext.HttpContext.Request.Path);
                 file = portalSettings.ActiveTab.SkinPath + Localization.LocalResourceDirectory + "/" + file;
                 var localization = Localization.GetString(resourceKey, file);
                 if (!string.IsNullOrEmpty(localization))
@@ -38,13 +40,13 @@ namespace DotNetNuke.Web.Mvc.Skins
             }
 
             var label = new TagBuilder("span");
-            label.SetInnerText(text);
+            label.InnerHtml.Append(text);
             if (!string.IsNullOrEmpty(cssClass))
             {
                 label.AddCssClass(cssClass);
             }
 
-            return new MvcHtmlString(label.ToString());
+            return new HtmlString(label.ToString());
         }
     }
 }

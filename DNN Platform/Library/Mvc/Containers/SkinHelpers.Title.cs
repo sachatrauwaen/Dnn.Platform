@@ -5,34 +5,34 @@
 namespace DotNetNuke.Web.Mvc.Containers
 {
     using System;
-    using System.Web;
-    using System.Web.Mvc;
-    using System.Web.Mvc.Html;
+    using System.IO;
 
-    using DotNetNuke.Common;
-    using DotNetNuke.Common.Utilities;
+    using Dnn.Migration;
     using DotNetNuke.Entities.Modules;
     using DotNetNuke.Framework.Models;
     using DotNetNuke.Web.Mvc.Skins;
+    using Microsoft.AspNetCore.Html;
+    using Microsoft.AspNetCore.Mvc.Rendering;
+    using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
     public static partial class SkinHelpers
     {
-        public static IHtmlString Title(this HtmlHelper<ContainerModel> htmlHelper, string cssClass)
+        public static IHtmlContent Title(this HtmlHelper<ContainerModel> htmlHelper, string cssClass)
         {
             var model = htmlHelper.ViewData.Model;
             if (model == null)
             {
-                throw new InvalidOperationException("The model need to be present.");
+                throw new InvalidOperationException("The model needs to be present.");
             }
 
             var labelDiv = new TagBuilder("div");
-            labelDiv.InnerHtml = model.ModuleConfiguration.ModuleTitle;
+            labelDiv.InnerHtml.Append(model.ModuleConfiguration.ModuleTitle);
             if (!string.IsNullOrEmpty(cssClass))
             {
                 labelDiv.AddCssClass(cssClass);
             }
 
-            return MvcHtmlString.Create(labelDiv.ToString());
+            return labelDiv;
         }
     }
 }

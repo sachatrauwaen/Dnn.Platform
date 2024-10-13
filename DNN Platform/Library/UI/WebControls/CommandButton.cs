@@ -15,6 +15,7 @@ namespace DotNetNuke.UI.WebControls
     /// Class:      CommandButton
     /// <summary>The CommandButton Class provides an enhanced Button control for DotNetNuke.</summary>
     [ToolboxData("<{0}:CommandButton runat=server></{0}:CommandButton>")]
+    [CLSCompliant(false)]
     public class CommandButton : WebControl, INamingContainer
     {
         private ImageButton icon;
