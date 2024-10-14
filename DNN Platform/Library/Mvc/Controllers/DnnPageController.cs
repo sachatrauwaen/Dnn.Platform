@@ -6,8 +6,6 @@ namespace DotNetNuke.Web.Mvc.Skins.Controllers
 {
     using System;
     using System.Text;
-    using System.Web.Routing;
-    using System.Web.UI;
 
     using DotNetNuke.Entities.Modules;
     using DotNetNuke.Entities.Modules.Actions;
@@ -15,7 +13,6 @@ namespace DotNetNuke.Web.Mvc.Skins.Controllers
     using DotNetNuke.Entities.Tabs;
     using DotNetNuke.Entities.Users;
     using DotNetNuke.Services.Localization;
-    using DotNetNuke.UI.Modules;
     using Microsoft.AspNetCore.Mvc;
 
     /*

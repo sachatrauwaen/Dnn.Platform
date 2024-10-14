@@ -4,21 +4,22 @@
 namespace DotNetNuke.UI.Containers.EventListeners
 {
     using System;
+    using DotNetNuke.Web.Mvc.Skins;
 
     /// <summary>ContainerEventArgs provides a custom EventARgs class for Container Events.</summary>
     [CLSCompliant(false)]
     public class ContainerEventArgs : EventArgs
     {
-        private readonly Container container;
+        private readonly ContainerModel container;
 
         /// <summary>Initializes a new instance of the <see cref="ContainerEventArgs"/> class.</summary>
         /// <param name="container"></param>
-        public ContainerEventArgs(Container container)
+        public ContainerEventArgs(ContainerModel container)
         {
             this.container = container;
         }
 
-        public Container Container
+        public ContainerModel Container
         {
             get
             {

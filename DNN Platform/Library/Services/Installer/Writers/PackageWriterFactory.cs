@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information
 namespace DotNetNuke.Services.Installer.Writers
 {
+    using DotNetNuke.Common;
     using DotNetNuke.Common.Lists;
     using DotNetNuke.Framework;
     using DotNetNuke.Services.Installer.Packages;
@@ -54,7 +55,7 @@ namespace DotNetNuke.Services.Installer.Writers
                     if (entry != null && !string.IsNullOrEmpty(entry.Text))
                     {
                         // The class for the Installer is specified in the Text property
-                        writer = (PackageWriterBase)Reflection.CreateObject(entry.Text, "PackageWriter_" + entry.Value);
+                        writer = (PackageWriterBase)Reflection.CreateObject(Globals.DependencyProvider, entry.Text, "PackageWriter_" + entry.Value);
                     }
 
                     break;

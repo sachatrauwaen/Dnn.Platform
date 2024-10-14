@@ -13,6 +13,7 @@ namespace DotNetNuke.Services.Authentication
     /// The AuthenticationLogoffBase class provides a base class for Authentiication
     /// Logoff controls.
     /// </summary>
+    [CLSCompliant(false)]
     public abstract class AuthenticationLogoffBase : UserModuleBase
     {
         /// <summary>Initializes a new instance of the <see cref="AuthenticationLogoffBase"/> class.</summary>

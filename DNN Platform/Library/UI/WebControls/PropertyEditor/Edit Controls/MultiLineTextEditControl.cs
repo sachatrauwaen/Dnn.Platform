@@ -11,6 +11,7 @@ namespace DotNetNuke.UI.WebControls
     /// string/text properties.
     /// </summary>
     [ToolboxData("<{0}:MultiLineTextEditControl runat=server></{0}:MultiLineTextEditControl>")]
+    [CLSCompliant(false)]
     public class MultiLineTextEditControl : TextEditControl
     {
         /// <inheritdoc/>

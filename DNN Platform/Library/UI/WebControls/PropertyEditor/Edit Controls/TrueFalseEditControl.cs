@@ -9,6 +9,7 @@ namespace DotNetNuke.UI.WebControls
     using DotNetNuke.Common.Utilities;
     using DotNetNuke.Instrumentation;
     using DotNetNuke.Services.Localization;
+    using Microsoft.Extensions.Logging;
 
     /// Project:    DotNetNuke
     /// Namespace:  DotNetNuke.UI.WebControls
@@ -18,6 +19,7 @@ namespace DotNetNuke.UI.WebControls
     /// true/false (boolean) properties.
     /// </summary>
     [ToolboxData("<{0}:TrueFalseEditControl runat=server></{0}:TrueFalseEditControl>")]
+    [CLSCompliant(false)]
     public class TrueFalseEditControl : EditControl
     {
         // private static readonly ILog Logger = LoggerSource.Instance.GetLogger(typeof(TrueFalseEditControl));
@@ -45,7 +47,7 @@ namespace DotNetNuke.UI.WebControls
                 }
                 catch (Exception exc)
                 {
-                    Logger.Error(exc);
+                    this.Logger.LogError(exc, exc.Message);
                 }
 
                 return boolValue;
@@ -66,7 +68,7 @@ namespace DotNetNuke.UI.WebControls
                 }
                 catch (Exception exc)
                 {
-                    Logger.Error(exc);
+                    this.Logger.LogError(exc, exc.Message);
                 }
 
                 return boolValue;

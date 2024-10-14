@@ -25,6 +25,7 @@ namespace DotNetNuke.UI.WebControls
     /// options.
     /// </summary>
     [ToolboxData("<{0}:VisibilityControl runat=server></{0}:VisibilityControl>")]
+    [CLSCompliant(false)]
     public class VisibilityControl : WebControl, IPostBackDataHandler, INamingContainer
     {
         public event PropertyChangedEventHandler VisibilityChanged;

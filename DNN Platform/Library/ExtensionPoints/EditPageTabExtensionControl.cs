@@ -11,6 +11,7 @@ namespace DotNetNuke.ExtensionPoints
 
     [DefaultProperty("Module")]
     [ToolboxData("<{0}:EditPageTabExtensionControl runat=server></{0}:EditPageTabExtensionControl>")]
+    [CLSCompliant(false)]
     public class EditPageTabExtensionControl : DefaultExtensionControl
     {
         [Bindable(true)]

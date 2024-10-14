@@ -18,6 +18,7 @@ namespace DotNetNuke.Security.Permissions.Controls
     using DotNetNuke.Entities.Users;
     using DotNetNuke.Security.Roles;
 
+    [CLSCompliant(false)]
     public class TabPermissionsGrid : PermissionsGrid
     {
         private List<PermissionInfoBase> permissionsList;

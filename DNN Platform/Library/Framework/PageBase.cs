@@ -24,6 +24,7 @@ namespace DotNetNuke.Framework
     using DotNetNuke.Services.Localization;
     using DotNetNuke.UI.Modules;
     using DotNetNuke.Web.Client.ClientResourceManagement;
+    using Microsoft.Extensions.Logging;
 
     /// Namespace:  DotNetNuke.Framework
     /// Project:    DotNetNuke
@@ -368,7 +369,7 @@ namespace DotNetNuke.Framework
         {
             base.OnError(e);
             Exception exc = this.Server.GetLastError();
-            Logger.Fatal("An error has occurred while loading page.", exc);
+            this.Logger.LogError(exc, "An error has occurred while loading page.");
 
             string strURL = Globals.ApplicationURL();
             if (exc is HttpException && !this.IsViewStateFailure(exc))

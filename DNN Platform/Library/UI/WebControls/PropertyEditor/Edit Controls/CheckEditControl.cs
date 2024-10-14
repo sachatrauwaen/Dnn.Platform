@@ -15,6 +15,7 @@ namespace DotNetNuke.UI.WebControls
     /// true/false (boolean) properties.
     /// </summary>
     [ToolboxData("<{0}:CheckEditControl runat=server></{0}:CheckEditControl>")]
+    [CLSCompliant(false)]
     public class CheckEditControl : TrueFalseEditControl
     {
         /// <summary>Initializes a new instance of the <see cref="CheckEditControl"/> class.</summary>

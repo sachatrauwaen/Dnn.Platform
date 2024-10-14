@@ -8,7 +8,6 @@ namespace DotNetNuke.Web.Mvc.Skins
     using System.Collections.Generic;
     using System.Text;
     using System.Web;
-    using System.Web.Mvc;
 
     using DotNetNuke.Abstractions;
     using DotNetNuke.Common;
@@ -22,11 +21,14 @@ namespace DotNetNuke.Web.Mvc.Skins
     using DotNetNuke.Services.Localization;
     using DotNetNuke.Services.Social.Messaging.Internal;
     using DotNetNuke.Services.Social.Notifications;
+    using Microsoft.AspNetCore.Html;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.Extensions.DependencyInjection;
 
     public static partial class SkinHelpers
     {
-        public static IHtmlString User(this HtmlHelper<DotNetNuke.Framework.Models.PageModel> helper, string cssClass = "SkinObject", string text = "", string url = "", bool showUnreadMessages = true, bool showAvatar = true, bool legacyMode = true, bool showInErrorPage = false)
+        public static IHtmlContent User(this IHtmlHelper<DotNetNuke.Framework.Models.PageModel> helper, IHttpContextAccessor httpContextAccessor, string cssClass = "SkinObject", string text = "", string url = "", bool showUnreadMessages = true, bool showAvatar = true, bool legacyMode = true, bool showInErrorPage = false)
         {
             var portalSettings = PortalSettings.Current;
             var navigationManager = Globals.DependencyProvider.GetRequiredService<INavigationManager>();
@@ -34,7 +36,7 @@ namespace DotNetNuke.Web.Mvc.Skins
 
             if (portalSettings.InErrorPageRequest() && !showInErrorPage)
             {
-                return MvcHtmlString.Empty;
+                return Microsoft.AspNetCore.Html.HtmlString.Empty;
             }
 
             var userPropertiesDiv = new TagBuilder("div");
@@ -42,9 +44,10 @@ namespace DotNetNuke.Web.Mvc.Skins
 
             var ul = new TagBuilder("ul");
 
-            if (!HttpContext.Current.Request.IsAuthenticated)
+            var httpContext = httpContextAccessor.HttpContext;
+            if (!httpContext.User.Identity.IsAuthenticated)
             {
-                // Niet-geauthenticeerde gebruiker logica
+                // Logic for unauthenticated user
                 if (portalSettings.UserRegistration != (int)Globals.PortalRegistrationType.NoRegistration &&
                     (portalSettings.Users < portalSettings.UserQuota || portalSettings.UserQuota == 0))
                 {
@@ -54,17 +57,17 @@ namespace DotNetNuke.Web.Mvc.Skins
                     var registerLink = new TagBuilder("a");
                     registerLink.AddCssClass(cssClass);
                     registerLink.Attributes.Add("rel", "nofollow");
-                    registerLink.InnerHtml = !string.IsNullOrEmpty(text) ? text.Replace("src=\"", "src=\"" + portalSettings.ActiveTab.SkinPath) : Localization.GetString("Register", GetSkinsResourceFile("UserAndLogin.ascx"));
+                    registerLink.InnerHtml.Append(!string.IsNullOrEmpty(text) ? text.Replace("src=\"", "src=\"" + portalSettings.ActiveTab.SkinPath) : Localization.GetString("Register", GetSkinsResourceFile("UserAndLogin.ascx")));
                     registerLink.Attributes.Add("href", !string.IsNullOrEmpty(url) ? url : Globals.RegisterURL(HttpUtility.UrlEncode(navigationManager.NavigateURL()), Null.NullString));
 
-                    if (portalSettings.EnablePopUps && portalSettings.RegisterTabId == Null.NullInteger/*&& !AuthenticationController.HasSocialAuthenticationEnabled(portalSettings)*/)
+                    if (portalSettings.EnablePopUps && portalSettings.RegisterTabId == Null.NullInteger)
                     {
                         var clickEvent = "return " + UrlUtils.PopUpUrl(registerLink.Attributes["href"], portalSettings, true, false, 600, 950);
                         registerLink.Attributes.Add("onclick", clickEvent);
                     }
 
-                    registerLi.InnerHtml = registerLink.ToString();
-                    ul.InnerHtml += registerLi.ToString();
+                    registerLi.InnerHtml.AppendHtml(registerLink);
+                    ul.InnerHtml.AppendHtml(registerLi);
                 }
 
                 if (!portalSettings.HideLoginControl)
@@ -75,51 +78,52 @@ namespace DotNetNuke.Web.Mvc.Skins
                     var loginLink = new TagBuilder("a");
                     loginLink.AddCssClass(cssClass);
                     loginLink.Attributes.Add("rel", "nofollow");
-                    loginLink.InnerHtml = Localization.GetString("Login", GetSkinsResourceFile("UserAndLogin.ascx"));
-                    loginLink.Attributes.Add("href", Globals.LoginURL(HttpUtility.UrlEncode(HttpContext.Current.Request.RawUrl), HttpContext.Current.Request.QueryString["override"] != null));
+                    loginLink.InnerHtml.Append(Localization.GetString("Login", GetSkinsResourceFile("UserAndLogin.ascx")));
+                    loginLink.Attributes.Add("href", Globals.LoginURL(HttpUtility.UrlEncode(httpContext.Request.Path), httpContext.Request.Query["override"] != QueryString.Empty));
 
-                    if (portalSettings.EnablePopUps && portalSettings.LoginTabId == Null.NullInteger/*&& !AuthenticationController.HasSocialAuthenticationEnabled(portalSettings)*/)
+                    if (portalSettings.EnablePopUps && portalSettings.LoginTabId == Null.NullInteger)
                     {
                         var clickEvent = "return " + UrlUtils.PopUpUrl(loginLink.Attributes["href"], portalSettings, true, false, 300, 650);
                         loginLink.Attributes.Add("onclick", clickEvent);
                     }
 
-                    loginLi.InnerHtml = loginLink.ToString();
-                    ul.InnerHtml += loginLi.ToString();
+                    loginLi.InnerHtml.AppendHtml(loginLink);
+                    ul.InnerHtml.AppendHtml(loginLi);
                 }
             }
             else if (userInfo.UserID != -1)
             {
-                // Geauthenticeerde gebruiker logica
+                // Logic for authenticated user
                 var userNameLi = new TagBuilder("li");
                 userNameLi.AddCssClass("userName");
 
                 var userNameLink = new TagBuilder("a");
                 userNameLink.Attributes.Add("id", "dnn_dnnUser_userNameLink");
                 userNameLink.Attributes.Add("href", "#");
-                userNameLink.InnerHtml = userInfo.DisplayName;
+                userNameLink.InnerHtml.Append(userInfo.DisplayName);
 
                 var userMenu = new TagBuilder("ul");
                 userMenu.AddCssClass("userMenu");
 
-                // Voeg hier de verschillende menu-items toe (viewProfile, userMessages, userNotifications, etc.)
-                userMenu.InnerHtml += CreateMenuItem("viewProfile", Globals.UserProfileURL(userInfo.UserID), "Profile");
+                // Add various menu items (viewProfile, userMessages, userNotifications, etc.)
+                userMenu.InnerHtml.AppendHtml(CreateMenuItem("viewProfile", Globals.UserProfileURL(userInfo.UserID), "Profile"));
 
                 if (showUnreadMessages)
                 {
                     var unreadMessages = InternalMessagingController.Instance.CountUnreadMessages(userInfo.UserID, PortalController.GetEffectivePortalId(userInfo.PortalID));
                     var unreadAlerts = NotificationsController.Instance.CountNotifications(userInfo.UserID, PortalController.GetEffectivePortalId(userInfo.PortalID));
 
-                    userMenu.InnerHtml += CreateMessageMenuItem("userMessages", navigationManager.NavigateURL(GetMessageTab(portalSettings), string.Empty, $"userId={userInfo.UserID}"), "Messages", unreadMessages);
-                    userMenu.InnerHtml += CreateMessageMenuItem("userNotifications", navigationManager.NavigateURL(GetMessageTab(portalSettings), string.Empty, $"userId={userInfo.UserID}", "view=notifications", "action=notifications"), "Notifications", unreadAlerts);
+                    userMenu.InnerHtml.AppendHtml(CreateMessageMenuItem("userMessages", navigationManager.NavigateURL(GetMessageTab(portalSettings), string.Empty, $"userId={userInfo.UserID}"), "Messages", unreadMessages));
+                    userMenu.InnerHtml.AppendHtml(CreateMessageMenuItem("userNotifications", navigationManager.NavigateURL(GetMessageTab(portalSettings), string.Empty, $"userId={userInfo.UserID}", "view=notifications", "action=notifications"), "Notifications", unreadAlerts));
                 }
 
-                userMenu.InnerHtml += CreateMenuItem("userSettings", navigationManager.NavigateURL(portalSettings.UserTabId, "Profile", $"userId={userInfo.UserID}", "pageno=1"), "Account");
-                userMenu.InnerHtml += CreateMenuItem("userProfilename", navigationManager.NavigateURL(portalSettings.UserTabId, "Profile", $"userId={userInfo.UserID}", "pageno=2"), "EditProfile");
-                userMenu.InnerHtml += CreateMenuItem("userLogout", navigationManager.NavigateURL(portalSettings.ActiveTab.TabID, "Logoff"), "Logout", true);
+                userMenu.InnerHtml.AppendHtml(CreateMenuItem("userSettings", navigationManager.NavigateURL(portalSettings.UserTabId, "Profile", $"userId={userInfo.UserID}", "pageno=1"), "Account"));
+                userMenu.InnerHtml.AppendHtml(CreateMenuItem("userProfilename", navigationManager.NavigateURL(portalSettings.UserTabId, "Profile", $"userId={userInfo.UserID}", "pageno=2"), "EditProfile"));
+                userMenu.InnerHtml.AppendHtml(CreateMenuItem("userLogout", navigationManager.NavigateURL(portalSettings.ActiveTab.TabID, "Logoff"), "Logout", true));
 
-                userNameLi.InnerHtml = userNameLink.ToString() + userMenu.ToString();
-                ul.InnerHtml += userNameLi.ToString();
+                userNameLi.InnerHtml.AppendHtml(userNameLink);
+                userNameLi.InnerHtml.AppendHtml(userMenu);
+                ul.InnerHtml.AppendHtml(userNameLi);
 
                 if (showAvatar)
                 {
@@ -135,17 +139,17 @@ namespace DotNetNuke.Web.Mvc.Skins
 
                     var profileImgSpan = new TagBuilder("span");
                     profileImgSpan.AddCssClass("userProfileImg");
-                    profileImgSpan.InnerHtml = profileImg.ToString();
+                    profileImgSpan.InnerHtml.AppendHtml(profileImg);
 
-                    profileLink.InnerHtml = profileImgSpan.ToString();
-                    userProfileLi.InnerHtml = profileLink.ToString();
+                    profileLink.InnerHtml.AppendHtml(profileImgSpan);
+                    userProfileLi.InnerHtml.AppendHtml(profileLink);
 
-                    ul.InnerHtml += userProfileLi.ToString();
+                    ul.InnerHtml.AppendHtml(userProfileLi);
                 }
             }
 
-            userPropertiesDiv.InnerHtml = ul.ToString();
-            return new MvcHtmlString(userPropertiesDiv.ToString());
+            userPropertiesDiv.InnerHtml.AppendHtml(ul);
+            return new Microsoft.AspNetCore.Html.HtmlString(userPropertiesDiv.ToString());
         }
 
         private static string CreateMenuItem(string cssClass, string href, string resourceKey, bool isStrong = false)
@@ -156,9 +160,9 @@ namespace DotNetNuke.Web.Mvc.Skins
             var a = new TagBuilder("a");
             a.Attributes.Add("href", href);
             var text = Localization.GetString(resourceKey, Localization.GetResourceFile(null, "UserAndLogin.ascx"));
-            a.InnerHtml = isStrong ? $"<strong>{text}</strong>" : text;
+            a.InnerHtml.AppendHtml(isStrong ? $"<strong>{text}</strong>" : text);
 
-            li.InnerHtml = a.ToString();
+            li.InnerHtml.AppendHtml(a);
             return li.ToString();
         }
 
@@ -174,13 +178,13 @@ namespace DotNetNuke.Web.Mvc.Skins
             {
                 var span = new TagBuilder("span");
                 span.AddCssClass(cssClass == "userMessages" ? "messageCount" : "notificationCount");
-                span.InnerHtml = count.ToString();
-                a.InnerHtml = span.ToString();
+                span.InnerHtml.Append(count.ToString());
+                a.InnerHtml.AppendHtml(span);
             }
 
-            a.InnerHtml += Localization.GetString(resourceKey, Localization.GetResourceFile(null, "UserAndLogin.ascx"));
+            a.InnerHtml.AppendHtml(Localization.GetString(resourceKey, Localization.GetResourceFile(null, "UserAndLogin.ascx")));
 
-            li.InnerHtml = a.ToString();
+            li.InnerHtml.AppendHtml(a);
             return li.ToString();
         }
 

@@ -10,6 +10,7 @@ namespace DotNetNuke.ExtensionPoints
 
     [DefaultProperty("Text")]
     [ToolboxData("<{0}:EditPagePanelExtensionControl runat=server></{0}:EditPagePanelExtensionControl>")]
+    [CLSCompliant(false)]
     public class EditPagePanelExtensionControl : DefaultExtensionControl
     {
         public void BindAction(int portalId, int tabId, int moduleId)

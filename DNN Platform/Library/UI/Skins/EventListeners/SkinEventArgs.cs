@@ -4,21 +4,22 @@
 namespace DotNetNuke.UI.Skins.EventListeners
 {
     using System;
+    using DotNetNuke.Web.Mvc.Skins;
 
     /// <summary>SkinEventArgs provides a custom EventARgs class for Skin Events.</summary>
     [CLSCompliant(false)]
     public class SkinEventArgs : EventArgs
     {
-        private readonly Skin skin;
+        private readonly SkinModel skin;
 
         /// <summary>Initializes a new instance of the <see cref="SkinEventArgs"/> class.</summary>
         /// <param name="skin"></param>
-        public SkinEventArgs(Skin skin)
+        public SkinEventArgs(SkinModel skin)
         {
             this.skin = skin;
         }
 
-        public Skin Skin
+        public SkinModel Skin
         {
             get
             {

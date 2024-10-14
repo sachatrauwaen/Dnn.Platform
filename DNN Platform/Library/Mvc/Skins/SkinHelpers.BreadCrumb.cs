@@ -5,18 +5,18 @@
 namespace DotNetNuke.Web.Mvc.Skins
 {
     using System.Text;
-    using System.Web;
-    using System.Web.Mvc;
 
     using DotNetNuke.Abstractions;
     using DotNetNuke.Common;
     using DotNetNuke.Entities.Portals;
     using DotNetNuke.Entities.Tabs;
+    using Microsoft.AspNetCore.Html;
+    using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.Extensions.DependencyInjection;
 
     public static partial class SkinHelpers
     {
-        public static IHtmlString BreadCrumb(this HtmlHelper<DotNetNuke.Framework.Models.PageModel> helper, string cssClass = "SkinObject", string separator = "<img alt=\"breadcrumb separator\" src=\"/images/breadcrumb.gif\">", int rootLevel = 0, bool useTitle = false, bool hideWithNoBreadCrumb = false, bool cleanerMarkup = false)
+        public static IHtmlContent BreadCrumb(this IHtmlHelper<DotNetNuke.Framework.Models.PageModel> helper, string cssClass = "SkinObject", string separator = "<img alt=\"breadcrumb separator\" src=\"/images/breadcrumb.gif\">", int rootLevel = 0, bool useTitle = false, bool hideWithNoBreadCrumb = false, bool cleanerMarkup = false)
         {
             var portalSettings = PortalSettings.Current;
             var navigationManager = Globals.DependencyProvider.GetRequiredService<INavigationManager>();
@@ -33,7 +33,7 @@ namespace DotNetNuke.Web.Mvc.Skins
 
             if (hideWithNoBreadCrumb && portalSettings.ActiveTab.BreadCrumbs.Count == (rootLevel + 1))
             {
-                return MvcHtmlString.Empty;
+                return HtmlString.Empty;
             }
 
             if (showRoot && portalSettings.ActiveTab.TabID != portalSettings.HomeTabId)
@@ -100,7 +100,7 @@ namespace DotNetNuke.Web.Mvc.Skins
 
             breadcrumb.Append("</span>");
 
-            return new MvcHtmlString(breadcrumb.ToString());
+            return new HtmlString(breadcrumb.ToString());
         }
     }
 }

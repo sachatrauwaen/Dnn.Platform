@@ -12,6 +12,7 @@ namespace DotNetNuke.Entities.Modules
     /// Namespace:  DotNetNuke.Entities.Modules
     /// Class    :  UserUserControlBase
     /// <summary>The UserUserControlBase class defines a custom base class for the User Control.</summary>
+    [CLSCompliant(false)]
     public class UserUserControlBase : UserModuleBase
     {
         public delegate void UserCreatedEventHandler(object sender, UserCreatedEventArgs e);

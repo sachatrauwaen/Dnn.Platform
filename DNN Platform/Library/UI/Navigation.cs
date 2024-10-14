@@ -262,7 +262,7 @@ namespace DotNetNuke.UI
                     // if action is visible and user has permission
                     if (action.Visible &&
                         (action.Secure != SecurityAccessLevel.Anonymous ||
-                            ((!ModuleHost.IsViewMode(actionControl.ModuleControl.ModuleContext.Configuration, PortalSettings.Current))
+                            ((!ModuleHostModel.IsViewMode(actionControl.ModuleControl.ModuleContext.Configuration, PortalSettings.Current))
                                 && ModulePermissionController.HasModuleAccess(action.Secure, Null.NullString, actionControl.ModuleControl.ModuleContext.Configuration))))
                     {
                         if (isActionPending)
@@ -283,14 +283,14 @@ namespace DotNetNuke.UI
                             else if (!string.IsNullOrEmpty(action.ClientScript))
                             {
                                 node.JSFunction = action.ClientScript;
-                                node.ClickAction = eClickAction.None;
+                                node.ClickAction = EClickAction.None;
                             }
                             else
                             {
                                 node.NavigateURL = action.Url;
                                 if (action.UseActionEvent == false && !string.IsNullOrEmpty(node.NavigateURL))
                                 {
-                                    node.ClickAction = eClickAction.Navigate;
+                                    node.ClickAction = EClickAction.Navigate;
                                     if (action.NewWindow)
                                     {
                                         node.Target = "_blank";
@@ -298,7 +298,7 @@ namespace DotNetNuke.UI
                                 }
                                 else
                                 {
-                                    node.ClickAction = eClickAction.PostBack;
+                                    node.ClickAction = EClickAction.PostBack;
                                 }
                             }
 
@@ -352,7 +352,7 @@ namespace DotNetNuke.UI
                 objNode.Key = objNode.ID;
                 objNode.Text = objTab.LocalizedTabName;
                 objNode.NavigateURL = objTab.FullUrl;
-                objNode.ClickAction = eClickAction.Navigate;
+                objNode.ClickAction = EClickAction.Navigate;
                 objNode.Image = objTab.IconFile;
                 objNode.LargeImage = objTab.IconFileLarge;
                 switch (eToolTips)

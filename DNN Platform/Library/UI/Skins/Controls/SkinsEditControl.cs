@@ -22,6 +22,7 @@ namespace DotNetNuke.UI.Skins.Controls
     /// skins.
     /// </summary>
     [ToolboxData("<{0}:SkinsEditControl runat=server></{0}:SkinsEditControl>")]
+    [CLSCompliant(false)]
     public class SkinsEditControl : EditControl, IPostBackEventHandler
     {
         private string addedItem = Null.NullString;

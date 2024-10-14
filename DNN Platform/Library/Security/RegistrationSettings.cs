@@ -4,8 +4,7 @@
 
 namespace DotNetNuke.Security
 {
-    using System.Collections.Generic;
-
+    // using System.Collections.Generic;
     using DotNetNuke.Collections;
     using DotNetNuke.Common;
     using DotNetNuke.Common.Utilities;
@@ -38,7 +37,7 @@ namespace DotNetNuke.Security
 
         /// <summary>Initializes a new instance of the <see cref="RegistrationSettings"/> class.</summary>
         /// <param name="settings"></param>
-        public RegistrationSettings(Dictionary<string, string> settings)
+        public RegistrationSettings(System.Collections.Generic.Dictionary<string, string> settings)
             : this()
         {
             this.RandomPassword = settings.GetValueOrDefault("Registration_RandomPassword", this.RandomPassword);

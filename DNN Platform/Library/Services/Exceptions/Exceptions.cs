@@ -123,6 +123,7 @@ namespace DotNetNuke.Services.Exceptions
             ProcessHttpException(exc, request.RawUrl);
         }
 
+        /*
         /// <summary>Processes the module load exception.</summary>
         /// <param name="objPortalModuleBase">The control.</param>
         /// <param name="exc">The exception.</param>
@@ -149,6 +150,7 @@ namespace DotNetNuke.Services.Exceptions
         {
             ProcessModuleLoadException(friendlyMessage, (Control)objPortalModuleBase, exc, displayErrorMessage);
         }
+        */
 
         /// <summary>Processes the module load exception.</summary>
         /// <param name="ctrl">The control.</param>
@@ -273,12 +275,13 @@ namespace DotNetNuke.Services.Exceptions
                             // hide the module
                             ctrl.Visible = false;
                             errorPlaceholder.Visible = true;
-                            errorPlaceholder.Controls.Add(new ErrorContainer(portalSettings, friendlyMessage, lex).Container);
+
+                            // errorPlaceholder.Controls.Add(new ErrorContainer(portalSettings, friendlyMessage, lex).Container);
                         }
                         else
                         {
                             // there's no ErrorPlaceholder, add it to the module's control collection
-                            ctrl.Controls.Add(new ErrorContainer(portalSettings, friendlyMessage, lex).Container);
+                            // ctrl.Controls.Add(new ErrorContainer(portalSettings, friendlyMessage, lex).Container);
                         }
                     }
                 }
@@ -339,7 +342,9 @@ namespace DotNetNuke.Services.Exceptions
                     if (url.IndexOf("error=terminate") != -1)
                     {
                         HttpContext.Current.Response.Clear();
-                        HttpContext.Current.Server.Transfer("~/ErrorPage.aspx");
+
+                        // HttpContext.Current.Server.Transfer("~/ErrorPage.aspx");
+                        throw new NotImplementedException();
                     }
                     else
                     {
@@ -419,7 +424,7 @@ namespace DotNetNuke.Services.Exceptions
         {
             if (exc is ThreadAbortException)
             {
-                Thread.ResetAbort();
+                // Thread.ResetAbort();
                 return true;
             }
             else

@@ -139,9 +139,13 @@ namespace DotNetNuke.UI.WebControls
             }
         }
 
+        
+
         /// <summary>Initialises the Column.</summary>
         public override void Initialize()
         {
+            throw new NotImplementedException();
+            /*
             this.ItemTemplate = this.CreateTemplate(ListItemType.Item);
             this.EditItemTemplate = this.CreateTemplate(ListItemType.EditItem);
             this.HeaderTemplate = this.CreateTemplate(ListItemType.Header);
@@ -154,6 +158,7 @@ namespace DotNetNuke.UI.WebControls
 
             this.ItemStyle.HorizontalAlign = HorizontalAlign.Center;
             this.HeaderStyle.HorizontalAlign = HorizontalAlign.Center;
+            */
         }
 
         /// <summary>Creates a CheckBoxColumnTemplate.</summary>

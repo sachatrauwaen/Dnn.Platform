@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information
 namespace DotNetNuke.Services.Installer.Packages.WebControls
 {
+    using System;
     using System.Collections.Generic;
     using System.Web.UI;
 
@@ -19,6 +20,7 @@ namespace DotNetNuke.Services.Installer.Packages.WebControls
     /// package types.
     /// </summary>
     [ToolboxData("<{0}:PackageTypeEditControl runat=server></{0}:PackageTypeEditControl>")]
+    [CLSCompliant(false)]
     public class PackageTypeEditControl : TextEditControl
     {
         /// <summary>RenderEditMode renders the Edit mode of the control.</summary>

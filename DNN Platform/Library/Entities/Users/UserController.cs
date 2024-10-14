@@ -319,7 +319,6 @@ namespace DotNetNuke.Entities.Users
             MembershipProvider.Instance().ChangeUsername(userId, newUsername);
         }
 
-        /*
         /// <summary>Checks if the user has known default username and password.</summary>
         /// <param name="username">The user username.</param>
         /// <param name="password">The user password.</param>
@@ -341,7 +340,6 @@ namespace DotNetNuke.Entities.Users
                 loginStatus = UserLoginStatus.LOGIN_INSECUREHOSTPASSWORD;
             }
         }
-        */
 
         /// <summary>Copys a user to a different portal.</summary>
         /// <param name="user">The user to copy.</param>
@@ -802,6 +800,8 @@ namespace DotNetNuke.Entities.Users
                     int index = kvp.Key.IndexOf("_");
                     if (index > 0)
                     {
+                        throw new NotImplementedException();
+                        /*
                         // Get the prefix
                         string prefix = kvp.Key.Substring(0, index + 1);
                         switch (prefix)
@@ -832,6 +832,7 @@ namespace DotNetNuke.Entities.Users
 
                                 break;
                         }
+                        */
                     }
                 }
             }
@@ -1461,11 +1462,14 @@ namespace DotNetNuke.Entities.Users
             // Check if Profile needs updating
             if (validStatus == UserValidStatus.VALID)
             {
+                throw new NotImplementedException();
+                /*
                 var validProfile = Convert.ToBoolean(UserModuleBase.GetSetting(portalId, "Security_RequireValidProfileAtLogin"));
                 if (validProfile && (!ProfileController.ValidateProfile(portalId, objUser.Profile)))
                 {
                     validStatus = UserValidStatus.UPDATEPROFILE;
                 }
+                */
             }
 
             return validStatus;
@@ -1678,6 +1682,8 @@ namespace DotNetNuke.Entities.Users
         /// <returns>A Hashtable of the user related portal settings.</returns>
         internal static Hashtable GetUserSettings(int portalId, Hashtable settings)
         {
+            throw new NotImplementedException();
+            /*
             portalId = GetEffectivePortalId(portalId);
 
             if (settings["Column_FirstName"] == null)
@@ -1727,7 +1733,8 @@ namespace DotNetNuke.Entities.Users
 
             if (settings["Display_Mode"] == null)
             {
-                settings["Display_Mode"] = DisplayMode.All;
+                // settings["Display_Mode"] = DisplayMode.All;
+                throw new NotImplementedException();
             }
             else
             {
@@ -1890,6 +1897,7 @@ namespace DotNetNuke.Entities.Users
             }
 
             return settings;
+            */
         }
 
         /// <summary>  updates a user.</summary>

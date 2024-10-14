@@ -6,7 +6,10 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 
 using DotNetNuke.Application;
-[assembly: CLSCompliant(true)]
+
+[assembly: System.Runtime.Versioning.SupportedOSPlatformAttribute("windows")]
+
+[assembly: CLSCompliant(false)]
 
 [assembly: AssemblyStatus(ReleaseMode.Alpha)]
 

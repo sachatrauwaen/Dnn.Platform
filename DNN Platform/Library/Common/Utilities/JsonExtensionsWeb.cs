@@ -4,7 +4,8 @@
 namespace DotNetNuke.Common.Utilities
 {
     using System;
-    using System.Web.Script.Serialization;
+
+    using Newtonsoft.Json;
 
     /// <summary>JSON Extensions based on the JavaScript Serializer in System.web.</summary>
     public static class JsonExtensionsWeb
@@ -14,8 +15,8 @@ namespace DotNetNuke.Common.Utilities
         /// <returns>The JSON string.</returns>
         public static string ToJsonString(object value)
         {
-            var ser = SerializerFactory();
-            string json = ser.Serialize(value);
+            // var ser = SerializerFactory();
+            string json = JsonConvert.SerializeObject(value);
             return json;
         }
 
@@ -34,9 +35,9 @@ namespace DotNetNuke.Common.Utilities
         public static object FromJsonString(string json, Type type)
         {
             // *** Have to use Reflection with a 'dynamic' non constant type instance
-            var ser = SerializerFactory();
-
-            object result = ser.GetType().GetMethod("Deserialize").MakeGenericMethod(type).Invoke(ser, new object[1] { json });
+            // var ser = SerializerFactory();
+            // object result = ser.GetType().GetMethod("Deserialize").MakeGenericMethod(type).Invoke(ser, new object[1] { json });
+            object result = JsonConvert.DeserializeObject(json, type);
             return result;
         }
 
@@ -55,16 +56,18 @@ namespace DotNetNuke.Common.Utilities
         /// <returns>The deserialized value.</returns>
         public static TType FromJson<TType>(this string json)
         {
-            var ser = SerializerFactory();
-
-            var result = ser.Deserialize<TType>(json);
+            // var ser = SerializerFactory();
+            // var result = ser.Deserialize<TType>(json);
+            var result = JsonConvert.DeserializeObject<TType>(json);
             return result;
         }
 
+        /*
         private static JavaScriptSerializer SerializerFactory()
         {
             // Allow large JSON strings to be serialized and deserialized.
             return new JavaScriptSerializer { MaxJsonLength = int.MaxValue };
         }
+        */
     }
 }

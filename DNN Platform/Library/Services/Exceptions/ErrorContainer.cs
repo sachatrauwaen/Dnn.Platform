@@ -13,7 +13,6 @@ namespace DotNetNuke.Services.Exceptions
 
     using Localization = DotNetNuke.Services.Localization.Localization;
 
-    [CLSCompliant(false)]
     public class ErrorContainer : Control
     {
         /// <summary>Initializes a new instance of the <see cref="ErrorContainer"/> class.</summary>

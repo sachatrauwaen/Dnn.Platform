@@ -3,11 +3,13 @@
 // See the LICENSE file in the project root for more information
 namespace DotNetNuke.Entities.Modules
 {
+    using System;
     using System.Collections;
 
     using DotNetNuke.UI.Modules;
 
     /// <summary>Base class for module settings.</summary>
+    [CLSCompliant(false)]
     public class ModuleSettingsBase : PortalModuleBase, ISettingsControl
     {
         /// <summary>Gets the module settings.</summary>

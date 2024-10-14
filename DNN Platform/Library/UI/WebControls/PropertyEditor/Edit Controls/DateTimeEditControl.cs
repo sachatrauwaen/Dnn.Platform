@@ -19,6 +19,7 @@ namespace DotNetNuke.UI.WebControls
     /// date and time properties.
     /// </summary>
     [ToolboxData("<{0}:DateTimeEditControl runat=server></{0}:DateTimeEditControl>")]
+    [CLSCompliant(false)]
     public class DateTimeEditControl : DateEditControl
     {
         private DropDownList ampmField;

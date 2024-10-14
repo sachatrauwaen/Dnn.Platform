@@ -9,6 +9,7 @@ namespace DotNetNuke.Entities.Modules
     /// Namespace:  DotNetNuke.Entities.Modules
     /// Class    :  ProfileUserControlBase
     /// <summary>The ProfileUserControlBase class defines a custom base class for the profile Control.</summary>
+    [CLSCompliant(false)]
     public class ProfileUserControlBase : UserModuleBase
     {
         public event EventHandler ProfileUpdated;

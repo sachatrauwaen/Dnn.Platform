@@ -4,14 +4,13 @@
 
 namespace DotNetNuke.Web.Mvc.Skins
 {
-    using System.Web;
-    using System.Web.Mvc;
-
+    using Microsoft.AspNetCore.Html;
+    using Microsoft.AspNetCore.Mvc.Rendering;
     using DotNetNuke.Services.Localization;
 
     public static partial class SkinHelpers
     {
-        public static IHtmlString ControlPanel(this HtmlHelper<DotNetNuke.Framework.Models.PageModel> helper, string cssClass = "SkinObject")
+        public static IHtmlContent ControlPanel(this IHtmlHelper<DotNetNuke.Framework.Models.PageModel> helper, string cssClass = "SkinObject")
         {
             var lblControlPanel = new TagBuilder("span");
 
@@ -20,8 +19,8 @@ namespace DotNetNuke.Web.Mvc.Skins
                 lblControlPanel.AddCssClass(cssClass);
             }
 
-            // lblControlPanel.SetInnerText(Localization.GetString("ControlPanel", Localization.GetResourceFile(helper.ViewContext.Controller, "ControlPanel.ascx")));
-            return new MvcHtmlString(lblControlPanel.ToString());
+            // lblControlPanel.InnerHtml.Append(Localization.GetString("ControlPanel", Localization.GetResourceFile(helper.ViewContext.Controller, "ControlPanel.ascx")));
+            return new HtmlString(lblControlPanel.ToString());
         }
     }
 }

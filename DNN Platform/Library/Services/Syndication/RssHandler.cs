@@ -17,6 +17,7 @@ namespace DotNetNuke.Services.Syndication
     using DotNetNuke.Services.Search.Internals;
 
     /// <summary>An HTTP handler for serving an RSS feed.</summary>
+    [CLSCompliant(false)]
     public class RssHandler : SyndicationHandlerBase
     {
         /// <inheritdoc />
@@ -96,7 +97,9 @@ namespace DotNetNuke.Services.Syndication
 
             this.Context.Response.Cache.SetExpires(DateTime.Now.AddSeconds(60));
             this.Context.Response.Cache.SetCacheability(HttpCacheability.Public);
-            this.Context.Response.Cache.VaryByParams["moduleid"] = true;
+            throw new NotImplementedException();
+
+            // this.Context.Response.Cache.VaryByParams["moduleid"] = true;
         }
 
         /// <summary>Creates an RSS Item.</summary>

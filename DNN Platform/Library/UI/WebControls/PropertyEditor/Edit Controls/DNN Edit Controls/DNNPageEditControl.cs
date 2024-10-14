@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information
 namespace DotNetNuke.UI.WebControls
 {
+    using System;
     using System.Collections.Generic;
     using System.Web.UI;
 
@@ -20,6 +21,7 @@ namespace DotNetNuke.UI.WebControls
     /// a DNN Page.
     /// </summary>
     [ToolboxData("<{0}:DNNPageEditControl runat=server></{0}:DNNPageEditControl>")]
+    [CLSCompliant(false)]
     public class DNNPageEditControl : IntegerEditControl
     {
         /// <summary>RenderEditMode renders the Edit mode of the control.</summary>

@@ -6,7 +6,8 @@ namespace DotNetNuke.Entities.Portals
 {
     using System;
     using System.Collections;
-    using System.Collections.Generic;
+
+    // using System.Collections.Generic;
     using System.Linq;
 
     using DotNetNuke.Collections;
@@ -113,7 +114,7 @@ namespace DotNetNuke.Entities.Portals
         }
 
         /// <inheritdoc/>
-        public virtual IList<ModuleInfo> GetTabModules(PortalSettings portalSettings)
+        public virtual System.Collections.Generic.IList<ModuleInfo> GetTabModules(PortalSettings portalSettings)
         {
             return portalSettings.ActiveTab.Modules.Cast<ModuleInfo>().Select(m => m).ToList();
         }
@@ -266,9 +267,9 @@ namespace DotNetNuke.Entities.Portals
             portalSettings.AllowedExtensionsWhitelist = new FileExtensionWhitelist(setting);
         }
 
-        protected List<TabInfo> GetBreadcrumbs(int tabId, int portalId)
+        protected System.Collections.Generic.List<TabInfo> GetBreadcrumbs(int tabId, int portalId)
         {
-            var breadCrumbs = new List<TabInfo>();
+            var breadCrumbs = new System.Collections.Generic.List<TabInfo>();
             GetBreadCrumbs(breadCrumbs, tabId, portalId);
             return breadCrumbs;
         }
@@ -346,7 +347,7 @@ namespace DotNetNuke.Entities.Portals
             activeTab.ContainerPath = SkinController.FormatSkinPath(activeTab.ContainerSrc);
         }
 
-        private static void GetBreadCrumbs(IList<TabInfo> breadCrumbs, int tabId, int portalId)
+        private static void GetBreadCrumbs(System.Collections.Generic.IList<TabInfo> breadCrumbs, int tabId, int portalId)
         {
             var portalTabs = TabController.Instance.GetTabsByPortal(portalId);
             var hostTabs = TabController.Instance.GetTabsByPortal(Null.NullInteger);

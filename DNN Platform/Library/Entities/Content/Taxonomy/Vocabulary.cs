@@ -15,7 +15,6 @@ namespace DotNetNuke.Entities.Content.Taxonomy
     /// <summary>Class of Vocabulary.</summary>
     /// <seealso cref="TermController"/>
     [Serializable]
-    [CLSCompliant(false)]
     public class Vocabulary : BaseEntityInfo, IHydratable
     {
         private static readonly PortalSecurity Security = PortalSecurity.Instance;

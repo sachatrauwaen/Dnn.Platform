@@ -26,6 +26,7 @@ namespace DotNetNuke.UI.WebControls
     /// Regions.
     /// </summary>
     [ToolboxData("<{0}:DNNRegionEditControl runat=server></{0}:DNNRegionEditControl>")]
+    [CLSCompliant(false)]
     public class DNNRegionEditControl : EditControl
     {
         private DropDownList regions;

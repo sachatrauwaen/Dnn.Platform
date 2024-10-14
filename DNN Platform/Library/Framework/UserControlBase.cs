@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information
 namespace DotNetNuke.Framework
 {
+    using System;
     using System.ComponentModel;
     using System.Web.UI;
 
@@ -13,6 +14,7 @@ namespace DotNetNuke.Framework
     /// The UserControlBase class defines a custom base class inherited by all
     /// user controls within the Portal.
     /// </summary>
+    [CLSCompliant(false)]
     public class UserControlBase : UserControl
     {
         public bool IsHostMenu

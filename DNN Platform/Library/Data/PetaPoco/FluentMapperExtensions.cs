@@ -8,7 +8,7 @@ namespace DotNetNuke.Data.PetaPoco
     using System.Linq.Expressions;
     using System.Web.Caching;
 
-    // using global::PetaPoco;
+    using global::PetaPoco;
 
     public static class FluentMapperExtensions
     {

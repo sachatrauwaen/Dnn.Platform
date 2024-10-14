@@ -47,7 +47,7 @@ namespace DotNetNuke.UI.Modules
         private const string DefaultCssProvider = "DnnPageHeaderProvider";
         private const string DefaultJsProvider = "DnnBodyProvider";
 
-        private static readonly ILog Logger = LoggerSource.Instance.GetLogger(typeof(ModuleHost));
+        private static readonly ILog Logger = LoggerSource.Instance.GetLogger(typeof(ModuleHostModel));
 
         private static readonly Regex CdfMatchRegex = new Regex(
             @"<\!--CDF\((?<type>JAVASCRIPT|CSS|JS-LIBRARY)\|(?<path>.+?)(\|(?<provider>.+?)\|(?<priority>\d+?))?\)-->",

@@ -18,6 +18,7 @@ namespace DotNetNuke.UI.WebControls
     /// a Locale.
     /// </summary>
     [ToolboxData("<{0}:DNNLocaleEditControl runat=server></{0}:DNNLocaleEditControl>")]
+    [CLSCompliant(false)]
     public class DNNLocaleEditControl : TextEditControl, IPostBackEventHandler
     {
         private string displayMode = "Native";

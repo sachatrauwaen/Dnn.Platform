@@ -469,7 +469,7 @@ namespace DotNetNuke.Services.Authentication.OAuth
                                         {
                                             new QueryParameter("scope", this.Scope),
                                             new QueryParameter(OAuthClientIdKey, this.APIKey),
-                                            new QueryParameter(OAuthRedirectUriKey, HttpContext.Current.Server.UrlEncode(this.CallbackUri.ToString())),
+                                            new QueryParameter(OAuthRedirectUriKey, HttpUtility.UrlEncode(this.CallbackUri.ToString())),
                                             new QueryParameter("state", this.Service),
                                             new QueryParameter("response_type", "code"),
                                         };
@@ -505,10 +505,10 @@ namespace DotNetNuke.Services.Authentication.OAuth
         {
             IList<QueryParameter> parameters = new List<QueryParameter>();
             parameters.Add(new QueryParameter(OAuthClientIdKey, this.APIKey));
-            parameters.Add(new QueryParameter(OAuthRedirectUriKey, HttpContext.Current.Server.UrlEncode(this.CallbackUri.ToString())));
+            parameters.Add(new QueryParameter(OAuthRedirectUriKey, HttpUtility.UrlEncode(this.CallbackUri.ToString())));
 
             // DNN-6265 Support for OAuth V2 Secrets which are not URL Friendly
-            parameters.Add(new QueryParameter(OAuthClientSecretKey, HttpContext.Current.Server.UrlEncode(this.APISecret.ToString())));
+            parameters.Add(new QueryParameter(OAuthClientSecretKey, HttpUtility.UrlEncode(this.APISecret.ToString())));
             parameters.Add(new QueryParameter(OAuthGrantTyepKey, "authorization_code"));
             parameters.Add(new QueryParameter(OAuthCodeKey, this.VerificationCode));
 

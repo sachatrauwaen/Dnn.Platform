@@ -1,9 +1,29 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
+  
+
   <ItemGroup>
     <Compile Remove="Obsolete\**" />
+    <Compile Remove="Security\Permissions\Controls\**" />
+    <Compile Remove="Services\GeneratedImage\**" />
+    <Compile Remove="UI\Containers\**" />
+    <Compile Remove="UI\Skins\**" />
+    <Compile Remove="UI\WebControls\DataGrids\**" />
+    <Compile Remove="UI\WebControls\NavDataSource\**" />
     <EmbeddedResource Remove="Obsolete\**" />
+    <EmbeddedResource Remove="Security\Permissions\Controls\**" />
+    <EmbeddedResource Remove="Services\GeneratedImage\**" />
+    <EmbeddedResource Remove="UI\Containers\**" />
+    <EmbeddedResource Remove="UI\Skins\**" />
+    <EmbeddedResource Remove="UI\WebControls\DataGrids\**" />
+    <EmbeddedResource Remove="UI\WebControls\NavDataSource\**" />
     <None Remove="Obsolete\**" />
+    <None Remove="Security\Permissions\Controls\**" />
+    <None Remove="Services\GeneratedImage\**" />
+    <None Remove="UI\Containers\**" />
+    <None Remove="UI\Skins\**" />
+    <None Remove="UI\WebControls\DataGrids\**" />
+    <None Remove="UI\WebControls\NavDataSource\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -72,10 +92,6 @@
   
   
   <ItemGroup>
-    <Reference Include="DotNetNuke.WebControls">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Controls\DotNetNuke.WebControls\bin\DotNetNuke.WebControls.dll</HintPath>
-    </Reference>
     <Reference Include="Lucene.Net">
       <HintPath>..\Components\Lucene.Net\bin\Lucene.Net.dll</HintPath>
     </Reference>
@@ -92,64 +108,60 @@
     <Compile Include="..\..\SolutionInfo.cs">
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
-    <Compile Update="Services\Authentication\OAuth\OAuthLoginBase.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Update="Services\Authentication\OAuth\OAuthSettingsBase.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Update="Entities\Modules\ModuleSettingsBase.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Update="Entities\Modules\PortalModuleBase.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Update="Entities\Modules\ProfileUserControlBase.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Update="Entities\Modules\UserModuleBase.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Update="Entities\Modules\UserUserControlBase.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Update="Framework\CDefault.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Update="Framework\PageBase.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
+    <Compile Include="Obsolete\CBO.cs" />
+    <Compile Include="Obsolete\EventLogController.cs" />
+    <Compile Include="Obsolete\HostController.cs" />
+    <Compile Include="Obsolete\IModuleController.cs" />
+    <Compile Include="Obsolete\IPortalAliasController.cs" />
+    <Compile Include="Obsolete\IPortalSettings.cs" />
+    <Compile Include="Obsolete\IRoleController.cs" />
+    <Compile Include="Obsolete\ITabController.cs" />
+    <Compile Include="Obsolete\IUserController.cs" />
+    <Compile Include="Obsolete\LogController.cs" />
+    <Compile Include="Obsolete\LogInfo.cs" />
+    <Compile Include="Obsolete\LogTypeConfigInfo.cs" />
+    <Compile Include="Obsolete\LogTypeInfo.cs" />
+    <Compile Include="Obsolete\ModuleController.cs" />
+    <Compile Include="Obsolete\PortalAliasController.cs" />
+    <Compile Include="Obsolete\PortalController.cs" />
+    <Compile Include="Obsolete\PortalSettings.cs" />
+    <Compile Include="Obsolete\PortalTemplateIOImpl.cs" />
+    <Compile Include="Obsolete\RoleController.cs" />
+    <Compile Include="Obsolete\SerializationController.cs" />
+    <Compile Include="Obsolete\TabController.cs" />
+    <Compile Include="Obsolete\TestableModuleController.cs" />
+    <Compile Include="Obsolete\TestablePortalAliasController.cs" />
+    <Compile Include="Obsolete\TestablePortalController.cs" />
+    <Compile Include="Obsolete\TestablePortalSettings.cs" />
+    <Compile Include="Obsolete\TestableRoleController.cs" />
+    <Compile Include="Obsolete\TestableTabController.cs" />
+    <Compile Include="Obsolete\TestableUserController.cs" />
+    <Compile Include="Obsolete\UserController.cs" />
+    <Compile Include="UI\Containers\ActionManager.cs" />
+    <Compile Include="UI\Containers\EventListeners\ContainerEventArgs.cs" />
+    <Compile Include="UI\Containers\EventListeners\ContainerEventHandler.cs" />
+    <Compile Include="UI\Containers\EventListeners\ContainerEventListener.cs" />
+    <Compile Include="UI\Containers\EventListeners\ContainerEventType.cs" />
+    <Compile Include="UI\Containers\IActionControl.cs" />
+    <Compile Include="UI\Skins\Controls\LanguagePropertyAccess.cs" />
+    <Compile Include="UI\Skins\Controls\LanguageTokenReplace.cs" />
+    <Compile Include="UI\Skins\EventListeners\SkinEventArgs.cs" />
+    <Compile Include="UI\Skins\EventListeners\SkinEventHandler.cs" />
+    <Compile Include="UI\Skins\EventListeners\SkinEventListener.cs" />
+    <Compile Include="UI\Skins\EventListeners\SkinEventType.cs" />
+    <Compile Include="UI\Skins\SkinController.cs" />
+    <Compile Include="UI\Skins\SkinDefaults.cs" />
+    <Compile Include="UI\Skins\SkinFileProcessor.cs" />
+    <Compile Include="UI\Skins\SkinPackageInfo.cs" />
+    <Compile Include="UI\Skins\SkinScope.cs" />
+    <Compile Include="UI\Skins\SkinType.cs" />
     <Compile Update="Framework\UserControlBase.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Update="Modules\HtmlEditorProvider.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Update="Modules\NavigationProvider.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Update="Services\Authentication\AuthenticationLoginBase.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Update="Services\Authentication\AuthenticationLogoffBase.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Update="Services\Authentication\AuthenticationSettingsBase.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Update="Services\FileSystem\FolderMappings\FolderMappingSettingsControlBase.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
     <Compile Update="Services\Installer\Packages\PackageEditorBase.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Update="UI\Containers\ActionBase.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Update="UI\Containers\ActionButton.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Update="UI\Containers\Container.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Update="UI\ControlPanels\ControlPanelBase.cs">
@@ -158,34 +170,10 @@
     <Compile Update="UI\Modules\ModuleUserControlBase.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Update="UI\Skins\Controls\ControlPanel.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Update="UI\Skins\Controls\ModuleMessage.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Update="UI\Skins\NavObjectBase.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Update="UI\Skins\Skin.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Update="UI\Skins\SkinControl.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Update="UI\Skins\SkinObjectBase.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Update="UI\Skins\SkinThumbNailControl.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
     <Compile Update="UI\UserControls\Address.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Update="UI\UserControls\DualListControl.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Update="UI\UserControls\Help.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Update="UI\UserControls\HelpButtonControl.cs">
@@ -231,12 +219,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Obsolete\" />
     <Folder Include="UI\Internal\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Dnn.Migration\Dnn.Migration.csproj" />
-    <ProjectReference Include="..\..\DotNetNuke.Internal.SourceGenerators\DotNetNuke.Internal.SourceGenerators.csproj" />
+    <ProjectReference Include="..\..\DotNetNuke.Internal.SourceGenerators\DotNetNuke.Internal.SourceGenerators.csproj" ReferenceOutputAssembly="false" OutputItemType="Analyzer" />
     <ProjectReference Include="..\Controls\CountryListBox\CountryListBox.csproj" />
     <ProjectReference Include="..\DotNetNuke.Abstractions\DotNetNuke.Abstractions.csproj" />
     <ProjectReference Include="..\DotNetNuke.DependencyInjection\DotNetNuke.DependencyInjection.csproj" />
@@ -279,8 +266,29 @@
     <PackageReference Include="WebForms.VirtualFile" Version="0.4.1-ci0004" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Remove="Common\Initialize.cs" />
+    <Compile Remove="Entities\Modules\ModuleSettingsBase.cs" />
+    <Compile Remove="Entities\Modules\PortalModuleBase.cs" />
+    <Compile Remove="Entities\Modules\ProfileUserControlBase.cs" />
+    <Compile Remove="Entities\Modules\UserModuleBase.cs" />
+    <Compile Remove="Entities\Modules\UserUserControlBase.cs" />
+    <Compile Remove="Framework\CDefault.cs" />
+    <Compile Remove="Framework\PageBase.cs" />
+    <Compile Remove="Modules\NavigationEventArgs.cs" />
+    <Compile Remove="Modules\NavigationProvider.cs" />
     <Compile Remove="Mvc\Models\ModuleSettingsMvcViewModel.cs" />
+    <Compile Remove="Services\Authentication\AuthenticationLoginBase.cs" />
+    <Compile Remove="Services\Authentication\AuthenticationLogoffBase.cs" />
+    <Compile Remove="Services\Authentication\AuthenticationSettingsBase.cs" />
+    <Compile Remove="Services\Authentication\OAuth\OAuthLoginBase.cs" />
+    <Compile Remove="Services\Authentication\OAuth\OAuthSettingsBase.cs" />
+    <Compile Remove="Services\Exceptions\ErrorContainer.cs" />
+    <Compile Remove="Services\FileSystem\FolderMappings\FolderMappingSettingsControlBase.cs" />
+    <Compile Remove="Services\Localization\LocalizationExpressionBuilderEditor.cs" />
+    <Compile Remove="Services\Search\SearchDataStore.cs" />
     <Compile Remove="Services\Search\SearchDataStoreController.cs" />
+    <Compile Remove="UI\Modules\ModuleHost.cs" />
+    <Compile Remove="UI\UserControls\Help.cs" />
     <Compile Remove="UI\WebControls\CaptchaControl.cs" />
     <Compile Remove="UI\WebControls\CaptchaHandler.cs" />
   </ItemGroup>

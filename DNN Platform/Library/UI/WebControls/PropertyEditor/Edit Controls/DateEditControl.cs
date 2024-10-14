@@ -13,6 +13,7 @@ namespace DotNetNuke.UI.WebControls
     using DotNetNuke.Common.Utilities;
     using DotNetNuke.Instrumentation;
     using DotNetNuke.Services.Localization;
+    using Microsoft.Extensions.Logging;
 
     using Calendar = DotNetNuke.Common.Utilities.Calendar;
 
@@ -24,6 +25,7 @@ namespace DotNetNuke.UI.WebControls
     /// date properties.
     /// </summary>
     [ToolboxData("<{0}:DateEditControl runat=server></{0}:DateEditControl>")]
+    [CLSCompliant(false)]
     public class DateEditControl : EditControl
     {
         // private static readonly ILog Logger = LoggerSource.Instance.GetLogger(typeof(DateEditControl));
@@ -44,7 +46,7 @@ namespace DotNetNuke.UI.WebControls
                 }
                 catch (Exception exc)
                 {
-                    Logger.Error(exc);
+                    this.Logger.LogError(exc, exc.Message);
                 }
 
                 return dteValue;
@@ -105,7 +107,7 @@ namespace DotNetNuke.UI.WebControls
                 }
                 catch (Exception exc)
                 {
-                    Logger.Error(exc);
+                    this.Logger.LogError(exc, exc.Message);
                 }
 
                 return dteValue;

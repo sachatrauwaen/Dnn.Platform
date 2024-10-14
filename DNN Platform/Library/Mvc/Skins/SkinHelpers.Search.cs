@@ -5,21 +5,21 @@
 namespace DotNetNuke.Web.Mvc.Skins
 {
     using System;
-    using System.Web;
-    using System.Web.Mvc;
 
     using DotNetNuke.Abstractions;
     using DotNetNuke.Common;
     using DotNetNuke.Entities.Icons;
     using DotNetNuke.Entities.Portals;
     using DotNetNuke.Services.Localization;
+    using Microsoft.AspNetCore.Html;
+    using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.Extensions.DependencyInjection;
 
     public static partial class SkinHelpers
     {
         private const string SearchAscxFileName = "Search.ascx";
 
-        public static IHtmlString Search(this HtmlHelper<DotNetNuke.Framework.Models.PageModel> helper, string cssClass = "SkinObject", bool showSite = true, bool showWeb = true, bool useWebForSite = false, bool useDropDownList = false, int minCharRequired = 2, int autoSearchDelayInMilliSecond = 400, bool enableWildSearch = true)
+        public static IHtmlContent Search(this IHtmlHelper<DotNetNuke.Framework.Models.PageModel> helper, string cssClass = "SkinObject", bool showSite = true, bool showWeb = true, bool useWebForSite = false, bool useDropDownList = false, int minCharRequired = 2, int autoSearchDelayInMilliSecond = 400, bool enableWildSearch = true)
         {
             var portalSettings = PortalSettings.Current;
             var navigationManager = Globals.DependencyProvider.GetRequiredService<INavigationManager>();
@@ -35,7 +35,7 @@ namespace DotNetNuke.Web.Mvc.Skins
 
             var downArrow = new TagBuilder("img");
             downArrow.Attributes.Add("src", IconController.IconURL("Action"));
-            searchIcon.InnerHtml = downArrow.ToString();
+            searchIcon.InnerHtml.AppendHtml(downArrow);
 
             var searchInputContainer = new TagBuilder("span");
             searchInputContainer.AddCssClass("searchInputContainer");
@@ -49,40 +49,41 @@ namespace DotNetNuke.Web.Mvc.Skins
             txtSearchNew.Attributes.Add("aria-label", "Search");
             txtSearchNew.Attributes.Add("autocomplete", "off");
             txtSearchNew.Attributes.Add("placeholder", Localization.GetSafeJSString("Placeholder", GetSkinsResourceFile(SearchAscxFileName)));
-            searchInputContainer.InnerHtml = txtSearchNew.ToString();
+            searchInputContainer.InnerHtml.AppendHtml(txtSearchNew);
 
             var clearText = new TagBuilder("a");
             clearText.AddCssClass("dnnSearchBoxClearText");
             clearText.Attributes.Add("title", Localization.GetSafeJSString("SearchClearQuery", GetSkinsResourceFile(SearchAscxFileName)));
-            searchInputContainer.InnerHtml += clearText.ToString();
+            searchInputContainer.InnerHtml.AppendHtml(clearText);
 
-            searchBorder.InnerHtml = searchIcon.ToString() + searchInputContainer.ToString();
+            searchBorder.InnerHtml.AppendHtml(searchIcon);
+            searchBorder.InnerHtml.AppendHtml(searchInputContainer);
 
             var searchChoices = new TagBuilder("ul");
             searchChoices.AddCssClass("SearchChoices");
 
             var searchIconSite = new TagBuilder("li");
             searchIconSite.AddCssClass("SearchIconSite");
-            searchIconSite.SetInnerText(Localization.GetString("Site", GetSkinsResourceFile(SearchAscxFileName)));
-            searchChoices.InnerHtml = searchIconSite.ToString();
+            searchIconSite.InnerHtml.Append(Localization.GetString("Site", GetSkinsResourceFile(SearchAscxFileName)));
+            searchChoices.InnerHtml.AppendHtml(searchIconSite);
 
             var searchIconWeb = new TagBuilder("li");
             searchIconWeb.AddCssClass("SearchIconWeb");
-            searchIconWeb.SetInnerText(Localization.GetString("Web", GetSkinsResourceFile(SearchAscxFileName)));
-            searchChoices.InnerHtml += searchIconWeb.ToString();
+            searchIconWeb.InnerHtml.Append(Localization.GetString("Web", GetSkinsResourceFile(SearchAscxFileName)));
+            searchChoices.InnerHtml.AppendHtml(searchIconWeb);
 
-            searchBorder.InnerHtml += searchChoices.ToString();
+            searchBorder.InnerHtml.AppendHtml(searchChoices);
 
             var cmdSearchNew = new TagBuilder("button");
             cmdSearchNew.AddCssClass("SkinObject SearchButton");
-            cmdSearchNew.SetInnerText(Localization.GetString("Search", GetSkinsResourceFile(SearchAscxFileName)));
-            searchBorder.InnerHtml += cmdSearchNew.ToString();
+            cmdSearchNew.InnerHtml.Append(Localization.GetString("Search", GetSkinsResourceFile(SearchAscxFileName)));
+            searchBorder.InnerHtml.AppendHtml(cmdSearchNew);
 
-            searchContainer.InnerHtml = searchBorder.ToString();
+            searchContainer.InnerHtml.AppendHtml(searchBorder);
 
             var script = new TagBuilder("script");
             script.Attributes.Add("type", "text/javascript");
-            script.InnerHtml = @"
+            script.InnerHtml.AppendHtml(@"
                 $(function() {
                     if (typeof dnn != 'undefined' && typeof dnn.searchSkinObject != 'undefined') {
                         var searchSkinObject = new dnn.searchSkinObject({
@@ -111,9 +112,9 @@ namespace DotNetNuke.Web.Mvc.Skins
                         }
                     }
                 });
-            ";
+            ");
 
-            return new MvcHtmlString(searchContainer.ToString() + script.ToString());
+            return new HtmlString(searchContainer.ToString() + script.ToString());
         }
     }
 }

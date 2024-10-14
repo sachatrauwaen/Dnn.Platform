@@ -13,6 +13,7 @@ namespace DotNetNuke.ExtensionPoints
 
     [DefaultProperty("Text")]
     [ToolboxData("<{0}:ContextMenuItemExtensionControl runat=server></{0}:ContextMenuItemExtensionControl>")]
+    [CLSCompliant(false)]
     public class ContextMenuItemExtensionControl : DefaultExtensionControl
     {
         private string content = string.Empty;

@@ -11,6 +11,7 @@ namespace DotNetNuke.ExtensionPoints
 
     [DefaultProperty("Text")]
     [ToolboxData("<{0}:UserControlExtensionControl runat=server></{0}:UserControlExtensionControl>")]
+    [CLSCompliant(false)]
     public class UserControlExtensionControl : DefaultExtensionControl
     {
         public void BindAction(int portalId, int tabId, int moduleId)

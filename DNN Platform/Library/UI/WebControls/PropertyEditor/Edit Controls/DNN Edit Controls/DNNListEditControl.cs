@@ -15,6 +15,7 @@ namespace DotNetNuke.UI.WebControls
     using DotNetNuke.Entities.Portals;
     using DotNetNuke.Instrumentation;
     using DotNetNuke.Services.Localization;
+    using Microsoft.Extensions.Logging;
 
     /// Project:    DotNetNuke
     /// Namespace:  DotNetNuke.UI.WebControls
@@ -24,6 +25,7 @@ namespace DotNetNuke.UI.WebControls
     /// from Lists.
     /// </summary>
     [ToolboxData("<{0}:DNNListEditControl runat=server></{0}:DNNListEditControl>")]
+    [CLSCompliant(false)]
     public class DNNListEditControl : EditControl, IPostBackEventHandler
     {
         // private static readonly ILog Logger = LoggerSource.Instance.GetLogger(typeof(DNNListEditControl));
@@ -59,7 +61,7 @@ namespace DotNetNuke.UI.WebControls
                 }
                 catch (Exception exc)
                 {
-                    Logger.Error(exc);
+                    this.Logger.LogError(exc, exc.Message);
                 }
 
                 return intValue;
@@ -119,7 +121,7 @@ namespace DotNetNuke.UI.WebControls
                 }
                 catch (Exception exc)
                 {
-                    Logger.Error(exc);
+                    this.Logger.LogError(exc, exc.Message);
                 }
 
                 return intValue;

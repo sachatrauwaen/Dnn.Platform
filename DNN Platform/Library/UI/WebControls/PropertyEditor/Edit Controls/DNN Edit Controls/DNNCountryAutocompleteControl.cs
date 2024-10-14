@@ -14,6 +14,7 @@ namespace DotNetNuke.UI.WebControls
     using DotNetNuke.Web.Client.ClientResourceManagement;
 
     [ToolboxData("<{0}:DnnCountryAutocompleteControl runat=server></{0}:DnnCountryAutocompleteControl>")]
+    [CLSCompliant(false)]
     public class DnnCountryAutocompleteControl : EditControl
     {
         private TextBox countryName;

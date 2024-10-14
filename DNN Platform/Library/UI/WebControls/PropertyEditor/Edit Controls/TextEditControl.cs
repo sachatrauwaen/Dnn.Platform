@@ -16,6 +16,7 @@ namespace DotNetNuke.UI.WebControls
     /// string/text properties.
     /// </summary>
     [ToolboxData("<{0}:TextEditControl runat=server></{0}:TextEditControl>")]
+    [CLSCompliant(false)]
     public class TextEditControl : EditControl
     {
         /// <summary>

@@ -15,6 +15,7 @@ namespace DotNetNuke.Services.Authentication
     /// The AuthenticationLoginBase class provides a bas class for Authentication
     /// Login controls.
     /// </summary>
+    [CLSCompliant(false)]
     public abstract partial class AuthenticationLoginBase : UserModuleBase
     {
         /// <summary>Initializes a new instance of the <see cref="AuthenticationLoginBase"/> class.</summary>

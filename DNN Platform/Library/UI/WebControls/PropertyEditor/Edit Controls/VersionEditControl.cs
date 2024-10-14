@@ -15,6 +15,7 @@ namespace DotNetNuke.UI.WebControls
     /// System.Version properties.
     /// </summary>
     [ToolboxData("<{0}:VersionEditControl runat=server></{0}:VersionEditControl>")]
+    [CLSCompliant(false)]
     public class VersionEditControl : EditControl
     {
         protected Version Version

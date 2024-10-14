@@ -8,7 +8,6 @@ namespace DotNetNuke.Web.Mvc.Skins
     using System.Collections.Generic;
     using System.Text;
     using System.Web;
-    using System.Web.Mvc;
 
     using DotNetNuke.Abstractions;
     using DotNetNuke.Common;
@@ -22,24 +21,28 @@ namespace DotNetNuke.Web.Mvc.Skins
     using DotNetNuke.Services.Localization;
     using DotNetNuke.Services.Social.Messaging.Internal;
     using DotNetNuke.Services.Social.Notifications;
+    using Microsoft.AspNetCore.Html;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.Extensions.DependencyInjection;
 
     public static partial class SkinHelpers
     {
-        public static IHtmlString UserAndLogin(this HtmlHelper<DotNetNuke.Framework.Models.PageModel> helper, bool showInErrorPage = false)
+        public static IHtmlContent UserAndLogin(this IHtmlHelper<DotNetNuke.Framework.Models.PageModel> helper, IHttpContextAccessor httpContextAccessor, bool showInErrorPage = false)
         {
             var portalSettings = PortalSettings.Current;
             var navigationManager = Globals.DependencyProvider.GetRequiredService<INavigationManager>();
 
             if (!showInErrorPage && portalSettings.InErrorPageRequest())
             {
-                return MvcHtmlString.Empty;
+                return Microsoft.AspNetCore.Html.HtmlString.Empty;
             }
 
             var sb = new StringBuilder();
             sb.Append("<div class=\"userProperties\"><ul>");
 
-            if (!HttpContext.Current.Request.IsAuthenticated)
+            var httpContext = httpContextAccessor.HttpContext;
+            if (!httpContext.User.Identity.IsAuthenticated)
             {
                 if (CanRegister(portalSettings))
                 {
@@ -48,7 +51,7 @@ namespace DotNetNuke.Web.Mvc.Skins
 
                 if (!portalSettings.HideLoginControl)
                 {
-                    sb.Append($"<li class=\"userLogin\"><a id=\"loginLink\" href=\"{LoginUrl()}\">{LocalizeString(helper, "Login")}</a></li>");
+                    sb.Append($"<li class=\"userLogin\"><a id=\"loginLink\" href=\"{LoginUrl(httpContext)}\">{LocalizeString(helper, "Login")}</a></li>");
                 }
             }
             else
@@ -85,11 +88,11 @@ namespace DotNetNuke.Web.Mvc.Skins
 
             if (UsePopUp(portalSettings))
             {
-                result = result.Replace("id=\"registerLink\"", $"id=\"registerLink\" onclick=\"{RegisterUrlForClickEvent(navigationManager, portalSettings, helper)}\"");
-                result = result.Replace("id=\"loginLink\"", $"id=\"loginLink\" onclick=\"{LoginUrlForClickEvent(portalSettings, helper)}\"");
+                result = result.Replace("id=\"registerLink\"", $"id=\"registerLink\" onclick=\"{RegisterUrlForClickEvent(navigationManager, portalSettings)}\"");
+                result = result.Replace("id=\"loginLink\"", $"id=\"loginLink\" onclick=\"{LoginUrlForClickEvent(portalSettings, httpContext)}\"");
             }
 
-            return new MvcHtmlString(result);
+            return new Microsoft.AspNetCore.Html.HtmlString(result);
         }
 
         private static bool CanRegister(PortalSettings portalSettings)
@@ -103,9 +106,9 @@ namespace DotNetNuke.Web.Mvc.Skins
             return Globals.RegisterURL(HttpUtility.UrlEncode(navigationManager.NavigateURL()), Null.NullString);
         }
 
-        private static string LoginUrl()
+        private static string LoginUrl(Microsoft.AspNetCore.Http.HttpContext httpContext)
         {
-            string returnUrl = HttpContext.Current.Request.RawUrl;
+            string returnUrl = httpContext.Request.Path;
             if (returnUrl.IndexOf("?returnurl=", StringComparison.OrdinalIgnoreCase) != -1)
             {
                 returnUrl = returnUrl.Substring(0, returnUrl.IndexOf("?returnurl=", StringComparison.OrdinalIgnoreCase));
@@ -113,67 +116,28 @@ namespace DotNetNuke.Web.Mvc.Skins
 
             returnUrl = HttpUtility.UrlEncode(returnUrl);
 
-            return Globals.LoginURL(returnUrl, HttpContext.Current.Request.QueryString["override"] != null);
+            return Globals.LoginURL(returnUrl, httpContext.Request.Query["override"] != QueryString.Empty);
         }
 
         private static bool UsePopUp(PortalSettings portalSettings)
         {
             return portalSettings.EnablePopUps
-                && portalSettings.LoginTabId == Null.NullInteger
-               /* && !AuthenticationController.HasSocialAuthenticationEnabled(portalSettings)*/;
+                && portalSettings.LoginTabId == Null.NullInteger;
         }
 
-        private static string RegisterUrlForClickEvent(INavigationManager navigationManager, PortalSettings portalSettings, HtmlHelper helper)
+        private static string RegisterUrlForClickEvent(INavigationManager navigationManager, PortalSettings portalSettings)
         {
             return "return " + UrlUtils.PopUpUrl(HttpUtility.UrlDecode(RegisterUrl(navigationManager)), portalSettings, true, false, 600, 950);
         }
 
-        private static string LoginUrlForClickEvent(PortalSettings portalSettings, HtmlHelper helper)
+        private static string LoginUrlForClickEvent(PortalSettings portalSettings, Microsoft.AspNetCore.Http.HttpContext httpContext)
         {
-            return "return " + UrlUtils.PopUpUrl(HttpUtility.UrlDecode(LoginUrl()), portalSettings, true, false, 300, 650);
+            return "return " + UrlUtils.PopUpUrl(HttpUtility.UrlDecode(LoginUrl(httpContext)), portalSettings, true, false, 300, 650);
         }
 
-        private static string LocalizeString(HtmlHelper helper, string key)
+        private static string LocalizeString(IHtmlHelper helper, string key)
         {
             return Localization.GetString(key, GetSkinsResourceFile("UserAndLogin.ascx"));
         }
-
-        /*
-        private static int GetMessageTab(PortalSettings portalSettings)
-        {
-            var cacheKey = $"MessageCenterTab:{portalSettings.PortalId}:{portalSettings.CultureCode}";
-            var messageTabId = DataCache.GetCache<int>(cacheKey);
-            if (messageTabId > 0)
-            {
-                return messageTabId;
-            }
-
-            messageTabId = FindMessageTab(portalSettings);
-            DataCache.SetCache(cacheKey, messageTabId, TimeSpan.FromMinutes(20));
-
-            return messageTabId;
-        }
-        private static int FindMessageTab(PortalSettings portalSettings)
-        {
-            var profileTab = TabController.Instance.GetTab(portalSettings.UserTabId, portalSettings.PortalId, false);
-            if (profileTab != null)
-            {
-                var childTabs = TabController.Instance.GetTabsByPortal(profileTab.PortalID).DescendentsOf(profileTab.TabID);
-                foreach (TabInfo tab in childTabs)
-                {
-                    foreach (KeyValuePair<int, ModuleInfo> kvp in ModuleController.Instance.GetTabModules(tab.TabID))
-                    {
-                        var module = kvp.Value;
-                        if (module.DesktopModule.FriendlyName == "Message Center" && !module.IsDeleted)
-                        {
-                            return tab.TabID;
-                        }
-                    }
-                }
-            }
-
-            return portalSettings.UserTabId;
-        }
-        */
     }
 }

@@ -5,23 +5,23 @@
 namespace DotNetNuke.Web.Mvc.Skins
 {
     using System;
-    using System.Web;
-    using System.Web.Mvc;
 
     using DotNetNuke.Entities.Portals;
     using DotNetNuke.Services.Localization;
+    using Microsoft.AspNetCore.Html;
+    using Microsoft.AspNetCore.Mvc.Rendering;
 
     public static partial class SkinHelpers
     {
-        public static IHtmlString TreeViewMenu(this HtmlHelper<DotNetNuke.Framework.Models.PageModel> helper, string cssClass = "SkinObject")
+        public static IHtmlContent TreeViewMenu(this IHtmlHelper<DotNetNuke.Framework.Models.PageModel> helper, string cssClass = "SkinObject")
         {
             var portalSettings = PortalSettings.Current;
             var link = new TagBuilder("a");
 
             link.Attributes.Add("href", portalSettings.PortalAlias.HTTPAlias);
-            link.SetInnerText(Localization.GetString("Title.Text", GetSkinsResourceFile("TreeViewMenu.ascx")));
+            link.InnerHtml.Append(Localization.GetString("Title.Text", GetSkinsResourceFile("TreeViewMenu.ascx")));
 
-            return new MvcHtmlString(link.ToString());
+            return new HtmlString(link.ToString());
         }
     }
 }

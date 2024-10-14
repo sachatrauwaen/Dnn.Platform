@@ -22,6 +22,7 @@ namespace DotNetNuke.UI.WebControls
     /// Properties.
     /// </summary>
     [ToolboxData("<{0}:ProfileEditorControl runat=server></{0}:ProfileEditorControl>")]
+    [CLSCompliant(false)]
     public class ProfileEditorControl : CollectionEditorControl
     {
         /// <summary>CreateEditor creates the control collection.</summary>

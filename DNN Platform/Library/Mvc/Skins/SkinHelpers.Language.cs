@@ -7,10 +7,8 @@ namespace DotNetNuke.Web.Mvc.Skins
     using System;
     using System.Collections.Generic;
     using System.Globalization;
-    using System.Web;
-    using System.Web.Mvc;
-    using System.Web.UI.WebControls;
 
+    // using System.Web;
     using DotNetNuke.Entities.Portals;
     using DotNetNuke.Entities.Tabs;
     using DotNetNuke.Security;
@@ -19,10 +17,13 @@ namespace DotNetNuke.Web.Mvc.Skins
     using DotNetNuke.Services.Localization;
     using DotNetNuke.UI.Skins.Controls;
 
+    using Microsoft.AspNetCore.Html;
+    using Microsoft.AspNetCore.Mvc.Rendering;
+
     public static partial class SkinHelpers
     {
-        public static IHtmlString Language(
-            this HtmlHelper<DotNetNuke.Framework.Models.PageModel> helper,
+        public static IHtmlContent Language(
+            this IHtmlHelper<DotNetNuke.Framework.Models.PageModel> helper,
             string cssClass = "",
             string itemTemplate = "",
             string selectedItemTemplate = "",
@@ -43,7 +44,7 @@ namespace DotNetNuke.Web.Mvc.Skins
             var localTokenReplace = new LanguageTokenReplace { resourceFile = localResourceFile };
 
             var locales = new Dictionary<string, Locale>();
-            IEnumerable<ListItem> cultureListItems = Localization.LoadCultureInListItems(CultureDropDownTypes.NativeName, currentCulture, string.Empty, false);
+            IEnumerable<System.Web.UI.WebControls.ListItem> cultureListItems = Localization.LoadCultureInListItems(CultureDropDownTypes.NativeName, currentCulture, string.Empty, false);
             foreach (Locale loc in LocaleController.Instance.GetLocales(portalSettings.PortalId).Values)
             {
                 string defaultRoles = PortalController.GetPortalSetting(string.Format("DefaultTranslatorRoles-{0}", loc.Code), portalSettings.PortalId, "Administrators");
@@ -70,13 +71,13 @@ namespace DotNetNuke.Web.Mvc.Skins
                 {
                     var option = new TagBuilder("option");
                     option.Attributes.Add("value", cultureItem.Value);
-                    option.SetInnerText(cultureItem.Text);
+                    option.InnerHtml.Append(cultureItem.Text);
                     if (cultureItem.Value == currentCulture)
                     {
                         option.Attributes.Add("selected", "selected");
                     }
 
-                    selectCulture.InnerHtml += option.ToString();
+                    selectCulture.InnerHtml.AppendHtml(option);
                 }
             }
 
@@ -92,10 +93,10 @@ namespace DotNetNuke.Web.Mvc.Skins
 
             var languageContainer = new TagBuilder("div");
             languageContainer.AddCssClass("languageContainer");
-            languageContainer.InnerHtml += commonHeaderTemplate;
+            languageContainer.InnerHtml.AppendHtml(commonHeaderTemplate);
             if (showMenu)
             {
-                languageContainer.InnerHtml += selectCulture.ToString();
+                languageContainer.InnerHtml.AppendHtml(selectCulture);
             }
 
             if (showLinks)
@@ -125,7 +126,7 @@ namespace DotNetNuke.Web.Mvc.Skins
                     selectedItemTemplate = Localization.GetString("SelectedItemTemplate.Default", localResourceFile, templateCulture);
                 }
 
-                languageContainer.InnerHtml += headerTemplate;
+                languageContainer.InnerHtml.AppendHtml(headerTemplate);
                 var rptLanguages = new TagBuilder("ul");
                 rptLanguages.AddCssClass("languageList");
                 bool alt = false;
@@ -134,31 +135,31 @@ namespace DotNetNuke.Web.Mvc.Skins
                     var listItem = new TagBuilder("li");
                     if (locale.Code == currentCulture && !string.IsNullOrEmpty(selectedItemTemplate))
                     {
-                        listItem.InnerHtml = ParseTemplate(selectedItemTemplate, locale.Code, localTokenReplace, currentCulture);
+                        listItem.InnerHtml.AppendHtml(ParseTemplate(selectedItemTemplate, locale.Code, localTokenReplace, currentCulture));
                     }
                     else
                     {
                         if (alt)
                         {
-                            listItem.InnerHtml = ParseTemplate(alternateTemplate, locale.Code, localTokenReplace, currentCulture);
+                            listItem.InnerHtml.AppendHtml(ParseTemplate(alternateTemplate, locale.Code, localTokenReplace, currentCulture));
                         }
                         else
                         {
-                            listItem.InnerHtml = ParseTemplate(itemTemplate, locale.Code, localTokenReplace, currentCulture);
+                            listItem.InnerHtml.AppendHtml(ParseTemplate(itemTemplate, locale.Code, localTokenReplace, currentCulture));
                         }
 
                         alt = !alt;
                     }
 
-                    rptLanguages.InnerHtml += listItem.ToString();
+                    rptLanguages.InnerHtml.AppendHtml(listItem);
                 }
 
-                languageContainer.InnerHtml += rptLanguages.ToString();
-                languageContainer.InnerHtml += footerTemplate;
+                languageContainer.InnerHtml.AppendHtml(rptLanguages);
+                languageContainer.InnerHtml.AppendHtml(footerTemplate);
             }
 
-            languageContainer.InnerHtml += commonFooterTemplate;
-            return new MvcHtmlString(languageContainer.ToString());
+            languageContainer.InnerHtml.AppendHtml(commonFooterTemplate);
+            return new HtmlString(languageContainer.ToString());
         }
 
         private static string ParseTemplate(string template, string locale, LanguageTokenReplace localTokenReplace, string currentCulture)
@@ -179,7 +180,8 @@ namespace DotNetNuke.Web.Mvc.Skins
             }
             catch (Exception ex)
             {
-                Exceptions.ProcessPageLoadException(ex, HttpContext.Current.Request.RawUrl);
+                // Exceptions.ProcessPageLoadException(ex, HttpContext.Current.Request.RawUrl);
+                throw new Exception("HttpContext.Current.Request.RawUrl", ex);
             }
 
             return strReturnValue;

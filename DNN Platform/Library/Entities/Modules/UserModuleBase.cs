@@ -45,6 +45,7 @@ namespace DotNetNuke.Entities.Modules
     /// The UserModuleBase class defines a custom base class inherited by all
     /// desktop portal modules within the Portal that manage Users.
     /// </summary>
+    [CLSCompliant(false)]
     public class UserModuleBase : PortalModuleBase
     {
         private UserInfo user;

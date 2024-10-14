@@ -6,6 +6,7 @@ namespace DotNetNuke.Web.Mvc.Skins
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.IO;
     using System.Linq;
     using System.Text;
@@ -31,13 +32,26 @@ namespace DotNetNuke.Web.Mvc.Skins
     using DotNetNuke.UI.Modules;
     using DotNetNuke.UI.Skins;
     using DotNetNuke.UI.Skins.Controls;
-    using DotNetNuke.UI.Skins.EventListeners;
+
+    // using DotNetNuke.UI.Skins.EventListeners;
     using DotNetNuke.Web.Client;
     using DotNetNuke.Web.Client.ClientResourceManagement;
     using DotNetNuke.Web.Mvc.Skins.Controllers;
+    using Microsoft.AspNetCore.Http;
 
     public class SkinModel
     {
+        // ReSharper disable InconsistentNaming
+        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1310:FieldNamesMustNotContainUnderscore", Justification = "Breaking Change")]
+        [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1401:FieldsMustBePrivate", Justification = "Breaking change")]
+        public static string MODULELOAD_ERROR = Localization.GetString("ModuleLoad.Error");
+        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1310:FieldNamesMustNotContainUnderscore", Justification = "Breaking Change")]
+        [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1401:FieldsMustBePrivate", Justification = "Breaking change")]
+        public static string CONTAINERLOAD_ERROR = Localization.GetString("ContainerLoad.Error");
+        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1310:FieldNamesMustNotContainUnderscore", Justification = "Breaking Change")]
+        [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1401:FieldsMustBePrivate", Justification = "Breaking change")]
+        public static string MODULEADD_ERROR = Localization.GetString("ModuleAdd.Error");
+
         private Dictionary<string, PaneModel> panes;
 
         public SkinModel(DnnPageController page)
@@ -115,12 +129,13 @@ namespace DotNetNuke.Web.Mvc.Skins
             string skinSource = Null.NullString;
 
             // skin preview
-            if (page.Request.QueryString["SkinSrc"] != null)
+            if (page.Request.Query["SkinSrc"] != QueryString.Empty)
             {
-                skinSource = SkinController.FormatSkinSrc(Globals.QueryStringDecode(page.Request.QueryString["SkinSrc"]) + ".ascx", page.PortalSettings);
+                skinSource = SkinController.FormatSkinSrc(Globals.QueryStringDecode(page.Request.Query["SkinSrc"]) + ".ascx", page.PortalSettings);
                 skin = LoadSkin(page, skinSource);
             }
 
+            /*
             // load user skin ( based on cookie )
             if (skin == null)
             {
@@ -134,6 +149,7 @@ namespace DotNetNuke.Web.Mvc.Skins
                     }
                 }
             }
+            */
 
             // load assigned skin
             if (skin == null)
@@ -178,7 +194,7 @@ namespace DotNetNuke.Web.Mvc.Skins
             {
                 skinSource = SkinController.FormatSkinSrc(SkinController.FormatSkinPath(skinSource) + "popUpSkin.ascx", page.PortalSettings);
 
-                if (File.Exists(HttpContext.Current.Server.MapPath(SkinController.FormatSkinSrc(skinSource, page.PortalSettings))))
+                if (File.Exists(System.Web.HttpContext.Current.Server.MapPath(SkinController.FormatSkinSrc(skinSource, page.PortalSettings))))
                 {
                     skin = LoadSkin(page, skinSource);
                 }
@@ -306,7 +322,7 @@ namespace DotNetNuke.Web.Mvc.Skins
         protected void OnPreRender(DnnPageController page)
         {
             // this.InvokeSkinEvents(SkinEventType.OnSkinPreRender);
-            var isSpecialPageMode = UrlUtils.InPopUp() || page.Request.QueryString["dnnprintmode"] == "true";
+            var isSpecialPageMode = UrlUtils.InPopUp() || page.Request.Query["dnnprintmode"] == "true";
             if (TabPermissionController.CanAddContentToPage() && Globals.IsEditMode() && !isSpecialPageMode)
             {
                 // Register Drag and Drop plugin
@@ -677,7 +693,7 @@ namespace DotNetNuke.Web.Mvc.Skins
         private void InjectControlPanel(DnnPageController page)
         {
             // if querystring dnnprintmode=true, controlpanel will not be shown
-            if (page.Request.QueryString["dnnprintmode"] != "true" && !UrlUtils.InPopUp() && page.Request.QueryString["hidecommandbar"] != "true")
+            if (page.Request.Query["dnnprintmode"] != "true" && !UrlUtils.InPopUp() && page.Request.Query["hidecommandbar"] != "true")
             {
                 // if (Host.AllowControlPanelToDetermineVisibility || (ControlPanelBase.IsPageAdminInternal() || ControlPanelBase.IsModuleAdminInternal()))
                 if (ControlPanelBase.IsPageAdminInternal() || ControlPanelBase.IsModuleAdminInternal())

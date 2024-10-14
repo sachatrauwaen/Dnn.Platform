@@ -8,6 +8,7 @@ namespace DotNetNuke.UI.WebControls
 
     using DotNetNuke.Common.Utilities;
     using DotNetNuke.Instrumentation;
+    using Microsoft.Extensions.Logging;
 
     /// Project:    DotNetNuke
     /// Namespace:  DotNetNuke.UI.WebControls
@@ -17,6 +18,7 @@ namespace DotNetNuke.UI.WebControls
     /// integer properties.
     /// </summary>
     [ToolboxData("<{0}:IntegerEditControl runat=server></{0}:IntegerEditControl>")]
+    [CLSCompliant(false)]
     public class IntegerEditControl : EditControl
     {
         // private static readonly ILog Logger = LoggerSource.Instance.GetLogger(typeof(IntegerEditControl));
@@ -47,7 +49,7 @@ namespace DotNetNuke.UI.WebControls
                 }
                 catch (Exception exc)
                 {
-                    Logger.Error(exc);
+                    this.Logger.LogError(exc, exc.Message);
                 }
 
                 return intValue;
@@ -68,7 +70,7 @@ namespace DotNetNuke.UI.WebControls
                 }
                 catch (Exception exc)
                 {
-                    Logger.Error(exc);
+                    this.Logger.LogError(exc, exc.Message);
                 }
 
                 return intValue;

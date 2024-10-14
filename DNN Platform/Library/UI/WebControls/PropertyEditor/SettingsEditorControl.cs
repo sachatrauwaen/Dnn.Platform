@@ -17,6 +17,7 @@ namespace DotNetNuke.UI.WebControls
     /// Settings.
     /// </summary>
     [ToolboxData("<{0}:SettingsEditorControl runat=server></{0}:SettingsEditorControl>")]
+    [CLSCompliant(false)]
     public class SettingsEditorControl : PropertyEditorControl
     {
         /// <summary>Gets or sets the CustomEditors that are used by this control.</summary>

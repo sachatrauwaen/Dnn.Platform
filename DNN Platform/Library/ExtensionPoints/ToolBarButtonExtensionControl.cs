@@ -4,6 +4,7 @@
 
 namespace DotNetNuke.ExtensionPoints
 {
+    using System;
     using System.ComponentModel;
     using System.Text;
     using System.Web;
@@ -13,6 +14,7 @@ namespace DotNetNuke.ExtensionPoints
 
     [DefaultProperty("Text")]
     [ToolboxData("<{0}:ToolBarButtonExtensionControl runat=server></{0}:ToolBarButtonExtensionControl>")]
+    [CLSCompliant(false)]
     public class ToolBarButtonExtensionControl : DefaultExtensionControl
     {
         private IExtensionControlRenderer btnRenderer;

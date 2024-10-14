@@ -17,7 +17,6 @@ namespace DotNetNuke.Entities.Content.Taxonomy
     using DotNetNuke.Security;
     using Newtonsoft.Json;
 
-
     /// <summary>Major class of Taxonomy.</summary>
     /// <remarks>
     /// <para>
@@ -46,7 +45,6 @@ namespace DotNetNuke.Entities.Content.Taxonomy
     /// </code>
     /// </example>
     [Serializable]
-    [CLSCompliant(false)]
     public class Term : BaseEntityInfo, IHydratable
     {
         private static readonly PortalSecurity Security = PortalSecurity.Instance;

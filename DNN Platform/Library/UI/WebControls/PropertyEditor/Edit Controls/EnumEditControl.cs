@@ -17,6 +17,7 @@ namespace DotNetNuke.UI.WebControls
     /// enumerated properties.
     /// </summary>
     [ToolboxData("<{0}:EnumEditControl runat=server></{0}:EnumEditControl>")]
+    [CLSCompliant(false)]
     public class EnumEditControl : EditControl
     {
         private readonly Type enumType;

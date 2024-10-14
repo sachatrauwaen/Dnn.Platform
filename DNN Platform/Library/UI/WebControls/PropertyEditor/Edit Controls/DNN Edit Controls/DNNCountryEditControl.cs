@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information
 namespace DotNetNuke.UI.WebControls
 {
+    using System;
     using System.Web.UI;
 
     using DotNetNuke.Common.Lists;
@@ -15,6 +16,7 @@ namespace DotNetNuke.UI.WebControls
     /// Countries.
     /// </summary>
     [ToolboxData("<{0}:DNNCountryEditControl runat=server></{0}:DNNCountryEditControl>")]
+    [CLSCompliant(false)]
     public class DNNCountryEditControl : DNNListEditControl
     {
         /// <summary>

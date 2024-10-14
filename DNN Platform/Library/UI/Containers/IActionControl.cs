@@ -9,7 +9,6 @@ namespace DotNetNuke.UI.Containers
     using DotNetNuke.UI.Modules;
 
     /// <summary>IActionControl provides a common Interface for Action Controls.</summary>
-    [CLSCompliant(false)]
     public interface IActionControl
     {
         /// <summary>The eventhandler for the action.</summary>

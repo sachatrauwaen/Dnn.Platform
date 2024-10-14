@@ -69,32 +69,26 @@ namespace DotNetNuke.Security.Permissions
             return permissionsString;
         }
 
-        /*
         /// <inheritdoc cref="IPermissionDefinitionService.GetDefinitionsByFolder" />
         [DnnDeprecated(9, 13, 1, $"Use {nameof(IPermissionDefinitionService)}.{nameof(IPermissionDefinitionService.GetDefinitionsByFolder)} instead.")]
         public static partial ArrayList GetPermissionsByFolder()
         {
             return new ArrayList(GetPermissionsByFolderEnumerable().ToArray());
         }
-        */
 
-        /*
         /// <inheritdoc cref="IPermissionDefinitionService.GetDefinitionsByPortalDesktopModule" />
         [DnnDeprecated(9, 13, 1, $"Use {nameof(IPermissionDefinitionService)}.{nameof(IPermissionDefinitionService.GetDefinitionsByPortalDesktopModule)} instead.")]
         public static partial ArrayList GetPermissionsByPortalDesktopModule()
         {
             return new ArrayList(GetPermissionsByPortalDesktopModuleEnumerable().ToArray());
         }
-        */
 
-        /*
         /// <inheritdoc cref="IPermissionDefinitionService.GetDefinitionsByTab" />
         [DnnDeprecated(9, 13, 1, $"Use {nameof(IPermissionDefinitionService)}.{nameof(IPermissionDefinitionService.GetDefinitionsByTab)} instead.")]
         public static partial ArrayList GetPermissionsByTab()
         {
             return new ArrayList(GetPermissionsByTabEnumerable().ToArray());
         }
-        */
 
         /// <inheritdoc cref="IPermissionDefinitionService.AddDefinition" />
         public int AddPermission(PermissionInfo permission)
@@ -129,32 +123,26 @@ namespace DotNetNuke.Security.Permissions
             return GetPermissions().SingleOrDefault(p => p.PermissionID == permissionID);
         }
 
-        /*
         /// <inheritdoc cref="IPermissionDefinitionService.GetDefinitionsByCodeAndKey" />
         [DnnDeprecated(9, 13, 1, $"Use {nameof(IPermissionDefinitionService)}.{nameof(IPermissionDefinitionService.GetDefinitionsByCodeAndKey)} instead.")]
         public partial ArrayList GetPermissionByCodeAndKey(string permissionCode, string permissionKey)
         {
             return new ArrayList(GetPermissionByCodeAndKeyEnumerable(permissionCode, permissionKey).ToArray());
         }
-        */
 
-        /*
         /// <inheritdoc cref="IPermissionDefinitionService.GetDefinitionsByModuleDefId" />
         [DnnDeprecated(9, 13, 1, $"Use {nameof(IPermissionDefinitionService)}.{nameof(IPermissionDefinitionService.GetDefinitionsByModuleDefId)} instead.")]
         public partial ArrayList GetPermissionsByModuleDefID(int moduleDefID)
         {
             return new ArrayList(GetPermissionsByModuleDefIdEnumerable(moduleDefID).ToArray());
         }
-        */
 
-        /*
         /// <inheritdoc cref="IPermissionDefinitionService.GetDefinitionsByModule" />
         [DnnDeprecated(9, 13, 1, $"Use {nameof(IPermissionDefinitionService)}.{nameof(IPermissionDefinitionService.GetDefinitionsByModule)} instead.")]
         public partial ArrayList GetPermissionsByModule(int moduleId, int tabId)
         {
             return new ArrayList(GetPermissionsByModuleEnumerable(moduleId, tabId).ToArray());
         }
-        */
 
         /// <inheritdoc cref="IPermissionDefinitionService.UpdateDefinition" />
         public void UpdatePermission(PermissionInfo permission)
@@ -236,7 +224,6 @@ namespace DotNetNuke.Security.Permissions
             return result;
         }
 
-        /*
         [DnnDeprecated(7, 3, 0, "Replaced by GetPermissionsByModule(int, int)", RemovalVersion = 10)]
         public partial ArrayList GetPermissionsByModuleID(int moduleId)
         {
@@ -244,7 +231,6 @@ namespace DotNetNuke.Security.Permissions
 
             return this.GetPermissionsByModuleDefID(module.ModuleDefID);
         }
-        */
 
         /// <inheritdoc />
         IEnumerable<IPermissionDefinitionInfo> IPermissionDefinitionService.GetDefinitions() => GetPermissions();

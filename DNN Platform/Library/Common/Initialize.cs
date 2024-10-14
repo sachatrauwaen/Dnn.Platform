@@ -83,6 +83,7 @@ namespace DotNetNuke.Common
         {
             try
             {
+                /*
                 ApplicationShutdownReason shutdownReason = HostingEnvironment.ShutdownReason;
                 string shutdownDetail;
                 switch (shutdownReason)
@@ -133,13 +134,14 @@ namespace DotNetNuke.Common
                         shutdownDetail = "Shutdown reason: " + shutdownReason;
                         break;
                 }
-
+                */
                 var log = new LogInfo
                 {
                     BypassBuffering = true,
                     LogTypeKey = EventLogType.APPLICATION_SHUTTING_DOWN.ToString(),
                 };
-                log.AddProperty("Shutdown Details", shutdownDetail);
+
+                // log.AddProperty("Shutdown Details", shutdownDetail);
                 LogController.Instance.AddLog(log);
 
                 // enhanced shutdown logging
@@ -152,7 +154,7 @@ namespace DotNetNuke.Common
 
                 if (runtime == null)
                 {
-                    Logger.InfoFormat("Application shutting down. Reason: {0}", shutdownDetail);
+                    // Logger.InfoFormat("Application shutting down. Reason: {0}", shutdownDetail);
                 }
                 else
                 {
@@ -170,9 +172,9 @@ namespace DotNetNuke.Common
                         runtime,
                         null) as string;
 
-                    Logger.Info("Application shutting down. Reason: " + shutdownDetail
-                                + Environment.NewLine + "ASP.NET Shutdown Info: " + shutDownMessage
-                                + Environment.NewLine + shutDownStack);
+                    // Logger.Info("Application shutting down. Reason: " + shutdownDetail
+                    //            + Environment.NewLine + "ASP.NET Shutdown Info: " + shutDownMessage
+                    //            + Environment.NewLine + shutDownStack);
                 }
             }
             catch (Exception exc)

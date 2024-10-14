@@ -21,11 +21,13 @@ namespace DotNetNuke.Framework.JavaScriptLibraries
     using DotNetNuke.Services.Localization;
     using DotNetNuke.Services.Log.EventLog;
     using DotNetNuke.UI.Skins;
-    using DotNetNuke.UI.Skins.Controls;
+
+    // using DotNetNuke.UI.Skins.Controls;
     using DotNetNuke.UI.Utilities;
     using DotNetNuke.Web.Client;
     using DotNetNuke.Web.Client.ClientResourceManagement;
     using Microsoft.AspNetCore.Mvc;
+
     using Globals = DotNetNuke.Common.Globals;
 
     public class MvcJavaScript

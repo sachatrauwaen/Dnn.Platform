@@ -16,7 +16,6 @@ namespace DotNetNuke.Common.Utilities
     /// The CacheItemArgs class provides an EventArgs implementation for the
     /// CacheItemExpiredCallback delegate.
     /// </summary>
-    [CLSCompliant(false)]
     public class CacheItemArgs
     {
         private ArrayList paramList;

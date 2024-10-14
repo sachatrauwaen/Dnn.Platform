@@ -14,7 +14,6 @@ namespace DotNetNuke.Web.Mvc.Skins
     using DotNetNuke.Framework.JavaScriptLibraries;
     using DotNetNuke.Framework.Models;
     using DotNetNuke.UI.Modules;
-    using DotNetNuke.UI.Skins;
     using DotNetNuke.Web.Client.ClientResourceManagement;
     using Microsoft.AspNetCore.Html;
     using Microsoft.AspNetCore.Mvc.Rendering;

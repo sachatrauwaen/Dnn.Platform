@@ -167,7 +167,7 @@ namespace DotNetNuke.Web.Mvc.Skins
             }
             catch (Exception exc)
             {
-                var lex = new ModuleLoadException(string.Format(Skin.MODULEADD_ERROR, this.Name), exc);
+                var lex = new ModuleLoadException(string.Format(SkinModel.MODULEADD_ERROR, this.Name), exc);
                 /*
                 if (TabPermissionController.CanAdminPage())
                 {
@@ -282,7 +282,7 @@ namespace DotNetNuke.Web.Mvc.Skins
                 return false;
             }
 
-            object controller = DotNetNuke.Framework.Reflection.CreateObject(moduleInfo.DesktopModule.BusinessControllerClass, string.Empty);
+            object controller = DotNetNuke.Framework.Reflection.CreateObject(Globals.DependencyProvider, moduleInfo.DesktopModule.BusinessControllerClass, string.Empty);
             return controller is IVersionable;
         }
 
@@ -427,7 +427,7 @@ namespace DotNetNuke.Web.Mvc.Skins
             catch (Exception exc)
             {
                 // could not load user control
-                var lex = new ModuleLoadException(Skin.MODULELOAD_ERROR, exc);
+                var lex = new ModuleLoadException(SkinModel.MODULELOAD_ERROR, exc);
                 if (TabPermissionController.CanAdminPage())
                 {
                     // only display the error to administrators

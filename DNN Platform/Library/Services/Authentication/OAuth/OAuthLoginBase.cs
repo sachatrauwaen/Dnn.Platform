@@ -9,6 +9,8 @@ namespace DotNetNuke.Services.Authentication.OAuth
 
     using DotNetNuke.Common;
 
+    [CLSCompliant(false)]
+
     public abstract class OAuthLoginBase : AuthenticationLoginBase
     {
         /// <inheritdoc/>

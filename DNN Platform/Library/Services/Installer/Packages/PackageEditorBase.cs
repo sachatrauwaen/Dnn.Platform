@@ -9,6 +9,7 @@ namespace DotNetNuke.Services.Installer.Packages
     using DotNetNuke.UI.Modules;
 
     /// <summary>The PackageEditorBase class provides a Base Classs for Package Editors.</summary>
+    [CLSCompliant(false)]
     public class PackageEditorBase : ModuleUserControlBase, IPackageEditor
     {
         private bool isWizard = Null.NullBoolean;

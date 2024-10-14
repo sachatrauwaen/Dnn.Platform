@@ -15,6 +15,7 @@ namespace DotNetNuke.UI.Modules
     using DotNetNuke.Entities.Users;
     using Microsoft.Extensions.DependencyInjection;
 
+    [CLSCompliant(false)]
     public abstract class ProfileModuleUserControlBase : ModuleUserControlBase, IProfileModule
     {
         /// <summary>Initializes a new instance of the <see cref="ProfileModuleUserControlBase"/> class.</summary>
@@ -69,7 +70,8 @@ namespace DotNetNuke.UI.Modules
                 }
                 catch (ThreadAbortException)
                 {
-                    Thread.ResetAbort();
+                    // Thread.ResetAbort();
+                    throw;
                 }
             }
 

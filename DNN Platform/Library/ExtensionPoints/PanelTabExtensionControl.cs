@@ -3,9 +3,11 @@
 // See the LICENSE file in the project root for more information
 namespace DotNetNuke.ExtensionPoints
 {
+    using System;
     using System.Web.UI;
     using System.Web.UI.WebControls;
 
+    [CLSCompliant(false)]
     public class PanelTabExtensionControl : WebControl
     {
         public string PanelId { get; set; }
