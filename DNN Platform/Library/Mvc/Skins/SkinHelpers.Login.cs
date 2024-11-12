@@ -94,6 +94,7 @@ namespace DotNetNuke.Web.Mvc.Skins
                 }
             }
 
+            // Render either legacy or new version
             if ((!portalSettings.HideLoginControl || HttpContext.Current.Request.IsAuthenticated)
                 && (!portalSettings.InErrorPageRequest() || showInErrorPage))
             {
@@ -111,7 +112,7 @@ namespace DotNetNuke.Web.Mvc.Skins
 
             if (!HttpContext.Current.Request.IsAuthenticated)
             {
-                sb.Append("<div class=\"loginGroup\" id=\"loginGroup\" style=\"display:none;\">");
+                sb.Append("<div class=\"loginGroup\" id=\"loginGroup\">");
                 sb.Append("<a id=\"enhancedLoginLink\" class=\"secondaryActionsList\" rel=\"nofollow\"></a>");
                 sb.Append("</div>");
             }

@@ -42,9 +42,6 @@ namespace DotNetNuke.Web.Mvc.Skins
             var userWrapperDiv = new TagBuilder("div");
             userWrapperDiv.AddCssClass("registerGroup");
 
-            var userPropertiesDiv = new TagBuilder("div");
-            userPropertiesDiv.AddCssClass("userProperties");
-
             var ul = new TagBuilder("ul");
 
             ul.AddCssClass("buttonGroup");
@@ -136,8 +133,7 @@ namespace DotNetNuke.Web.Mvc.Skins
                 }
             }
 
-            userPropertiesDiv.InnerHtml = ul.ToString();
-            userWrapperDiv.InnerHtml = userPropertiesDiv.ToString();
+            userWrapperDiv.InnerHtml = ul.ToString();
             return new MvcHtmlString(userWrapperDiv.ToString());
         }
 
