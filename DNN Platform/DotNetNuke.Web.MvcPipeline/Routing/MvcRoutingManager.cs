@@ -53,7 +53,7 @@ namespace DotNetNuke.Web.MvcPipeline.Routing
         private void RegisterSystemRoutes()
         {
             var route = new Route(
-                "mvc/{controller}/{action}/{tabid}/{language}",
+                "DesktopModules/{controller}/{action}/{tabid}/{language}",
                 new RouteValueDictionary(new { action = "Index", tabid = UrlParameter.Optional, language = UrlParameter.Optional }),
                 new DnnMvcPageRouteHandler());
 

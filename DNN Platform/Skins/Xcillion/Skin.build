@@ -8,7 +8,11 @@
         </ItemGroup>
     </Target>
     <Target Name="DebugProject" Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-        <Copy SourceFiles="@(ContainerFiles)" DestinationFolder="$(SkinFolderName)\Containers\$(SkinName)" />
-        <Copy SourceFiles="@(SkinFiles)" DestinationFolder="$(SkinFolderName)\Skins\$(SkinName)" />
+        <Copy
+            SourceFiles="@(ContainerFiles)"
+            DestinationFiles="@(ContainerFiles->'$(SkinFolderName)\Containers\$(SkinName)\%(RecursiveDir)%(Filename)%(Extension)')" />
+        <Copy
+            SourceFiles="@(SkinFiles)"
+            DestinationFiles="@(SkinFiles->'$(SkinFolderName)\Skins\$(SkinName)\%(RecursiveDir)%(Filename)%(Extension)')" />
     </Target>
 </Project>

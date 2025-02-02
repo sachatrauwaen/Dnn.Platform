@@ -3555,11 +3555,23 @@
     <RootDirectory>$(MSBuildProjectDirectory)\..\..</RootDirectory>
   </PropertyGroup>
   <Import Project="..\..\DNN_Platform.build" />
-  <Target Name="AfterBuild" DependsOnTargets="DebugProject">
+  <Target Name="AfterBuild" DependsOnTargets="GetFiles;DebugProject">
   </Target>
+   <Target Name="GetFiles">
+     <ItemGroup>
+          <ViewFiles Include="$(MSBuildProjectDirectory)\Views\**\*.*" />
+     </ItemGroup>
+ </Target>
   <Target Name="DebugProject">
     <Copy SourceFiles="$(MSBuildProjectDirectory)\bin\DotNetNuke.Website.dll" DestinationFolder="$(WebsitePath)\bin" />
     <Copy SourceFiles="$(MSBuildProjectDirectory)\bin\DotNetNuke.Website.pdb" DestinationFolder="$(WebsitePath)\bin" />
     <Copy SourceFiles="$(MSBuildProjectDirectory)\bin\DotNetNuke.Website.xml" DestinationFolder="$(WebsitePath)\bin" />
+	
+	<Copy
+		SourceFiles="@(ViewFiles)"
+		DestinationFiles="@(ViewFiles->'$(WebsitePath)\Views\%(RecursiveDir)%(Filename)%(Extension)')" />
+	
+	<Copy SourceFiles="$(MSBuildProjectDirectory)\js\mvc.js" DestinationFolder="$(WebsitePath)\js" />
+	
   </Target>
 </Project>

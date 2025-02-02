@@ -5,6 +5,8 @@ $(function () {
     var moduleId = $('#dnnEditHtml').attr('data-moduleid');
     var urlpars = 'tabid=' + tabId + '&PortalID=' + portalId + '&mid=' + moduleId;
 
+    // window.CKEDITOR_BASEPATH = '/Providers/HtmlEditorProviders/DNNConnect.CKE/js/ckeditor/4.18.0/';
+
     var editorConfigeditortxtContent = {
         //allowedContent: false,
         //allowedContent: true,

@@ -109,7 +109,7 @@ namespace DotNetNuke.Modules.Html.Controllers
             MvcClientResourceManager.RegisterScript(this.ControllerContext, "~/Resources/Shared/scripts/jquery/jquery.form.min.js");
             MvcClientResourceManager.RegisterStyleSheet(this.ControllerContext, "~/Portals/_default/Skins/_default/WebControlSkin/Default/GridView.default.css");
             MvcClientResourceManager.RegisterStyleSheet(this.ControllerContext, "~/DesktopModules/HTML/edit.css");
-            MvcClientResourceManager.RegisterScript(this.ControllerContext, "~/DesktopModules/HTML/edit.js");
+            MvcClientResourceManager.RegisterScript(this.ControllerContext, "~/DesktopModules/HTML/js/edit.js");
 
             this.contentSecurityPolicy.StyleSource.AddInline();
             this.contentSecurityPolicy.ScriptSource.AddSelf().AddInline();
