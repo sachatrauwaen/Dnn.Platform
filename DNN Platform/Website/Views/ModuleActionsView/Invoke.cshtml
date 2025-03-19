@@ -35,13 +35,18 @@
         function setUpActions() {
             var tabId = @Model.ModuleContext.TabID;
 
+            var panes = $('div.dnnSortable').map(function () {
+                return $(this).attr('data-name');
+            }).get();
+
             $('#moduleActions-@(Model.ModuleContext.ModuleID)-Menu').dnnModuleActions({
                 actionButton: "moduleActions-@(Model.ModuleContext.ModuleID)-Menu",
                 moduleId: moduleId,
                 tabId: tabId,
                 customActions: @Html.Raw(Model.CustomActionsJSON),
                 adminActions: @Html.Raw(Model.AdminActionsJSON),
-                panes: @Html.Raw(Model.Panes),
+                //panes: @Html.Raw(Model.Panes),
+                panes: panes,
                 customText: "@Model.CustomText",
                 adminText: "@Model.AdminText",
                 moveText: "@Model.MoveText",
@@ -64,43 +69,40 @@
             });
 
             setTimeout(() => {
-                
-            
 
-            var menu = $('#moduleActions-' + moduleId);
-            menu.find("#moduleActions-" + moduleId + "-Delete a").attr('href', '#');
-            menu.find("#moduleActions-" + moduleId + "-Delete a").off('click');
-            menu.find("#moduleActions-" + moduleId + "-Delete a").dnnConfirm({
-                text: '@Localization.GetSafeJSString(Localization.GetString("DeleteItem.Text", Localization.SharedResourceFile))',
-                yesText: '@Localization.GetSafeJSString(Localization.GetString("Yes.Text", Localization.SharedResourceFile))',
-                noText: '@Localization.GetSafeJSString(Localization.GetString("No.Text", Localization.SharedResourceFile))',
-                title: '@Localization.GetSafeJSString(Localization.GetString("Confirm.Text", Localization.SharedResourceFile))',
-                callbackTrue: function () {
+                var menu = $('#moduleActions-' + moduleId);
+                menu.find("#moduleActions-" + moduleId + "-Delete a").attr('href', '#');
+                menu.find("#moduleActions-" + moduleId + "-Delete a").off('click');
+                menu.find("#moduleActions-" + moduleId + "-Delete a").dnnConfirm({
+                    text: '@Localization.GetSafeJSString(Localization.GetString("DeleteItem.Text", Localization.SharedResourceFile))',
+                    yesText: '@Localization.GetSafeJSString(Localization.GetString("Yes.Text", Localization.SharedResourceFile))',
+                    noText: '@Localization.GetSafeJSString(Localization.GetString("No.Text", Localization.SharedResourceFile))',
+                    title: '@Localization.GetSafeJSString(Localization.GetString("Confirm.Text", Localization.SharedResourceFile))',
+                    callbackTrue: function () {
 
-                    var token = '@Html.AntiForgeryToken()';
-                    token = $(token).val();
+                        var token = '@Html.AntiForgeryToken()';
+                        token = $(token).val();
 
-                    $.post('@Url.Action("Delete", "ModuleActions")', {
-                        moduleId: moduleId,
-                        tabId: @Model.ModuleContext.TabID,
-                        __RequestVerificationToken: token,
-                    }).done(function (data) {
-                        window.location.reload();
-                    })
-                }
-            });
-
+                        $.post('@Url.Action("Delete", "ModuleActions")', {
+                            moduleId: moduleId,
+                            tabId: @Model.ModuleContext.TabID,
+                            __RequestVerificationToken: token,
+                        }).done(function (data) {
+                            window.location.reload();
+                        })
+                    }
+                });
            
-            menu.find('a').each(function () {
-                var $this = $(this);
-                var href = $this.attr('href');
-                if (href.indexOf('javascript:') == 0) {
-                    $this.click(function () {
-                        actionScripts[href]();
-                    });
-                    $this.attr('href','#');
-                }
-            });
+                menu.find('a').each(function () {
+                    var $this = $(this);
+                    var href = $this.attr('href');
+                    if (href.indexOf('javascript:') == 0) {
+                        $this.click(function () {
+                            actionScripts[href]();
+                        });
+                        $this.attr('href','#');
+                    }
+                });
 
             }, "200");
 

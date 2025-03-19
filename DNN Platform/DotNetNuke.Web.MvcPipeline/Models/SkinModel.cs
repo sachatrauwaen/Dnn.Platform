@@ -453,9 +453,9 @@ namespace DotNetNuke.Web.MvcPipeline.Models
 
         private void LoadPanes()
         {
-            this.PortalSettings.ActiveTab.Panes.Add("HeaderPane");
-            this.PortalSettings.ActiveTab.Panes.Add("ContentPane");
-            this.PortalSettings.ActiveTab.Panes.Add("ContentPaneLower");
+            // this.PortalSettings.ActiveTab.Panes.Add("HeaderPane");
+            // this.PortalSettings.ActiveTab.Panes.Add("ContentPane");
+            // this.PortalSettings.ActiveTab.Panes.Add("ContentPaneLower");
 
             /*
             // iterate page controls
