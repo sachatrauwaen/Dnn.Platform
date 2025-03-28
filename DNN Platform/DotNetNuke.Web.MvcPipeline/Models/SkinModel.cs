@@ -735,6 +735,7 @@ namespace DotNetNuke.Web.MvcPipeline.Models
                 {
                     // ControlPanel processing
                     this.ControlPanelRazor = Path.GetFileNameWithoutExtension(Host.ControlPanel);
+                    ServicesFramework.Instance.RequestAjaxAntiForgerySupport();
 
                     /*
                     var controlPanel = ControlUtilities.LoadControl<ControlPanelBase>(this, Host.ControlPanel);

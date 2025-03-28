@@ -103,6 +103,12 @@ namespace DotNetNuke.Web.Client.ClientResourceManagement
                                                 <add name=""LoaderControlProvider"" type=""ClientDependency.Core.FileRegistration.Providers.LoaderControlProvider, ClientDependency.Core"" enableCompositeFiles=""false""/>
                                               </providers>
                                             </fileRegistration>
+                                             <mvc defaultRenderer=""DnnStandardRenderer"">
+                                                  <renderers>
+                                                    <add name=""DnnStandardRenderer"" type=""DotNetNuke.Web.Client.Providers.DnnStandardRenderer, DotNetNuke.Web.Client"" enableCompositeFiles=""false"" />
+                                                    <add name=""LazyLoadRenderer"" type=""ClientDependency.Core.FileRegistration.Providers.LazyLoadRenderer, ClientDependency.Core"" enableCompositeFiles=""false"" />
+                                                  </renderers>
+                                             </mvc>
                                             <compositeFiles defaultFileProcessingProvider=""DnnCompositeFileProcessor"" compositeFileHandlerPath=""~/DependencyHandler.axd"">
                                               <fileProcessingProviders>
                                                 <!-- For webfarms update the urlType attribute to Base64QueryStrings, default setting is MappedId -->

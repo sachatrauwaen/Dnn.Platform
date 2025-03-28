@@ -82,8 +82,7 @@ namespace DotNetNuke.Framework.Controllers
             MvcJavaScript.RequestRegistration(CommonJs.DnnPlugins); // We need to add the Dnn JQuery plugins because the Edit Bar removes the Control Panel from the page
             MvcJavaScript.RequestRegistration(CommonJs.KnockoutMapping);
 
-            ServicesFramework.Instance.RequestAjaxAntiForgerySupport();
-
+            // ServicesFramework.Instance.RequestAjaxAntiForgerySupport(); // to later add this line
             MvcClientResourceManager.RegisterScript(this.ControllerContext, "~/Resources/Shared/Components/Tokeninput/jquery.tokeninput.js");
             MvcClientResourceManager.RegisterStyleSheet(this.ControllerContext, "~/Resources/Shared/Components/Tokeninput/Themes/token-input-facebook.css");
 

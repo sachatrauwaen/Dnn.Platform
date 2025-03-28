@@ -1,9 +1,12 @@
 @using DotNetNuke.Web.MvcPipeline.Models
 @using DotNetNuke.Web.MvcPipeline.Skins
-@using DotNetNuke.Web.DDRMenu
 @model PageModel
 
+@Html.DnnCssIncludeDefaultStylesheet()
+
 <style type="text/css">
-    body#Body {background:#fff;}
+    body#Body {
+        background: #fff;
+    }
 </style>
 @Html.Pane(id: "contentpane", cssClass: "col-md-12 contentPane")

@@ -558,8 +558,8 @@
     <Compile Include="Controllers\ModuleActionsController.cs" />
     <Compile Include="Models\ModuleActionsDeleteModel.cs" />
     <Compile Include="Controllers\ModuleActionsViewController.cs" />
-    <Compile Include="Controllers\PrivacyController.cs" />
-    <Compile Include="Controllers\TermsController.cs" />
+    <Compile Include="Controllers\PrivacyViewController.cs" />
+    <Compile Include="Controllers\TermsViewController.cs" />
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1275,10 +1275,12 @@
     <Content Include="Views\Default\Layout.cshtml" />
     <Content Include="Views\ModuleActionsView\Invoke.cshtml" />
     <Content Include="Views\PersonaBarContainer\Index.cshtml" />
-    <Content Include="Views\Privacy\Index.cshtml" />
-    <Content Include="Views\Terms\Index.cshtml" />
+    <Content Include="Views\PrivacyView\Index.cshtml" />
+    <Content Include="Views\TermsView\Index.cshtml" />
     <Content Include="Views\ModuleSettingsView\Invoke.cshtml" />
     <Content Include="Views\ModulePermissionsGrid\Index.cshtml" />
+    <Content Include="Portals\_default\Skins\_default\Views\popUpSkin.cshtml" />
+    <Content Include="Portals\_default\Skins\_default\Views\web.config" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
@@ -3557,21 +3559,16 @@
   <Import Project="..\..\DNN_Platform.build" />
   <Target Name="AfterBuild" DependsOnTargets="GetFiles;DebugProject">
   </Target>
-   <Target Name="GetFiles">
-     <ItemGroup>
-          <ViewFiles Include="$(MSBuildProjectDirectory)\Views\**\*.*" />
-     </ItemGroup>
- </Target>
+  <Target Name="GetFiles">
+    <ItemGroup>
+      <ViewFiles Include="$(MSBuildProjectDirectory)\Views\**\*.*" />
+    </ItemGroup>
+  </Target>
   <Target Name="DebugProject">
     <Copy SourceFiles="$(MSBuildProjectDirectory)\bin\DotNetNuke.Website.dll" DestinationFolder="$(WebsitePath)\bin" />
     <Copy SourceFiles="$(MSBuildProjectDirectory)\bin\DotNetNuke.Website.pdb" DestinationFolder="$(WebsitePath)\bin" />
     <Copy SourceFiles="$(MSBuildProjectDirectory)\bin\DotNetNuke.Website.xml" DestinationFolder="$(WebsitePath)\bin" />
-	
-	<Copy
-		SourceFiles="@(ViewFiles)"
-		DestinationFiles="@(ViewFiles->'$(WebsitePath)\Views\%(RecursiveDir)%(Filename)%(Extension)')" />
-	
-	<Copy SourceFiles="$(MSBuildProjectDirectory)\js\mvc.js" DestinationFolder="$(WebsitePath)\js" />
-	
+    <Copy SourceFiles="@(ViewFiles)" DestinationFiles="@(ViewFiles->'$(WebsitePath)\Views\%(RecursiveDir)%(Filename)%(Extension)')" />
+    <Copy SourceFiles="$(MSBuildProjectDirectory)\js\mvc.js" DestinationFolder="$(WebsitePath)\js" />
   </Target>
 </Project>

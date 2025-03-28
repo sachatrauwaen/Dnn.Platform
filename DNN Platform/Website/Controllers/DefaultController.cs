@@ -84,11 +84,14 @@ namespace DotNetNuke.Framework.Controllers
             this.ContentSecurityPolicy.ImgSource.AddSelf();
             this.ContentSecurityPolicy.FontSource.AddSelf();
             this.ContentSecurityPolicy.StyleSource.AddSelf();
+            this.ContentSecurityPolicy.FrameAncestors.AddSelf();
             this.ContentSecurityPolicy.FrameSource.AddSelf();
+            this.ContentSecurityPolicy.FormAction.AddSelf();
             this.ContentSecurityPolicy.ObjectSource.AddNone();
             this.ContentSecurityPolicy.BaseUriSource.AddNone();
             this.ContentSecurityPolicy.ScriptSource.AddNonce(this.ContentSecurityPolicy.Nonce);
-            this.ContentSecurityPolicy.AddReportUri(this.Request.Url.Scheme + "://" + this.Request.Url.Host + "/mvc/Csp/Report");
+            this.ContentSecurityPolicy.AddReportTo("csp-endpoint");
+            this.ContentSecurityPolicy.AddReportEndpoint("csp-endpoint", this.Request.Url.Scheme + "://" + this.Request.Url.Host + "/DesktopModules/Csp/Report");
 
             if (this.Request.IsAuthenticated)
             {

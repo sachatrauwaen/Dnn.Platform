@@ -38,8 +38,7 @@ namespace DotNetNuke.Web.MvcPipeline.Skins
             if (model.IsEditMode)
             {
                 editDiv.AddCssClass(cssClass);
-
-                // paneDiv.AddCssClass(model.Skin.PaneCssClass);
+                paneDiv.AddCssClass(model.Skin.PaneCssClass);
                 paneDiv.Attributes["data-name"] = id;
             }
             else
@@ -84,6 +83,10 @@ namespace DotNetNuke.Web.MvcPipeline.Skins
             else
             {
                 paneDiv.AddCssClass("DNNEmptyPane");
+                if (model.IsEditMode)
+                {
+                    paneDiv.AddCssClass("EditBarEmptyPane");
+                }
             }
 
             if (model.IsEditMode)
@@ -93,7 +96,7 @@ namespace DotNetNuke.Web.MvcPipeline.Skins
             }
             else
             {
-                return MvcHtmlString.Create(paneDiv.InnerHtml);
+                return MvcHtmlString.Create(paneDiv.ToString());
             }
         }
     }

@@ -9,12 +9,12 @@ namespace DotNetNuke.Framework.Controllers
     using DotNetNuke.Entities.Portals;
     using DotNetNuke.Services.Localization;
 
-    public class PrivacyController : Controller
+    public class TermsViewController : Controller
     {
-        public ActionResult Index()
+        public ActionResult Invoke()
         {
-            var privacy = Localization.GetSystemMessage(PortalSettings.Current, "MESSAGE_PORTAL_PRIVACY");
-            return this.View("Index", string.Empty, privacy);
+            var terms = Localization.GetSystemMessage(PortalSettings.Current, "MESSAGE_PORTAL_TERMS");
+            return this.View("Index", string.Empty, terms);
         }
     }
 }

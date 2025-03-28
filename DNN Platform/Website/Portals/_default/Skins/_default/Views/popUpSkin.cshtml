@@ -2,8 +2,10 @@
 @using DotNetNuke.Web.MvcPipeline.Skins
 @using DotNetNuke.Web.DDRMenu
 @model PageModel
-
+@Html.DnnCssIncludeDefaultStylesheet()
 <style type="text/css">
-    body#Body {background:#fff;}
+    body#Body {
+        background: #fff;
+    }
 </style>
-<div id="ContentPane" >@Html.Pane("contentpane")</div>
+@Html.Pane(id: "ContentPane")
