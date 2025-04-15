@@ -28,6 +28,8 @@ namespace DotNetNuke.Web.MvcPipeline.Framework
     using DotNetNuke.Web.MvcPipeline.Controllers;
     using DotNetNuke.Web.MvcPipeline.Models;
 
+    using DNNCommon = DotNetNuke.Common;
+
     public class PageModelFactory : IPageModelFactory
     {
         private static readonly Regex HeaderTextRegex = new Regex(
@@ -232,9 +234,9 @@ namespace DotNetNuke.Web.MvcPipeline.Framework
 
         private IFileInfo GetBackgroundFileInfo(PortalSettings portalSettings)
         {
-            string cacheKey = string.Format(Common.Utilities.DataCache.PortalCacheKey, portalSettings.PortalId, "BackgroundFile");
+            string cacheKey = string.Format(DNNCommon.Utilities.DataCache.PortalCacheKey, portalSettings.PortalId, "BackgroundFile");
             var file = CBO.GetCachedObject<Services.FileSystem.FileInfo>(
-                new CacheItemArgs(cacheKey, Common.Utilities.DataCache.PortalCacheTimeOut, Common.Utilities.DataCache.PortalCachePriority, portalSettings.PortalId, portalSettings.BackgroundFile),
+                new CacheItemArgs(cacheKey, DNNCommon.Utilities.DataCache.PortalCacheTimeOut, DNNCommon.Utilities.DataCache.PortalCachePriority, portalSettings.PortalId, portalSettings.BackgroundFile),
                 this.GetBackgroundFileInfoCallBack);
 
             return file;

@@ -40,6 +40,8 @@ namespace DotNetNuke.Web.MvcPipeline.Framework
     using DotNetNuke.Web.MvcPipeline.UI.Utilities;
     using Microsoft.Extensions.DependencyInjection;
 
+    using DNNCommon = DotNetNuke.Common;
+
     public class SkinModelFactory : ISkinModelFactory
     {
         private readonly INavigationManager navigationManager;
@@ -707,9 +709,9 @@ namespace DotNetNuke.Web.MvcPipeline.Framework
 
         private IFileInfo GetPageStylesheetFileInfo(string styleSheet, int portalId)
         {
-            string cacheKey = string.Format(Common.Utilities.DataCache.PortalCacheKey, portalId, "PageStylesheet" + styleSheet);
+            string cacheKey = string.Format(DNNCommon.Utilities.DataCache.PortalCacheKey, portalId, "PageStylesheet" + styleSheet);
             var file = CBO.GetCachedObject<Services.FileSystem.FileInfo>(
-                new CacheItemArgs(cacheKey, Common.Utilities.DataCache.PortalCacheTimeOut, Common.Utilities.DataCache.PortalCachePriority, styleSheet, portalId),
+                new CacheItemArgs(cacheKey, DNNCommon.Utilities.DataCache.PortalCacheTimeOut, DNNCommon.Utilities.DataCache.PortalCachePriority, styleSheet, portalId),
                 this.GetPageStylesheetInfoCallBack);
 
             return file;

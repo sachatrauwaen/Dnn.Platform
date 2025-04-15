@@ -12,6 +12,8 @@ namespace DotNetNuke.Web.MvcPipeline.Skins
     using DotNetNuke.Web.Client.ClientResourceManagement;
     using DotNetNuke.Web.MvcPipeline.Models;
 
+    using DNNCommon = DotNetNuke.Common;
+
     public static partial class SkinHelpers
     {
         public static IHtmlString DnnCssInclude(this HtmlHelper<PageModel> helper, string filePath, string pathNameAlias = "", int priority = 100, bool addTag = false, string name = "", string version = "", bool forceVersion = false, string forceProvider = "", bool forceBundle = false, string cssMedia = "")
@@ -44,7 +46,7 @@ namespace DotNetNuke.Web.MvcPipeline.Skins
 
         public static IHtmlString DnnCssIncludeDefaultStylesheet(this HtmlHelper<PageModel> helper, string pathNameAlias = "", int priority = 100, bool addTag = false, string name = "", string version = "", bool forceVersion = false, string forceProvider = "", bool forceBundle = false, string cssMedia = "")
         {
-            var filePath = string.Concat(Common.Globals.ApplicationPath, "/Resources/Shared/stylesheets/dnndefault/10.0.0/default.css");
+            var filePath = string.Concat(DNNCommon.Globals.ApplicationPath, "/Resources/Shared/stylesheets/dnndefault/10.0.0/default.css");
             MvcClientResourceManager.RegisterDefaultStylesheet(helper.ViewContext, filePath);
 
             if (addTag || helper.ViewContext.HttpContext.IsDebuggingEnabled)
