@@ -232,9 +232,9 @@ namespace DotNetNuke.Web.MvcPipeline.Framework
 
         private IFileInfo GetBackgroundFileInfo(PortalSettings portalSettings)
         {
-            string cacheKey = string.Format(Common.Utilities.DataCache.PortalCacheKey, portalSettings.PortalId, "BackgroundFile");
+            string cacheKey = string.Format(DotNetNuke.Common.Utilities.DataCache.PortalCacheKey, portalSettings.PortalId, "BackgroundFile");
             var file = CBO.GetCachedObject<Services.FileSystem.FileInfo>(
-                new CacheItemArgs(cacheKey, Common.Utilities.DataCache.PortalCacheTimeOut, Common.Utilities.DataCache.PortalCachePriority, portalSettings.PortalId, portalSettings.BackgroundFile),
+                new CacheItemArgs(cacheKey, DotNetNuke.Common.Utilities.DataCache.PortalCacheTimeOut, DotNetNuke.Common.Utilities.DataCache.PortalCachePriority, portalSettings.PortalId, portalSettings.BackgroundFile),
                 this.GetBackgroundFileInfoCallBack);
 
             return file;

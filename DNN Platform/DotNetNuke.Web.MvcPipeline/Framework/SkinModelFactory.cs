@@ -707,9 +707,9 @@ namespace DotNetNuke.Web.MvcPipeline.Framework
 
         private IFileInfo GetPageStylesheetFileInfo(string styleSheet, int portalId)
         {
-            string cacheKey = string.Format(Common.Utilities.DataCache.PortalCacheKey, portalId, "PageStylesheet" + styleSheet);
+            string cacheKey = string.Format(DotNetNuke.Common.Utilities.DataCache.PortalCacheKey, portalId, "PageStylesheet" + styleSheet);
             var file = CBO.GetCachedObject<Services.FileSystem.FileInfo>(
-                new CacheItemArgs(cacheKey, Common.Utilities.DataCache.PortalCacheTimeOut, Common.Utilities.DataCache.PortalCachePriority, styleSheet, portalId),
+                new CacheItemArgs(cacheKey, DotNetNuke.Common.Utilities.DataCache.PortalCacheTimeOut, DotNetNuke.Common.Utilities.DataCache.PortalCachePriority, styleSheet, portalId),
                 this.GetPageStylesheetInfoCallBack);
 
             return file;

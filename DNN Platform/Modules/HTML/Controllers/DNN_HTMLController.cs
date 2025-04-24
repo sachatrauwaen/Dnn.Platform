@@ -32,6 +32,8 @@ namespace DotNetNuke.Modules.Html.Controllers
     using DotNetNuke.Website.Controllers;
     using Microsoft.Extensions.DependencyInjection;
 
+    // [RouteArea("Html")]
+    // [RoutePrefix("DesktopModules/DNN_HTMLController")]
     public class DNN_HTMLController : ModuleSettingsController
     {
         // private readonly INavigationManager navigationManager;
