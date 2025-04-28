@@ -96,6 +96,8 @@ namespace DotNetNuke.Web.MvcPipeline.Routing
                 // routes.MapMvcAttributeRoutes();
             }
 
+            AreaRegistration.RegisterAllAreas();
+
             Logger.TraceFormat("Registered a total of {0} routes", this.routes.Count);
         }
 

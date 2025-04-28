@@ -163,7 +163,7 @@ namespace DotNetNuke.Web.MvcPipeline
                     return htmlHelper.Action(
                         actionName,
                         controllerName,
-                        new ControlViewModel()
+                        new 
                         {
                             ModuleId = module.ModuleID,
                             TabId = module.TabID,
@@ -172,6 +172,7 @@ namespace DotNetNuke.Web.MvcPipeline
                             ContainerSrc = module.ContainerSrc,
                             ContainerPath = module.ContainerPath,
                             IconFile = module.IconFile,
+                            area= "",
                         });
                 }
             }

@@ -53,5 +53,7 @@ namespace DotNetNuke.Web.MvcPipeline.Models
         public IContentSecurityPolicy ContentSecurityPolicy { get; set; }
 
         public INavigationManager NavigationManager { get; set; }
+
+        public string area { get; set; }
     }
 }

@@ -8,6 +8,7 @@ namespace DotNetNuke.Web.MvcWebsite.Controllers
     using System.Text.RegularExpressions;
     using System.Web;
     using System.Web.Mvc;
+
     using Dnn.EditBar.UI.Mvc;
     using DotNetNuke.Abstractions;
     using DotNetNuke.Common.Utilities;
@@ -36,7 +37,7 @@ namespace DotNetNuke.Web.MvcWebsite.Controllers
 
         private readonly INavigationManager navigationManager;
         private readonly IContentSecurityPolicy contentSecurityPolicy;
-        private readonly IPageModelFactory pageModelFactory;
+        protected readonly IPageModelFactory pageModelFactory;
 
         public DefaultController(IContentSecurityPolicy contentSecurityPolicy, INavigationManager navigationManager, IPageModelFactory pageModelFactory)
         {
@@ -46,6 +47,51 @@ namespace DotNetNuke.Web.MvcWebsite.Controllers
         }
 
         public ActionResult Page(int tabid, string language)
+        {
+            this.BeforeCreateModel();
+            var model = this.pageModelFactory.CreatePageModel<PageModel>(this);
+            return this.Page(tabid, language, "", model);
+        }
+
+        protected virtual ActionResult Page(int tabid, string language, string viewName, PageModel model)
+        {
+            try
+            {
+                this.InitializePage(model);
+            }
+            catch (MvcPageException ex)
+            {
+                if (string.IsNullOrEmpty(ex.RedirectUrl))
+                {
+                    return this.HttpNotFound(ex.Message);
+                }
+                else
+                {
+                    return this.Redirect(ex.RedirectUrl);
+                }
+            }
+
+            // DotNetNuke.Framework.JavaScriptLibraries.MvcJavaScript.Register(this.ControllerContext);
+            model.ClientVariables = MvcClientAPI.GetClientVariableList();
+            model.StartupScripts = MvcClientAPI.GetClientStartupScriptList();
+
+            // Register the scripts and stylesheets
+            this.RegisterScriptsAndStylesheets(model);
+
+            // this.Response.AddHeader("Content-Security-Policy", $"default-src 'self';base-uri 'self';form-action 'self';object-src 'none'; img-src *; style-src 'self' 'unsafe-inline';font-src *; script-src * 'unsafe-inline';");
+            var layout = "Layout";
+            if (string.IsNullOrEmpty(viewName))
+            {
+                viewName = model.Skin.RazorFile;
+            }
+            else
+            {
+                layout = model.Skin.RazorFile.Replace(".cshtml", "-app.cshtml");
+            }
+            return this.View(viewName, layout, model);
+        }
+
+        protected void BeforeCreateModel()
         {
             this.HttpContext.Items.Add("CSP-NONCE", this.contentSecurityPolicy.Nonce);
 
@@ -83,32 +129,6 @@ namespace DotNetNuke.Web.MvcWebsite.Controllers
 
             // Configure the ActiveTab with Skin/Container information
             PortalSettingsController.Instance().ConfigureActiveTab(this.PortalSettings);
-            PageModel model = this.pageModelFactory.CreatePageModel(this);
-            try
-            {
-                this.InitializePage(model);
-            }
-            catch (MvcPageException ex)
-            {
-                if (string.IsNullOrEmpty(ex.RedirectUrl))
-                {
-                    return this.HttpNotFound(ex.Message);
-                }
-                else
-                {
-                    return this.Redirect(ex.RedirectUrl);
-                }
-            }
-
-            // DotNetNuke.Framework.JavaScriptLibraries.MvcJavaScript.Register(this.ControllerContext);
-            model.ClientVariables = MvcClientAPI.GetClientVariableList();
-            model.StartupScripts = MvcClientAPI.GetClientStartupScriptList();
-
-            // Register the scripts and stylesheets
-            this.RegisterScriptsAndStylesheets(model);
-
-            // this.Response.AddHeader("Content-Security-Policy", $"default-src 'self';base-uri 'self';form-action 'self';object-src 'none'; img-src *; style-src 'self' 'unsafe-inline';font-src *; script-src * 'unsafe-inline';");
-            return this.View(model.Skin.RazorFile, "Layout", model);
         }
 
         private void RegisterScriptsAndStylesheets(PageModel page)

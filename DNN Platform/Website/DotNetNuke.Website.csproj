@@ -562,6 +562,9 @@
     <Compile Include="admin\Users\ViewProfile.ascx.designer.cs">
       <DependentUpon>ViewProfile.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Areas\Shop\Controllers\DefaultController.cs" />
+    <Compile Include="Areas\Shop\Models\ShopPageModel.cs" />
+    <Compile Include="Areas\Shop\ShopAreaRegistration.cs" />
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -609,6 +612,8 @@
     <AdditionalFiles Include="..\..\stylecop.json">
       <Link>stylecop.json</Link>
     </AdditionalFiles>
+    <Content Include="Areas\Shop\Views\web.config" />
+    <Content Include="Areas\Shop\Views\Default\Index.cshtml" />
     <None Include="compilerconfig.json" />
     <Compile Include="DesktopModules\Admin\EditExtension\AuthenticationEditor.ascx.cs">
       <DependentUpon>AuthenticationEditor.ascx</DependentUpon>
@@ -3392,6 +3397,9 @@
     <None Include="Resources\Shared\scripts\jquery\jquery.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Areas\Shop\Data\" />
+    <Folder Include="Areas\Shop\Views\Shared\" />
+    <Folder Include="Controllers\" />
     <Folder Include="Install\Provider\" />
     <Folder Include="Install\Temp\" />
   </ItemGroup>
@@ -3420,6 +3428,10 @@
     <ProjectReference Include="..\DotNetNuke.Abstractions\DotNetNuke.Abstractions.csproj">
       <Project>{6928a9b1-f88a-4581-a132-d3eb38669bb0}</Project>
       <Name>DotNetNuke.Abstractions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DotNetNuke.ContentSecurityPolicy\DotNetNuke.ContentSecurityPolicy.csproj">
+      <Project>{33C9571D-E3AF-46FC-DC75-9CA082BBDC3D}</Project>
+      <Name>DotNetNuke.ContentSecurityPolicy</Name>
     </ProjectReference>
     <ProjectReference Include="..\DotNetNuke.Instrumentation\DotNetNuke.Instrumentation.csproj">
       <Project>{3cd5f6b8-8360-4862-80b6-f402892db7dd}</Project>

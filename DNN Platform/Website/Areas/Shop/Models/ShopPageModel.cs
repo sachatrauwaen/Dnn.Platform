@@ -2,13 +2,17 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information
 
-namespace DotNetNuke.Web.MvcPipeline.Framework
+namespace DotNetNuke.Website.Areas.Shop.Models
 {
-    using DotNetNuke.Web.MvcPipeline.Controllers;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Web;
+
     using DotNetNuke.Web.MvcPipeline.Models;
 
-    public interface IPageModelFactory
+    public class ShopPageModel : PageModel
     {
-        TPageModel CreatePageModel<TPageModel>(DnnPageController page) where TPageModel : PageModel, new();
+        public string Text { get; set; }
     }
 }

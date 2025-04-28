@@ -8,8 +8,9 @@ namespace DotNetNuke.Web.MvcUrlRewriter.Entities.Urls
 {
     internal class MvcUrlRewriterController
     {
-        internal static bool IsMvc(UrlAction result, NameValueCollection queryStringCol, HttpContext context, int tabId, int portalId)
+        internal static bool IsMvc(UrlAction result, NameValueCollection queryStringCol, HttpContext context, int tabId, int portalId, out string routePrefix)
         {
+            routePrefix = string.Empty;
             var mvcCtls = new[] { /*"Module",*/ "Terms", "Privacy" };
             bool mvcCtl = false;
             /*
@@ -57,6 +58,10 @@ namespace DotNetNuke.Web.MvcUrlRewriter.Entities.Urls
                     if (tab != null)
                     {
                         mvcCtl = tab.GetTags().Contains("mvc");
+                        if (!string.IsNullOrEmpty(tab.KeyWords))
+                        {
+                            routePrefix = tab.KeyWords;
+                        }
                     }
                 }
             }

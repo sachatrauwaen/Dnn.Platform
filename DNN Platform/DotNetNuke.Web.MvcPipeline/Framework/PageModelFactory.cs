@@ -57,10 +57,10 @@ namespace DotNetNuke.Web.MvcPipeline.Framework
             this.skinModelFactory = skinModelFactory;
         }
 
-        public PageModel CreatePageModel(DnnPageController page)
+        public TPageModel CreatePageModel<TPageModel>(DnnPageController page) where TPageModel : PageModel, new()
         {
             var ctl = page.Request.QueryString["ctl"] != null ? page.Request.QueryString["ctl"] : string.Empty;
-            var pageModel = new PageModel
+            var pageModel = new TPageModel
             {
                 IsEditMode = Globals.IsEditMode(),
                 AntiForgery = AntiForgery.GetHtml().ToHtmlString(),

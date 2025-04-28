@@ -2270,9 +2270,19 @@
                         }
                         else
                         {
-                            if (MvcUrlRewriterController.IsMvc(result, queryStringCol, context, result.TabId, result.PortalId))
+                            if (MvcUrlRewriterController.IsMvc(result, queryStringCol, context, result.TabId, result.PortalId, out string routePrefix))
                             {
-                                RewriterUtils.RewriteUrl(context, "~/" + result.RewritePath.Replace(Globals.glbDefaultPage, "DesktopModules/Default/Page/" + result.TabId + "/" + result.CultureCode));
+                                if (string.IsNullOrEmpty(routePrefix))
+                                {
+                                    RewriterUtils.RewriteUrl(context, "~/" + result.RewritePath.Replace(Globals.glbDefaultPage, "DesktopModules/Default/Page/" + result.TabId + "/" + result.CultureCode));
+                                }
+                                else
+                                {
+                                    var pageRoute = result.dictKey.Substring(result.dictKey.IndexOf("::") + 2);
+                                    var routeSuffix = result.RawUrl.Substring(result.RawUrl.IndexOf(pageRoute) + pageRoute.Length);
+                                    RewriterUtils.RewriteUrl(context, "~/" + result.RewritePath.Replace(Globals.glbDefaultPage, routePrefix.Trim('/') + routeSuffix));
+                                }
+
                             }
                             else
                             {
