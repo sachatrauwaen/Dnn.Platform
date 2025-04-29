@@ -1,4 +1,7 @@
-﻿@model DotNetNuke.Website.Areas.Shop.Models.ShopPageModel
+﻿
+@using DotNetNuke.Web.MvcPipeline.Extensions
+
+@model DotNetNuke.Website.Areas.Shop.Models.ShopPageModel
 
 @{
     ViewBag.Title = "View";
@@ -8,5 +11,10 @@
 
 <h2>View @Model.Text zzzz</h2>
 
+@Url.Action("Create", new { area = "Shop" })
 
-@Url.Action("Create", "Default", new { area = "Shop" })
+<br />
+
+<a href="@Url.PageAction("Create", "Default", new { area = "Shop" })">@Url.PageAction("Create", "Default", new { area = "Shop" })</a>
+
+
