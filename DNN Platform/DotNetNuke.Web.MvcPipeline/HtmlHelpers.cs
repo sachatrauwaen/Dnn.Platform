@@ -57,6 +57,7 @@ namespace DotNetNuke.Web.MvcPipeline
             string actionName = string.Empty;
             try
             {
+                var area = module.DesktopModule.FolderName.Replace("/", "");
                 if (controlSrc.EndsWith(".mvc", System.StringComparison.OrdinalIgnoreCase))
                 {
                     var controlKey = module.ModuleControl.ControlKey;
@@ -79,7 +80,7 @@ namespace DotNetNuke.Web.MvcPipeline
                         { "ContainerPath", module.ContainerPath },
                         { "IconFile", module.IconFile }
                     };
-                    var area = module.DesktopModule.FolderName.Replace("/", "");
+                    
                     // controllerName = area + controllerName;
                     //values.Add("area", module.DesktopModule.FolderName);
 
@@ -172,7 +173,7 @@ namespace DotNetNuke.Web.MvcPipeline
                             ContainerSrc = module.ContainerSrc,
                             ContainerPath = module.ContainerPath,
                             IconFile = module.IconFile,
-                            area= "",
+                            area= area,
                         });
                 }
             }

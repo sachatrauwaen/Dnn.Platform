@@ -160,6 +160,7 @@
     <Compile Include="Components\HtmlTextUserInfo.cs" />
     <Compile Include="Controllers\DNN_HTMLController.cs" />
     <Compile Include="Controllers\HTMLEditHTMLViewController.cs" />
+    <Compile Include="Controllers\Test\HTMLHtmlModuleViewController.cs" />
     <Compile Include="Controllers\HTMLHtmlModuleViewController.cs" />
     <Compile Include="Models\HtmlModuleSettingsModel.cs" />
     <Compile Include="Models\WorkflowType.cs" />
