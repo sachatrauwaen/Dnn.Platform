@@ -5,6 +5,7 @@
 namespace DotNetNuke.Web.Mvc.Framework.Controllers
 {
     using System;
+    using System.Diagnostics.Eventing.Reader;
     using System.Text;
     using System.Web.Mvc;
     using System.Web.Routing;
@@ -17,9 +18,11 @@ namespace DotNetNuke.Web.Mvc.Framework.Controllers
     using DotNetNuke.Entities.Users;
     using DotNetNuke.Services.Localization;
     using DotNetNuke.UI.Modules;
+    using DotNetNuke.Web.Client;
     using DotNetNuke.Web.Mvc.Framework.ActionResults;
     using DotNetNuke.Web.Mvc.Framework.Modules;
     using DotNetNuke.Web.Mvc.Helpers;
+    using DotNetNuke.Web.Mvc.PageContext;
 
     public abstract class DnnController : Controller, IDnnController
     {
@@ -150,6 +153,21 @@ namespace DotNetNuke.Web.Mvc.Framework.Controllers
         {
             base.Initialize(requestContext);
             this.Url = new DnnUrlHelper(requestContext, this);
+
+            IPageContext pageContext;
+            if (this.DnnPage == null)
+            {
+                // MVC pipeline
+                pageContext = new MvcPageContext(this);
+            }
+            else
+            {
+                // webform pipeline
+                pageContext = new WebFormsPageContext(this.DnnPage);
+            }
+
+            pageContext.Title = "my page title";
+            pageContext.RegisterScript("~/DesktopModules/ModuleName/Script.js", FileOrder.Js.DefaultPriority, "DnnBodyProvider");
         }
     }
 }
