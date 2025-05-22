@@ -30,12 +30,12 @@ namespace DotNetNuke.Modules.Html.Controllers
     using DotNetNuke.Web.MvcPipeline.Controllers;
     using Microsoft.Extensions.DependencyInjection;
 
-    public class HTMLHtmlModuleViewController : ModuleViewControllerBase
+    public class HtmlModuleViewController : ModuleViewControllerBase
     {
         private readonly INavigationManager navigationManager;
         private readonly HtmlTextController htmlTextController;
 
-        public HTMLHtmlModuleViewController()
+        public HtmlModuleViewController()
         {
             this.navigationManager = Globals.DependencyProvider.GetRequiredService<INavigationManager>();
             this.htmlTextController = new HtmlTextController(this.navigationManager);

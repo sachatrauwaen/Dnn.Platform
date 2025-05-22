@@ -15,7 +15,7 @@ namespace DotNetNuke.Web.MvcPipeline.Routing
     using DotNetNuke.Framework.Reflections;
     using DotNetNuke.Instrumentation;
     using DotNetNuke.Services.Localization;
-    using DotNetNuke.Web.MvcPipeline.Common;
+    using DotNetNuke.Web.MvcPipeline.Commons;
 
     public sealed class MvcRoutingManager : IRoutingManager, IMapRoute
     {
@@ -78,7 +78,7 @@ namespace DotNetNuke.Web.MvcPipeline.Routing
                 var routeUrl = this.portalAliasMvcRouteManager.GetRouteUrl(moduleFolderName, url, count);
                 route = MapRouteWithNamespace(fullRouteName, moduleFolderName, routeUrl, defaults, constraints, namespaces);
                 this.routes.Add(route);
-                Logger.Trace("Mapping route: " + fullRouteName + " @ " + routeUrl);
+                Logger.Trace("Mapping route: " + fullRouteName + " Area="+moduleFolderName + " @ " + routeUrl);
             }
 
             return route;
@@ -96,7 +96,7 @@ namespace DotNetNuke.Web.MvcPipeline.Routing
                 // routes.MapMvcAttributeRoutes();
             }
 
-            AreaRegistration.RegisterAllAreas();
+            // AreaRegistration.RegisterAllAreas();
 
             Logger.TraceFormat("Registered a total of {0} routes", this.routes.Count);
         }

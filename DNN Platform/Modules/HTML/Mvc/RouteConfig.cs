@@ -6,6 +6,7 @@ namespace DotNetNuke.Modules.Html.Mvc
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Web;
 
@@ -16,7 +17,7 @@ namespace DotNetNuke.Modules.Html.Mvc
         public void RegisterRoutes(IMapRoute mapRouteManager)
         {
             mapRouteManager.MapRoute(
-                "Html",
+                "HTML",
                 "Html",
                 "{controller}/{action}",
                 new[] { "DotNetNuke.Modules.Html.Controllers" });

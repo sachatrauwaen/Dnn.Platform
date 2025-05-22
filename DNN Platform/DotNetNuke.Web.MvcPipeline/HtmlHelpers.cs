@@ -24,6 +24,7 @@ namespace DotNetNuke.Web.MvcPipeline
     using DotNetNuke.Web.MvcPipeline.UI.Utilities;
     using System.Linq;
     using System.Reflection;
+    using System.IO;
 
     public static partial class HtmlHelpers
     {
@@ -57,7 +58,7 @@ namespace DotNetNuke.Web.MvcPipeline
             string actionName = string.Empty;
             try
             {
-                var area = module.DesktopModule.FolderName.Replace("/", "");
+                var area = module.DesktopModule.FolderName;
                 if (controlSrc.EndsWith(".mvc", System.StringComparison.OrdinalIgnoreCase))
                 {
                     var controlKey = module.ModuleControl.ControlKey;
@@ -78,11 +79,9 @@ namespace DotNetNuke.Web.MvcPipeline
                         { "PanaName", module.PaneName },
                         { "ContainerSrc", module.ContainerSrc },
                         { "ContainerPath", module.ContainerPath },
-                        { "IconFile", module.IconFile }
+                        { "IconFile", module.IconFile },
+                        { "area", area }
                     };
-                    
-                    // controllerName = area + controllerName;
-                    //values.Add("area", module.DesktopModule.FolderName);
 
                     var queryString = htmlHelper.ViewContext.HttpContext.Request.QueryString;
 

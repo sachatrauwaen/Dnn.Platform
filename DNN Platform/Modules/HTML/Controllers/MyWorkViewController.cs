@@ -21,7 +21,6 @@ namespace DotNetNuke.Modules.Html.Controllers
     using DotNetNuke.Modules.Html;
     using DotNetNuke.Modules.Html.Components;
     using DotNetNuke.Modules.Html.Models;
-    using DotNetNuke.Mvc;
     using DotNetNuke.Services.Exceptions;
     using DotNetNuke.Services.Localization;
     using DotNetNuke.Web.Client.ClientResourceManagement;
@@ -30,16 +29,20 @@ namespace DotNetNuke.Modules.Html.Controllers
     using DotNetNuke.Website.Controllers;
     using Microsoft.Extensions.DependencyInjection;
 
-    public class HTMLMyWorkViewController : ModuleViewControllerBase
+    public class MyWorkViewController : ModuleViewControllerBase
     {
         private readonly INavigationManager navigationManager;
 
-        public HTMLMyWorkViewController()
+        public MyWorkViewController()
         {
             this.navigationManager = Globals.DependencyProvider.GetRequiredService<INavigationManager>();
         }
 
-        protected override object ViewModel(ModuleInfo module)
+        public override string ControlPath => "~/DesktopModules/Html/";
+
+        public override string ID => "MyWork";
+
+        protected override object ViewModel()
         {
             var objHtmlTextUsers = new HtmlTextUserController();
             var lst = objHtmlTextUsers.GetHtmlTextUser(this.UserInfo.UserID).Cast<HtmlTextUserInfo>();
@@ -47,9 +50,9 @@ namespace DotNetNuke.Modules.Html.Controllers
             MvcClientResourceManager.RegisterStyleSheet(this.ControllerContext, "~/Portals/_default/Skins/_default/WebControlSkin/Default/GridView.default.css");
             return new MyWorkModel()
             {
-                LocalResourceFile = Path.Combine(Path.GetDirectoryName(module.ModuleControl.ControlSrc), Localization.LocalResourceDirectory + "/" + Path.GetFileNameWithoutExtension(module.ModuleControl.ControlSrc)),
-                ModuleId = module.ModuleID,
-                TabId = module.TabID,
+                LocalResourceFile = this.LocalResourceFile,
+                ModuleId = this.ModuleId,
+                TabId = this.TabId,
                 RedirectUrl = this.navigationManager.NavigateURL(),
                 HtmlTextUsers = lst.Select(u => new HtmlTextUserModel()
                 {
