@@ -4,6 +4,8 @@
 
 namespace DotNetNuke.ContentSecurityPolicy
 {
+    using System;
+
     /// <summary>
     /// Interface définissant les opérations de gestion de la Content Security Policy.
     /// </summary>
@@ -118,6 +120,14 @@ namespace DotNetNuke.ContentSecurityPolicy
         /// </summary>
         /// <param name="value">L'endpoint où envoyer les rapports.</param>
         void AddReportTo(string value);
+
+        /// <summary>
+        /// Parses a CSP header string into a ContentSecurityPolicy object.
+        /// </summary>
+        /// <param name="cspHeader">The CSP header string to parse.</param>
+        /// <returns>A ContentSecurityPolicy object representing the parsed header.</returns>
+        /// <exception cref="System.ArgumentException">Thrown when the CSP header is invalid or cannot be parsed.</exception>
+        IContentSecurityPolicy AddHeaders(string cspHeader);
 
         /// <summary>
         /// Génère la politique de sécurité complète.

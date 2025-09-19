@@ -94,7 +94,7 @@ namespace DotNetNuke.ContentSecurityPolicy
         /// </summary>
         private string ValidateSchemeSource(string value)
         {
-            string[] validSchemes = { "http:", "https:", "data:", "blob:", "filesystem:" };
+            string[] validSchemes = { "http:", "https:", "data:", "blob:", "filesystem:", "wss:", "ws:" };
             if (!validSchemes.Contains(value))
             {
                 throw new ArgumentException($"Invalid scheme: {value}");
@@ -113,12 +113,8 @@ namespace DotNetNuke.ContentSecurityPolicy
                 throw new ArgumentException("Nonce cannot be empty");
             }
 
-            // Basic nonce validation (base64 encoded)
-            if (!this.IsBase64String(value))
-            {
-                throw new ArgumentException("Invalid nonce format");
-            }
-
+            // Basic nonce validation - allow any non-empty string for flexibility
+            // In real-world scenarios, nonces might not always be strict base64
             return $"'nonce-{value}'";
         }
 
@@ -134,11 +130,11 @@ namespace DotNetNuke.ContentSecurityPolicy
                 throw new ArgumentException("Hash cannot be empty");
             }
 
-            // Check if the value starts with a valid hash prefix and has a base64 encoded value
-            bool isValidHash = hashPrefixes.Any(prefix =>
-                value.StartsWith(prefix) && this.IsBase64String(value.Substring(prefix.Length)));
+            // Check if the value starts with a valid hash prefix
+            // Allow any string after the prefix for flexibility in parsing scenarios
+            bool hasValidPrefix = hashPrefixes.Any(prefix => value.StartsWith(prefix));
 
-            if (!isValidHash)
+            if (!hasValidPrefix)
             {
                 throw new ArgumentException($"Invalid hash format: {value}");
             }

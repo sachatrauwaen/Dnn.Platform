@@ -181,6 +181,19 @@ namespace DotNetNuke.ContentSecurityPolicy
         private List<BaseCspContributor> ReportingEndpointsContributors { get; } = new List<BaseCspContributor>();
 
         /// <summary>
+        /// Parses a CSP header string into a ContentSecurityPolicy object.
+        /// </summary>
+        /// <param name="cspHeader">The CSP header string to parse.</param>
+        /// <returns>A ContentSecurityPolicy object representing the parsed header.</returns>
+        /// <exception cref="System.ArgumentException">Thrown when the CSP header is invalid or cannot be parsed.</exception>
+        public IContentSecurityPolicy AddHeaders(string cspHeader)
+        {
+            var parser = new ContentSecurityPolicyParser(this);
+            parser.Parse(cspHeader);
+            return this;
+        }
+
+        /// <summary>
         /// Supprime les sources de script du type spécifié de la politique CSP.
         /// </summary>
         /// <param name="cspSourceType">Le type de source CSP à supprimer.</param>

@@ -40,5 +40,62 @@ namespace DotNetNuke.ContentSecurityPolicy
                 _ => throw new ArgumentException("Unknown directive type")
             };
         }
+
+        /// <summary>
+        /// Gets the directive type from a directive name string.
+        /// </summary>
+        /// <param name="directiveName">The directive name to get the type for.</param>
+        /// <returns>The directive type.</returns>
+        /// <exception cref="ArgumentException">Thrown when the directive name is unknown.</exception>
+        public static CspDirectiveType GetDirectiveType(string directiveName)
+        {
+            if (string.IsNullOrWhiteSpace(directiveName))
+            {
+                throw new ArgumentException("Directive name cannot be null or empty", nameof(directiveName));
+            }
+
+            return directiveName.ToLowerInvariant() switch
+            {
+                "default-src" => CspDirectiveType.DefaultSrc,
+                "script-src" => CspDirectiveType.ScriptSrc,
+                "style-src" => CspDirectiveType.StyleSrc,
+                "img-src" => CspDirectiveType.ImgSrc,
+                "connect-src" => CspDirectiveType.ConnectSrc,
+                "font-src" => CspDirectiveType.FontSrc,
+                "object-src" => CspDirectiveType.ObjectSrc,
+                "media-src" => CspDirectiveType.MediaSrc,
+                "frame-src" => CspDirectiveType.FrameSrc,
+                "base-uri" => CspDirectiveType.BaseUri,
+                "plugin-types" => CspDirectiveType.PluginTypes,
+                "sandbox" => CspDirectiveType.SandboxDirective,
+                "form-action" => CspDirectiveType.FormAction,
+                "frame-ancestors" => CspDirectiveType.FrameAncestors,
+                "report-uri" => CspDirectiveType.ReportUri,
+                "report-to" => CspDirectiveType.ReportTo,
+                "upgrade-insecure-requests" => CspDirectiveType.UpgradeInsecureRequests,
+                _ => throw new ArgumentException($"Unknown directive name: {directiveName}")
+            };
+        }
+
+        /// <summary>
+        /// Tries to get the directive type from a directive name string.
+        /// </summary>
+        /// <param name="directiveName">The directive name to get the type for.</param>
+        /// <param name="directiveType">The directive type, or default if parsing failed.</param>
+        /// <returns>True if parsing was successful, false otherwise.</returns>
+        public static bool TryGetDirectiveType(string directiveName, out CspDirectiveType directiveType)
+        {
+            directiveType = default;
+
+            try
+            {
+                directiveType = GetDirectiveType(directiveName);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
 }
