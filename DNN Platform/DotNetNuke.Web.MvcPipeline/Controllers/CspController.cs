@@ -14,6 +14,7 @@ namespace DotNetNuke.Web.MvcPipeline.Controllers
     using DotNetNuke.Entities.Portals;
     using DotNetNuke.Instrumentation;
     using DotNetNuke.Services.Log.EventLog;
+    using DotNetNuke.Web.MvcPipeline.Attributes;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
 
@@ -28,6 +29,7 @@ namespace DotNetNuke.Web.MvcPipeline.Controllers
         }
 
         [HttpPost]
+        [RateLimit()]
         public ActionResult Report()
         {
             var cspFileLogging = true;
