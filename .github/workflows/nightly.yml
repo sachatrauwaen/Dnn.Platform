@@ -1,0 +1,93 @@
+name: Nightly Build
+
+on:
+  schedule:
+    # Runs at 00:00 UTC every day
+    - cron: '0 0 * * *'
+  workflow_dispatch: # Allows manual trigger from the Actions tab
+
+permissions:
+  contents: write # Required to create/update Releases
+
+jobs:
+  nightly:
+    name: Build Nightly
+    runs-on: windows-latest
+
+    steps:
+      # 1. Checkout with full history for versioning tools (GitVersion)
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # 2. Setup Environment (Node, MSBuild, NuGet)
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Setup NuGet
+        uses: nuget/setup-nuget@v2
+
+      # 3. Create Settings & Build
+      - name: Create Settings
+        run: .\build.ps1 -Target CreateSettings
+        shell: powershell
+
+      - name: Run Build Script
+        run: .\build.ps1 -Target BuildAll
+        shell: powershell
+
+      # 4. Get Current Date (for renaming artifacts)
+      - name: Get Date
+        id: date
+        run: echo "date=$(Get-Date -Format 'yyyyMMdd')" >> $env:GITHUB_OUTPUT
+        shell: powershell
+
+      # 5. Rename Artifacts to include "Nightly" and Date
+      # This helps distinguish them from stable releases.
+      - name: Prepare Artifacts
+        run: |
+          $date = "${{ steps.date.outputs.date }}"
+          $sourceDir = "Artifacts"
+          $destDir = "NightlyArtifacts"
+          New-Item -ItemType Directory -Force -Path $destDir
+
+          # Rename and move Zip files
+          Get-ChildItem -Path $sourceDir -Filter "*.zip" | ForEach-Object {
+            $newName = $_.Name -replace "DNN_Platform_", "DNN_Platform_Nightly_$($date)_"
+            Copy-Item $_.FullName -Destination "$destDir\$newName"
+          }
+        shell: powershell
+
+      # 6. Upload Artifacts to Action Summary (Retention: 5 days)
+      - name: Upload Nightly Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: DNN-Nightly-${{ steps.date.outputs.date }}
+          path: NightlyArtifacts/
+          retention-days: 5
+
+      # 7. Publish to GitHub Releases (Rolling "Nightly" Tag)
+      # This updates a single "nightly" tag with the latest assets every day.
+      - name: Update Nightly Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: nightly
+          name: "Nightly Build ${{ steps.date.outputs.date }}"
+          body: |
+            **DNN Platform Nightly Build**
+            
+            Build Date: ${{ steps.date.outputs.date }}
+            Commit: ${{ github.sha }}
+            
+            *⚠️ These are automated development builds and should not be used in production.*
+          files: NightlyArtifacts/*.zip
+          prerelease: true
+          make_latest: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
