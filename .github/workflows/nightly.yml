@@ -36,7 +36,7 @@ jobs:
       # 3. Build
 
       - name: Run Build Script
-        run: .\build.ps1 -Target BuildAll -BuildVersion "10.99.00"
+        run: .\build.ps1 --target=BuildAll --buildVersion="10.99.00"
         shell: powershell
 
       # 4. Get Current Date (for renaming artifacts)
