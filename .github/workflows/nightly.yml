@@ -33,13 +33,10 @@ jobs:
       - name: Setup NuGet
         uses: nuget/setup-nuget@v2
 
-      # 3. Create Settings & Build
-      - name: Create Settings
-        run: .\build.ps1 -Target CreateSettings
-        shell: powershell
+      # 3. Build
 
       - name: Run Build Script
-        run: .\build.ps1 -Target BuildAll
+        run: .\build.ps1
         shell: powershell
 
       # 4. Get Current Date (for renaming artifacts)
