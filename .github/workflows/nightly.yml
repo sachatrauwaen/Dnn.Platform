@@ -9,6 +9,9 @@ on:
 permissions:
   contents: write # Required to create/update Releases
 
+env:
+  TF_BUILD: "yes"
+
 jobs:
   nightly:
     name: Build Nightly
