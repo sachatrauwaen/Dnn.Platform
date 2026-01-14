@@ -155,7 +155,7 @@ jobs:
     # 4. Get Current Date (for renaming artifacts)
     - name: Get Date
       id: date
-      run: echo "date=$(Get-Date -Format 'yyyyMMdd')" >> $env:GITHUB_OUTPUT
+      run: echo "date=$(Get-Date -Format 'yyyy-MM-dd-HH-mm')" >> $env:GITHUB_OUTPUT
       shell: powershell
 
     # 5. Rename Artifacts to include "Nightly" and Date
@@ -167,9 +167,9 @@ jobs:
         $destDir = "NightlyArtifacts"
         New-Item -ItemType Directory -Force -Path $destDir
 
-        # Rename and move Zip files
-        Get-ChildItem -Path $sourceDir -Filter "*.zip" | ForEach-Object {
-          $newName = $_.Name -replace "DNN_Platform_", "DNN_Platform_Nightly_$($date)_"
+        # Rename and move Zip files (including subfolders)
+        Get-ChildItem -Path $sourceDir -Filter "*Install.zip" -Recurse | ForEach-Object {
+          $newName = $_.Name -replace "DNN_Platform_", "DNN_Platform_MVC_Pipeline_$($date)_"
           Copy-Item $_.FullName -Destination "$destDir\$newName"
         }
       shell: powershell
