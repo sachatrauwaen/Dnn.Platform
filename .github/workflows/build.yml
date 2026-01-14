@@ -196,7 +196,7 @@ jobs:
         body: |
           **DNN Platform MVC Pipeline Build**
           
-          Build Date: $(Get-Date -Format 'dd/MM/yyyy HH:mm')
+          Build Date: ${{ steps.date.outputs.date }}
           Commit: ${{ github.sha }}
           
           *⚠️ These are automated development builds and should not be used in production.*
