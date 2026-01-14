@@ -1,0 +1,144 @@
+name: Build DNN Platform
+
+on:
+  push:
+    branches:
+      - '**'
+  pull_request:
+    branches:
+      - '**'
+    # Auto-cancel in-progress runs for PRs
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+      cancel-in-progress: true
+  workflow_dispatch:
+    inputs:
+      CakeTarget:
+        description: 'Cake build target'
+        required: false
+        default: 'BuildAll'
+        type: string
+      CakeVerbosity:
+        description: 'Cake verbosity level'
+        required: false
+        default: 'Normal'
+        type: choice
+        options:
+          - Quiet
+          - Minimal
+          - Normal
+          - Verbose
+          - Diagnostic
+      ReleaseMode:
+        description: 'Release mode'
+        required: false
+        default: 'Beta'
+        type: choice
+        options:
+          - Alpha
+          - Beta
+          - RC
+          - Stable
+      RunTests:
+        description: 'Run tests'
+        required: false
+        default: true
+        type: boolean
+
+env:
+  BUILD_ARTIFACT_STAGING_DIRECTORY: Artifacts/
+  YARN_CACHE_FOLDER: ${{ github.workspace }}/.yarn/cache
+
+jobs:
+  build:
+    runs-on: windows-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Create Yarn Cache Folder
+      shell: pwsh
+      run: |
+        $yarnCacheFolder = "${{ env.YARN_CACHE_FOLDER }}"
+        if (-not (Test-Path $yarnCacheFolder)) {
+          Write-Host "Creating Yarn cache folder at $yarnCacheFolder"
+          New-Item -ItemType Directory -Path $yarnCacheFolder -Force
+        } else {
+          Write-Host "Yarn cache folder already exists."
+        }
+
+    - name: Cache Yarn packages
+      uses: actions/cache@v4
+      with:
+        path: ${{ env.YARN_CACHE_FOLDER }}
+        key: yarn-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+        restore-keys: |
+          yarn-${{ runner.os }}-
+
+    - name: Setup .NET SDK
+      uses: actions/setup-dotnet@v4
+      with:
+        global-json-file: global.json
+
+    - name: Run DNN Update Versions
+      shell: pwsh
+      run: |
+        $cakeVerbosity = "${{ github.event.inputs.CakeVerbosity || 'Normal' }}"
+        ./build.ps1 --target=BuildServerSetVersion --verbosity=$cakeVerbosity
+
+    - name: Start SQL LocalDB Service
+      if: ${{ github.event.inputs.RunTests != 'false' }}
+      shell: cmd
+      run: sqllocaldb start mssqllocaldb
+
+    # This step is disabled in the original pipeline
+    # - name: npm config set registry
+    #   shell: pwsh
+    #   run: npm config set registry https://www.myget.org/F/dnn-software-public/npm/
+
+    - name: Update Alpha/Beta/Stable flag
+      shell: pwsh
+      run: |
+        $releaseMode = "${{ github.event.inputs.ReleaseMode || 'Beta' }}"
+        $path = '.\DNN Platform\Library\Properties\AssemblyInfo.cs'
+        $pattern3 = '\[assembly: AssemblyStatus'
+        (Get-Content $path) | ForEach-Object{
+          if($_ -match $pattern3){
+            # We have found the matching line
+            '[assembly: AssemblyStatus(ReleaseMode.{0})]' -f $releaseMode
+          } else {
+            $_
+          }
+        } | Set-Content $path
+
+    - name: Run DNN Build via Cake
+      shell: pwsh
+      run: |
+        $cakeTarget = "${{ github.event.inputs.CakeTarget || 'BuildAll' }}"
+        $cakeVerbosity = "${{ github.event.inputs.CakeVerbosity || 'Normal' }}"
+        ./build.ps1 --target=$cakeTarget --verbosity=$cakeVerbosity
+
+    - name: Run Unit Tests via Cake
+      if: ${{ github.event.inputs.RunTests != 'false' }}
+      shell: pwsh
+      run: |
+        $cakeVerbosity = "${{ github.event.inputs.CakeVerbosity || 'Normal' }}"
+        ./build.ps1 --target=UnitTests --verbosity=$cakeVerbosity
+      continue-on-error: true
+
+    - name: Publish Test Results
+      if: ${{ github.event.inputs.RunTests != 'false' && always() }}
+      uses: EnricoMi/publish-unit-test-result-action/windows@v2
+      with:
+        files: '**/TestResults/*.trx'
+        check_name: 'Test Results'
+        fail_on: 'errors'
+
+    - name: Upload Artifacts
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: Artifacts-${{ github.run_attempt }}
+        path: Artifacts/
+        if-no-files-found: warn
