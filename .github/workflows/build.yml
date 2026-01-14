@@ -155,7 +155,7 @@ jobs:
     # 4. Get Current Date (for renaming artifacts)
     - name: Get Date
       id: date
-      run: echo "date=$(Get-Date -Format 'yyyy-MM-dd-HH-mm')" >> $env:GITHUB_OUTPUT
+      run: echo "date=$(Get-Date -Format 'yyyy-MM-dd_HH-mm')" >> $env:GITHUB_OUTPUT
       shell: powershell
 
     # 5. Rename Artifacts to include "Nightly" and Date
@@ -169,7 +169,11 @@ jobs:
 
         # Rename and move Zip files (including subfolders)
         Get-ChildItem -Path $sourceDir -Filter "*Install.zip" -Recurse | ForEach-Object {
-          $newName = $_.Name -replace "DNN_Platform_", "DNN_Platform_MVC_Pipeline_$($date)_"
+          $newName = $_.Name -replace "DNN_Platform_", "MVCPL_$($date)_DNN_Platform_"
+          $newName = $newName -replace "Dnn.ContactList.", "MVCPL_$($date)_Dnn.ContactList."
+
+
+
           Copy-Item $_.FullName -Destination "$destDir\$newName"
         }
       shell: powershell
@@ -178,21 +182,21 @@ jobs:
     - name: Upload Nightly Artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: DNN-Nightly-${{ steps.date.outputs.date }}
+        name: DNN-MVC-Pipeline-${{ steps.date.outputs.date }}
         path: NightlyArtifacts/
         retention-days: 5
 
     # 7. Publish to GitHub Releases (Rolling "Nightly" Tag)
     # This updates a single "nightly" tag with the latest assets every day.
-    - name: Update Nightly Release
+    - name: Update MVC Pipeline Release
       uses: softprops/action-gh-release@v2
       with:
-        tag_name: nightly
-        name: "Nightly Build ${{ steps.date.outputs.date }}"
+        tag_name: mvc-pipeline
+        name: "MVC Pipeline Build ${{ steps.date.outputs.date }}"
         body: |
-          **DNN Platform Nightly Build**
+          **DNN Platform MVC Pipeline Build**
           
-          Build Date: ${{ steps.date.outputs.date }}
+          Build Date: $(Get-Date -Format 'dd/MM/yyyy HH:mm')
           Commit: ${{ github.sha }}
           
           *⚠️ These are automated development builds and should not be used in production.*
