@@ -47,6 +47,7 @@ concurrency:
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 env:  
+  TF_BUILD: yes
   BUILD_ARTIFACT_STAGING_DIRECTORY: Artifacts/
   YARN_CACHE_FOLDER: ${{ github.workspace }}/.yarn/cache
 
