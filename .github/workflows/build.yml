@@ -7,10 +7,6 @@ on:
   pull_request:
     branches:
       - '**'
-    # Auto-cancel in-progress runs for PRs
-    concurrency:
-      group: ${{ github.workflow }}-${{ github.ref }}
-      cancel-in-progress: true
   workflow_dispatch:
     inputs:
       CakeTarget:
@@ -44,6 +40,11 @@ on:
         required: false
         default: true
         type: boolean
+
+# Auto-cancel in-progress runs for PRs
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 env:
   BUILD_ARTIFACT_STAGING_DIRECTORY: Artifacts/
