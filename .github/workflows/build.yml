@@ -171,14 +171,11 @@ jobs:
         Get-ChildItem -Path $sourceDir -Filter "*Install.zip" -Recurse | ForEach-Object {
           $newName = $_.Name -replace "DNN_Platform_", "MVCPL_$($date)_DNN_Platform_"
           $newName = $newName -replace "Dnn.ContactList.", "MVCPL_$($date)_Dnn.ContactList."
-
-
-
           Copy-Item $_.FullName -Destination "$destDir\$newName"
         }
       shell: powershell
 
-    # 6. Upload Artifacts to Action Summary (Retention: 5 days)
+    # 6. Upload Artifacts to GitHub Actions (Retention: 5 days)
     - name: Upload Nightly Artifacts
       uses: actions/upload-artifact@v4
       with:
@@ -186,8 +183,33 @@ jobs:
         path: NightlyArtifacts/
         retention-days: 5
 
-    # 7. Publish to GitHub Releases (Rolling "Nightly" Tag)
-    # This updates a single "nightly" tag with the latest assets every day.
+    # 7. Delete old artifacts from existing release
+    - name: Delete old release assets
+      shell: pwsh
+      run: |
+        $tagName = "mvc-pipeline"
+        
+        # Check if release exists and get asset IDs
+        try {
+          $assets = gh release view $tagName --json assets --jq '.assets[] | .id' 2>$null
+          
+          if ($assets) {
+            Write-Host "Deleting old assets from release '$tagName'..."
+            $assets | ForEach-Object {
+              gh api -X DELETE "repos/${{ github.repository }}/releases/assets/$_"
+              Write-Host "Deleted asset ID: $_"
+            }
+          } else {
+            Write-Host "No existing assets found or release doesn't exist yet."
+          }
+        } catch {
+          Write-Host "Release '$tagName' doesn't exist yet or no assets to delete."
+        }
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    # 8. Publish to GitHub Releases (Rolling Release)
+    # This updates a single "mvc-pipeline" tag with the latest assets.
     - name: Update MVC Pipeline Release
       uses: softprops/action-gh-release@v2
       with:
