@@ -46,8 +46,7 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
-env:
-  TF_BUILD: yes
+env:  
   BUILD_ARTIFACT_STAGING_DIRECTORY: Artifacts/
   YARN_CACHE_FOLDER: ${{ github.workspace }}/.yarn/cache
 
@@ -83,11 +82,11 @@ jobs:
       with:
         global-json-file: global.json
 
-    - name: Run DNN Update Versions
-      shell: pwsh
-      run: |
-        $cakeVerbosity = "${{ github.event.inputs.CakeVerbosity || 'Normal' }}"
-        ./build.ps1 --target=BuildServerSetVersion --verbosity=$cakeVerbosity
+    #- name: Run DNN Update Versions
+    #  shell: pwsh
+    #  run: |
+    #    $cakeVerbosity = "${{ github.event.inputs.CakeVerbosity || 'Normal' }}"
+    #    ./build.ps1 --target=BuildServerSetVersion --verbosity=$cakeVerbosity
 
     - name: Start SQL LocalDB Service
       if: ${{ github.event.inputs.RunTests != 'false' }}
