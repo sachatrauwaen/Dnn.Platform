@@ -189,21 +189,27 @@ jobs:
       run: |
         $tagName = "mvc-pipeline"
         
-        # Check if release exists and get asset IDs
+        # Check if release exists and delete old assets
         try {
-          $assets = gh release view $tagName --json assets --jq '.assets[] | .id' 2>$null
+          $releaseInfo = gh release view $tagName --json assets 2>$null | ConvertFrom-Json
           
-          if ($assets) {
-            Write-Host "Deleting old assets from release '$tagName'..."
-            $assets | ForEach-Object {
-              gh api -X DELETE "repos/${{ github.repository }}/releases/assets/$_"
-              Write-Host "Deleted asset ID: $_"
+          if ($releaseInfo.assets -and $releaseInfo.assets.Count -gt 0) {
+            Write-Host "Found $($releaseInfo.assets.Count) existing assets. Deleting..."
+            
+            foreach ($asset in $releaseInfo.assets) {
+              try {
+                Write-Host "Deleting: $($asset.name)..."
+                gh release delete-asset $tagName $asset.name --yes 2>&1 | Out-Null
+                Write-Host "  ✓ Deleted: $($asset.name)"
+              } catch {
+                Write-Host "  ⚠ Could not delete $($asset.name): $_"
+              }
             }
           } else {
-            Write-Host "No existing assets found or release doesn't exist yet."
+            Write-Host "No existing assets found to delete."
           }
         } catch {
-          Write-Host "Release '$tagName' doesn't exist yet or no assets to delete."
+          Write-Host "Release '$tagName' doesn't exist yet. Will be created on first upload."
         }
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
