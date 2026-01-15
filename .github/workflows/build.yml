@@ -155,6 +155,11 @@ jobs:
     # 4. Get Current Date (for renaming artifacts)
     - name: Get Date
       id: date
+      run: echo "date=$(Get-Date -Format 'yyyy-MM-dd_HH-mm')" >> $env:GITHUB_OUTPUT
+      shell: powershell
+
+     - name: Get Date for display
+      id: datedisplay
       run: echo "date=$(Get-Date -Format 'dd/MM/yyyy HH:mm')" >> $env:GITHUB_OUTPUT
       shell: powershell
 
@@ -162,7 +167,7 @@ jobs:
     # This helps distinguish them from stable releases.
     - name: Prepare Artifacts
       run: |
-        $date = $(Get-Date -Format 'yyyyMMddHHmm')
+        $date = "${{ steps.date.outputs.date }}"
         $sourceDir = "Artifacts"
         $destDir = "NightlyArtifacts"
         New-Item -ItemType Directory -Force -Path $destDir
@@ -220,11 +225,11 @@ jobs:
       uses: softprops/action-gh-release@v2
       with:
         tag_name: mvc-pipeline
-        name: "MVC Pipeline Build ${{ steps.date.outputs.date }}"
+        name: "MVC Pipeline Build ${{ steps.datedisplay.outputs.date }}"
         body: |
           **DNN Platform MVC Pipeline Build**
           
-          Build Date: ${{ steps.date.outputs.date }}
+          Build Date: ${{ steps.datedisplay.outputs.date }}
           Commit: ${{ github.sha }}
           
           *⚠️ These are automated development builds and should not be used in production.*
