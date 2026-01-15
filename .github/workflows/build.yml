@@ -90,11 +90,11 @@ jobs:
       with:
         global-json-file: global.json
 
-    #- name: Run DNN Update Versions
-    #  shell: pwsh
-    #  run: |
-    #    $cakeVerbosity = "${{ github.event.inputs.CakeVerbosity || 'Normal' }}"
-    #    ./build.ps1 --target=BuildServerSetVersion --verbosity=$cakeVerbosity
+    - name: Run DNN Update Versions
+      shell: pwsh
+      run: |
+        $cakeVerbosity = "${{ github.event.inputs.CakeVerbosity || 'Normal' }}"
+        ./build.ps1 --target=BuildServerSetVersion --verbosity=$cakeVerbosity
 
     - name: Start SQL LocalDB Service
       if: ${{ github.event.inputs.RunTests != 'false' }}
@@ -155,7 +155,7 @@ jobs:
     # 4. Get Current Date (for renaming artifacts)
     - name: Get Date
       id: date
-      run: echo "date=$(Get-Date -Format 'yyyy-MM-dd_HH-mm')" >> $env:GITHUB_OUTPUT
+      run: echo "date=$(Get-Date -Format 'yyyyMMdd-HHmm')" >> $env:GITHUB_OUTPUT
       shell: powershell
 
     - name: Get Date for display
