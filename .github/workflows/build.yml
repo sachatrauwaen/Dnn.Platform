@@ -40,6 +40,11 @@ on:
         required: false
         default: true
         type: boolean
+      Version:
+        description: 'Force version (e.g., 10.2.0 or 10.2.0.123). Use "auto" for GitVersion or "off" for AssemblyInfo version'
+        required: false
+        default: 'auto'
+        type: string
 
 # Auto-cancel in-progress runs for PRs
 concurrency:
@@ -94,7 +99,8 @@ jobs:
       shell: pwsh
       run: |
         $cakeVerbosity = "${{ github.event.inputs.CakeVerbosity || 'Normal' }}"
-        ./build.ps1 --target=BuildServerSetVersion --verbosity=$cakeVerbosity
+        $version = "${{ github.event.inputs.Version || 'auto' }}"
+        ./build.ps1 --target=BuildServerSetVersion --verbosity=$cakeVerbosity --version=$version
 
     - name: Start SQL LocalDB Service
       if: ${{ github.event.inputs.RunTests != 'false' }}
@@ -126,14 +132,16 @@ jobs:
       run: |
         $cakeTarget = "${{ github.event.inputs.CakeTarget || 'BuildAll' }}"
         $cakeVerbosity = "${{ github.event.inputs.CakeVerbosity || 'Normal' }}"
-        ./build.ps1 --target=$cakeTarget --verbosity=$cakeVerbosity
+        $version = "${{ github.event.inputs.Version || 'auto' }}"
+        ./build.ps1 --target=$cakeTarget --verbosity=$cakeVerbosity --version=$version
 
     - name: Run Unit Tests via Cake
       if: ${{ github.event.inputs.RunTests != 'false' }}
       shell: pwsh
       run: |
         $cakeVerbosity = "${{ github.event.inputs.CakeVerbosity || 'Normal' }}"
-        ./build.ps1 --target=UnitTests --verbosity=$cakeVerbosity
+        $version = "${{ github.event.inputs.Version || 'auto' }}"
+        ./build.ps1 --target=UnitTests --verbosity=$cakeVerbosity --version=$version
       continue-on-error: true
 
     - name: Publish Test Results
