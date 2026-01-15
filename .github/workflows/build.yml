@@ -155,14 +155,14 @@ jobs:
     # 4. Get Current Date (for renaming artifacts)
     - name: Get Date
       id: date
-      run: echo "date=$(Get-Date -Format 'yyyy-MM-dd_HH-mm')" >> $env:GITHUB_OUTPUT
+      run: echo "date=$(Get-Date -Format 'dd/MM/yyyy HH:mm')" >> $env:GITHUB_OUTPUT
       shell: powershell
 
     # 5. Rename Artifacts to include "Nightly" and Date
     # This helps distinguish them from stable releases.
     - name: Prepare Artifacts
       run: |
-        $date = "${{ steps.date.outputs.date }}"
+        $date = $(Get-Date -Format 'yyyyMMddHHmm')
         $sourceDir = "Artifacts"
         $destDir = "NightlyArtifacts"
         New-Item -ItemType Directory -Force -Path $destDir
