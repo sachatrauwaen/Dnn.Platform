@@ -158,7 +158,7 @@ jobs:
       run: echo "date=$(Get-Date -Format 'yyyy-MM-dd_HH-mm')" >> $env:GITHUB_OUTPUT
       shell: powershell
 
-     - name: Get Date for display
+    - name: Get Date for display
       id: datedisplay
       run: echo "date=$(Get-Date -Format 'dd/MM/yyyy HH:mm')" >> $env:GITHUB_OUTPUT
       shell: powershell
