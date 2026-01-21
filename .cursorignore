@@ -13,8 +13,8 @@ node_modules/
 
 .vs/
 
-build/
-build.*
+-build/
+-build.*
 .yarn/
 Artifacts/
 DotNetNuke.Internal.SourceGenerators/
@@ -22,7 +22,7 @@ Install/
 tools/
 Website/
 .nuget/
-.github/
+-.github/
 Packages/
 Refs/
 tools/
